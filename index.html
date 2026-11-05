@@ -6,28 +6,97 @@
       min-height: max(884px, 100dvh);
     }
   </style>
-</head><body class="bg-surface text-on-surface font-body-md flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[24px] text-secondary">watch</span><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-primary font-bold">Buen Tiempo</span></div><div class="flex items-center gap-space-xs"><button aria-label="Buscar guardatiempos" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><a aria-label="Concierge WhatsApp" class="w-11 h-11 flex items-center justify-center text-secondary hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-[22px]">chat</span></a><button aria-label="Acceso Administrador" class="h-10 px-2.5 rounded-full bg-surface-container flex items-center gap-1 text-on-surface hover:bg-secondary-fixed transition-colors active:scale-95" id="open-admin-btn"><span class="material-symbols-outlined text-[16px] text-secondary">lock</span><span class="font-label-sm text-[10px] uppercase font-bold tracking-wider text-secondary">Admin</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full">
-<div class="px-margin pt-space-md pb-space-sm flex flex-col gap-space-xs"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="inline-flex w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(201,160,80,0.8)]"></span><span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Colección de Alta Relojería</span></div><span class="font-label-sm text-[10px] tracking-widest uppercase px-2.5 py-0.5 rounded-full border border-secondary/40 text-secondary bg-surface-container-low font-semibold">Exclusivo</span></div><h1 class="font-headline-lg-mobile text-[32px] tracking-tight font-bold" style="background: linear-gradient(135deg, #996515 0%, #D4AF37 25%, #FFF2A1 45%, #AA771C 70%, #68480C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)); font-family: 'Playfair Display', serif;">Buen Tiempo</h1><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed max-w-sm">Rendimiento suizo, titanio y cronometría de vanguardia para misiones de máxima precisión.</p></div>
-<div class="w-full overflow-x-auto py-space-sm pl-margin scrollbar-none flex items-center gap-space-xs pr-margin"><button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform" data-category="all"><span>Todos (6)</span></button><button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform" data-category="caballeros">Caballeros</button><button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform" data-category="damas">Damas</button><button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform flex items-center gap-1.5 border border-secondary/30" data-category="ofertas"><span class="material-symbols-outlined text-[15px] text-secondary">auto_awesome</span><span>Ofertas</span><span class="px-1.5 py-0.2 rounded-full bg-secondary text-on-secondary text-[10px] font-bold">1</span></button></div>
+</head>
+<body class="bg-surface text-on-surface font-body-md flex flex-col min-h-screen">
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] pt-safe">
+
+<div class="h-16 px-margin flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[24px] text-secondary">watch</span>
+
+<span class="font-headline-sm text-headline-sm uppercase tracking-wider text-primary font-bold">Buen Tiempo</span>
+</div>
+
+<div class="flex items-center gap-space-xs">
+<button aria-label="Buscar guardatiempos" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[22px]">search</span>
+</button>
+
+<a aria-label="Concierge WhatsApp" class="w-11 h-11 flex items-center justify-center text-secondary hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">chat</span></a>
+
+<button aria-label="Acceso Administrador" class="h-10 px-2.5 rounded-full bg-surface-container flex items-center gap-1 text-on-surface hover:bg-secondary-fixed transition-colors active:scale-95" id="open-admin-btn">
+<span class="material-symbols-outlined text-[16px] text-secondary">lock</span><span class="font-label-sm text-[10px] uppercase font-bold tracking-wider text-secondary">Admin</span></button>
+
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+
+</div>
+</div>
+</div>
+</header>
+
+<main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen">
+<div class="flex flex-col w-full">
+<div class="px-margin pt-space-md pb-space-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+
+<span class="inline-flex w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(201,160,80,0.8)]"></span>
+
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Colección de Alta Relojería</span>
+</div><
+    
+<span class="font-label-sm text-[10px] tracking-widest uppercase px-2.5 py-0.5 rounded-full border border-secondary/40 text-secondary bg-surface-container-low font-semibold">Exclusivo</span>
+</div>
+
+<h1 class="font-headline-lg-mobile text-[32px] tracking-tight font-bold" style="background: linear-gradient(135deg, #996515 0%, #D4AF37 25%, #FFF2A1 45%, #AA771C 70%, #68480C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)); font-family: 'Playfair Display', serif;">Buen Tiempo</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed max-w-sm">Rendimiento suizo, titanio y cronometría de vanguardia para misiones de máxima precisión.</p>
+</div>
+
+<div class="w-full overflow-x-auto py-space-sm pl-margin scrollbar-none flex items-center gap-space-xs pr-margin">
+<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform" data-category="all"><span>Todos (6)</span>
+</button>
+
+<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform" data-category="caballeros">Caballeros</button>
+
+<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform" data-category="damas">Damas</button>
+
+<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform flex items-center gap-1.5 border border-secondary/30" data-category="ofertas"><span class="material-symbols-outlined text-[15px] text-secondary">auto_awesome</span><span>Ofertas</span>
+
+<span class="px-1.5 py-0.2 rounded-full bg-secondary text-on-secondary text-[10px] font-bold">1</span>
+</button>
+</div>
+
 <div class="px-margin pt-space-xs pb-space-lg flex flex-col gap-space-md">
 <article class="bg-surface-container-lowest rounded-xl shadow-md p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg" data-is-offer="true"><div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Alta Relojería • Genève</span><span class="px-2 py-0.5 rounded-full font-label-sm text-[10px] uppercase font-bold tracking-wider flex items-center gap-1 border border-tertiary-fixed/40 shadow-sm" style="background-color: rgba(34, 197, 94, 0.16); color: #007032;"><span class="material-symbols-outlined text-[12px]" style="color: #00873d;">local_offer</span>Oferta -15%</span></div><div class="stock-badge-container flex items-center gap-1.5 bg-surface-container-low px-2.5 py-0.5 rounded-full border border-tertiary-fixed/30"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-normal">Disponible</span></div></div><div aria-label="Ampliar imagen de Aero Chrono Diver 300M" class="relative w-full h-56 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden p-space-sm cursor-pointer group watch-image-card" role="button" tabindex="0"><img alt="Aero Chrono Diver 300M" class="w-full h-full object-contain drop-shadow-md transform transition-transform duration-500 group-hover:scale-105" data-alt="Macro product photography of a luxury Swiss Aero Chrono Diver 300M luxury sports watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX2UquIFVOBKfEKpBYTNwtezRncbtv6rSNOABbeCEideQa3ILsj4Ka0nPZMNJizSQMMZ29pdVPc1TIhXt_8-HKfXZA0kNLOyajBGvCQq6tlvBGreqHvxXonqIK9J_5oKggZBXTgBL-ySBKRiKKKlijMpZbiQZGYu3Jx3pJFXNK7-cImYnAjh49RzxS04COZZHxuXLV9mKHsuQ_r2aHmSQVOjYzdQEt02VXpMJ4MLp3"/><div class="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/85 backdrop-blur-md flex items-center justify-center text-on-surface-variant group-hover:text-secondary group-hover:bg-surface-container-lowest shadow-sm transition-all duration-300 pointer-events-none"><span class="material-symbols-outlined text-[18px]">zoom_in</span></div><div class="absolute top-2.5 left-2.5 flex flex-col gap-1"><span class="bg-surface-container-lowest/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. AC-300-TI</span><span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider font-bold shadow-sm flex items-center gap-1 backdrop-blur-md border border-tertiary-fixed/30" style="background-color: rgba(34, 197, 94, 0.22); color: #005a28;"><span class="material-symbols-outlined text-[11px]" style="color: #007032;">percent</span>Edición Oferta</span></div><button aria-label="Añadir a lista de deseos" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10"><span class="material-symbols-outlined text-[18px]">favorite</span></button></div><div class="flex flex-col gap-1"><h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Aero Chrono Diver 300M</h2><div class="flex items-baseline justify-between"><div class="flex items-baseline gap-1.5"><span class="font-headline-md text-headline-md text-secondary font-bold">$12,580</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">USD</span></div><span class="font-body-sm text-body-sm text-on-surface-variant">Ref: AC-300-TI • Titanio 42mm</span></div></div><div class="flex flex-col gap-1.5 pt-1"><a class="w-full py-3 px-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-lg text-label-lg flex items-center justify-center gap-2 active:bg-tertiary-fixed-dim transition-colors shadow-sm font-bold" href="https://wa.me/34600000000?text=Hola,%20solicito%20ordenar%20el%20guardatiempos%20en%20OFERTA%20Aero%20Chrono%20Diver%20300M%20(Ref.%20AC-300-TI)"><svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.766zm9.969 5.766c0 5.518-4.482 10-10 10-1.748 0-3.393-.45-4.832-1.238l-5.168 1.353 1.378-5.039c-.899-1.498-1.378-3.23-1.378-5.076 0-5.518 4.482-10 10-10s10 4.482 10 10z"></path></svg><span>Comprar</span></a><div class="flex items-center justify-center gap-1.5 text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-container">verified_user</span><span class="font-body-sm text-[11px] text-on-surface-variant">Envío express asegurado incluido • Garantía 5 años</span></div></div></article>
 <article class="bg-surface-container-lowest rounded-xl shadow-md p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg" data-is-offer="false">
 <div class="flex items-center justify-between">
+
+
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Horlogerie Scuderia</span>
-<div class="stock-badge-container flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-error-container" style="background-color: rgba(186, 26, 26, 0.08);"><span class="w-2 h-2 rounded-full bg-error"></span><span class="font-label-sm text-label-sm text-error font-semibold tracking-normal">Agotado</span></div>
+<div class="stock-badge-container flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-error-container" style="background-color: rgba(186, 26, 26, 0.08);"><span class="w-2 h-2 rounded-full bg-error"></span>
+
+<span class="font-label-sm text-label-sm text-error font-semibold tracking-normal">Agotado</span>
 </div>
+</div>
+
 <div aria-label="Ampliar imagen de Monaco Racing Edition" class="relative w-full h-56 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden p-space-sm cursor-pointer group watch-image-card" role="button" tabindex="0">
+
 <img alt="Monaco Racing Edition" class="w-full h-full object-contain drop-shadow-md transform transition-transform duration-500 group-hover:scale-105" data-alt="High-end editorial studio product shot of Monaco Racing Edition chronograph sports watch featuring square cushion-shaped steel case, sunray galvanic blue dial with dual registers, orange racing second hand, perforated black leather and rubber hybrid strap, bright clean studio spotlight highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJYGpFugnw7TnWKlbi_jchNpROiBNCGI9H9QVgC20an-v9wrNCXbMcoQzyRvkObuFPTQx1YmjCmChc8lYFY_MgQlrhh5DMzfwQxSLZ0NRzV-mrUdKHKxXMHUyYxaUqAFyjxwlBGkA1-X-BFptjaDT1iRql9TssqsmCitNmZatVJu3Ke5jar5eOIL1QZba84M7xn57_qUxCK7mw96jZqm_C1-pTPjQkYzqEtbiWjBB6"/>
 <div class="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/85 backdrop-blur-md flex items-center justify-center text-on-surface-variant group-hover:text-secondary group-hover:bg-surface-container-lowest shadow-sm transition-all duration-300 pointer-events-none">
 <span class="material-symbols-outlined text-[18px]">zoom_in</span>
 </div>
+
 <div class="absolute top-2.5 left-2.5 flex flex-col gap-1">
 <span class="bg-surface-container-lowest/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. MRE-71-CH</span>
 </div>
+
 <button aria-label="Añadir a lista de deseos" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10">
 <span class="material-symbols-outlined text-[18px]">favorite</span>
 </button>
 </div>
+
 <div class="flex flex-col gap-1">
 <h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Monaco Racing Edition</h2>
 <div class="flex items-baseline justify-between">
@@ -35,11 +104,14 @@
 <span class="font-headline-md text-headline-md text-on-surface font-bold">$9,250</span>
 <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">USD</span>
 </div>
+
 <span class="font-body-sm text-body-sm text-on-surface-variant">Ref: MRE-71-CH • Cal. 11 39mm</span>
 </div>
 </div>
+
 <div class="flex flex-col gap-1.5 pt-1">
-<a class="w-full py-3 px-4 rounded-full bg-surface-container text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-sm font-bold border border-outline-variant/30 hover:border-secondary" href="https://wa.me/34600000000?text=Hola,%20deseo%20anotarme%20a%20la%20lista%20de%20espera%20para%20Monaco%20Racing%20Edition%20(Ref.%20MRE-71-CH)"><span class="material-symbols-outlined text-[18px] text-secondary">hourglass_top</span><span>Consultar lista de espera</span></a>
+<a class="w-full py-3 px-4 rounded-full bg-surface-container text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-sm font-bold border border-outline-variant/30 hover:border-secondary" href="https://wa.me/584129029550?text=Hola,%20deseo%20anotarme%20a%20la%20lista%20de%20espera%20para%20Monaco%20Racing%20Edition%20(Ref.%20MRE-71-CH)">
+<span class="material-symbols-outlined text-[18px] text-secondary">hourglass_top</span><span>Consultar lista de espera</span></a>
 <div class="flex items-center justify-center gap-1.5 text-on-surface-variant">
 <span class="material-symbols-outlined text-[14px] text-tertiary-container">verified_user</span>
 <span class="font-body-sm text-[11px] text-on-surface-variant">Reposición en curso • Notificación prioritaria por Concierge</span>
