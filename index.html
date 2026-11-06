@@ -1,292 +1,609 @@
 <!DOCTYPE html>
-
-<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-error": "#ffffff", "secondary-fixed-dim": "#e9c176", "inverse-primary": "#bec6e0", "on-primary-fixed": "#131b2e", "on-primary": "#ffffff", "error-container": "#ffdad6", "primary": "#000000", "on-surface": "#111c2d", "primary-fixed": "#dae2fd", "on-primary-container": "#7c839b", "on-surface-variant": "#45464d", "surface-variant": "#d8e3fb", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#3de273", "surface-container-low": "#f0f3ff", "secondary": "#775a19", "tertiary-fixed": "#66ff8e", "tertiary": "#000000", "outline-variant": "#c6c6cd", "primary-fixed-dim": "#bec6e0", "outline": "#76777d", "secondary-container": "#fed488", "surface-container": "#e7eeff", "surface": "#f9f9ff", "on-secondary": "#ffffff", "surface-dim": "#cfdaf2", "error": "#ba1a1a", "surface-bright": "#f9f9ff", "surface-container-high": "#dee8ff", "on-tertiary-fixed-variant": "#005322", "primary-container": "#131b2e", "surface-container-highest": "#d8e3fb", "surface-tint": "#565e74", "on-tertiary-fixed": "#002109", "inverse-on-surface": "#ecf1ff", "tertiary-container": "#002109", "surface-container-lowest": "#ffffff", "on-background": "#111c2d", "on-secondary-container": "#785a1a", "inverse-surface": "#263143", "on-error-container": "#93000a", "secondary-fixed": "#ffdea5", "on-secondary-fixed-variant": "#5d4201", "on-tertiary-container": "#009844", "background": "#f9f9ff", "on-primary-fixed-variant": "#3f465c", "on-secondary-fixed": "#261900" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "space-lg": "1.5rem", "gutter-tablet": "1.5rem", "margin": "1.25rem", "space-xl": "2.5rem", "space-sm": "0.5rem", "gutter": "1rem", "gutter-desktop": "2rem", "margin-tablet": "2rem", "margin-desktop": "3rem", "space-xs": "0.25rem", "space-md": "1rem" }, fontFamily: { "headline-md": ["Playfair Display"], "body-sm": ["Inter"], "label-sm": ["Inter"], "headline-xl-mobile": ["Playfair Display"], "headline-xl": ["Playfair Display"], "body-md": ["Inter"], "label-md": ["Inter"], "headline-lg-mobile": ["Playfair Display"], "headline-sm": ["Playfair Display"], "headline-lg": ["Playfair Display"], "body-lg": ["Inter"], "label-lg": ["Inter"] }, fontSize: { "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "500" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }], "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.1em", "fontWeight": "700" }], "headline-xl-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "label-md": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "600" }], "headline-lg-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.06em", "fontWeight": "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
-    body {
-      min-height: max(884px, 100dvh);
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <meta content="mobile_tab" name="shell-type"/>
+  <title>Buen Tiempo - Catálogo Móvil</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#111827",
+            "secondary": "#B8860B",
+            "surface": "#F8FAFC",
+            "surface-container": "#F1F5F9",
+            "surface-container-low": "#F8FAFC",
+            "surface-container-lowest": "#FFFFFF",
+            "on-surface": "#0F172A",
+            "on-surface-variant": "#64748B",
+            "outline-variant": "#E2E8F0",
+            "tertiary-fixed": "#22C55E",
+            "tertiary-fixed-dim": "#16A34A",
+            "on-tertiary-fixed": "#FFFFFF",
+            "error": "#EF4444"
+          },
+          fontFamily: {
+            headline: ["Playfair Display", "serif"],
+            body: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    @layer base {
+      html, body {
+        width: 100%;
+        max-width: 100vw;
+        margin: 0;
+        padding: 0;
+        overscroll-behavior: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px); }
+      .pt-safe { padding-top: max(env(safe-area-inset-top, 0px), 12px); }
     }
+    ::-webkit-scrollbar { display: none; }
   </style>
 </head>
-<body class="bg-surface text-on-surface font-body-md flex flex-col min-h-screen">
-<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] pt-safe">
+<body class="bg-surface text-on-surface font-body flex flex-col min-h-screen antialiased selection:bg-secondary/20">
 
-<div class="h-16 px-margin flex items-center justify-between gap-space-sm">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-[24px] text-secondary">watch</span>
+  <!-- Mobile Top Header -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/60 pt-safe transition-all">
+    <div class="h-14 px-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[22px] text-secondary">watch</span>
+        <span class="font-headline font-bold text-[18px] tracking-wide text-primary uppercase">Buen Tiempo</span>
+      </div>
 
-<span class="font-headline-sm text-headline-sm uppercase tracking-wider text-primary font-bold">Buen Tiempo</span>
-</div>
+      <div class="flex items-center gap-1.5">
+        <button aria-label="Buscar guardatiempos" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface active:bg-surface-container transition-colors">
+          <span class="material-symbols-outlined text-[20px]">search</span>
+        </button>
 
-<div class="flex items-center gap-space-xs">
-<button aria-label="Buscar guardatiempos" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
-<span class="material-symbols-outlined text-[22px]">search</span>
-</button>
+        <button aria-label="Gestión de catálogo" id="open-admin-btn" class="h-8 px-2.5 rounded-full bg-surface-container flex items-center gap-1 text-on-surface active:scale-95 transition-transform border border-outline-variant/60">
+          <span class="material-symbols-outlined text-[15px] text-secondary">tune</span>
+          <span class="text-[11px] font-bold tracking-wider uppercase text-secondary">Panel</span>
+        </button>
 
-<a aria-label="Concierge WhatsApp" class="w-11 h-11 flex items-center justify-center text-secondary hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined text-[22px]">chat</span></a>
+        <a aria-label="Concierge WhatsApp" href="https://wa.me/34600000000" class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white active:scale-95 transition-transform">
+          <span class="material-symbols-outlined text-[18px]">support_agent</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
-<button aria-label="Acceso Administrador" class="h-10 px-2.5 rounded-full bg-surface-container flex items-center gap-1 text-on-surface hover:bg-secondary-fixed transition-colors active:scale-95" id="open-admin-btn">
-<span class="material-symbols-outlined text-[16px] text-secondary">lock</span><span class="font-label-sm text-[10px] uppercase font-bold tracking-wider text-secondary">Admin</span></button>
-
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
-
-</div>
-</div>
-</div>
-</header>
-
-<main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen">
-<div class="flex flex-col w-full">
-<div class="px-margin pt-space-md pb-space-sm flex flex-col gap-space-xs">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-xs">
-
-<span class="inline-flex w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(201,160,80,0.8)]"></span>
-
-<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Colección de Alta Relojería</span>
-</div><
+  <!-- Main Mobile Content -->
+  <main class="flex-1 w-full pt-20 pb-24 px-4 flex flex-col gap-5 max-w-md mx-auto">
     
-<span class="font-label-sm text-[10px] tracking-widest uppercase px-2.5 py-0.5 rounded-full border border-secondary/40 text-secondary bg-surface-container-low font-semibold">Exclusivo</span>
-</div>
+    <!-- Hero / Headline Section -->
+    <section class="flex flex-col gap-1.5 pt-1">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-1.5">
+          <span class="inline-flex w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(184,134,11,0.8)]"></span>
+          <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">Colección de Alta Relojería</span>
+        </div>
+        <span class="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded-full border border-secondary/40 text-secondary bg-surface-container font-semibold">Exclusivo</span>
+      </div>
 
-<h1 class="font-headline-lg-mobile text-[32px] tracking-tight font-bold" style="background: linear-gradient(135deg, #996515 0%, #D4AF37 25%, #FFF2A1 45%, #AA771C 70%, #68480C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)); font-family: 'Playfair Display', serif;">Buen Tiempo</h1>
-<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed max-w-sm">Rendimiento suizo, titanio y cronometría de vanguardia para misiones de máxima precisión.</p>
-</div>
+      <h1 class="font-headline text-[28px] leading-tight font-bold" style="background: linear-gradient(135deg, #85570E 0%, #B8860B 40%, #E6CA65 70%, #996515 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Buen Tiempo
+      </h1>
+      <p class="text-[12px] text-on-surface-variant leading-relaxed">
+        Rendimiento suizo, titanio y cronometría de vanguardia para misiones de máxima precisión.
+      </p>
+    </section>
 
-<div class="w-full overflow-x-auto py-space-sm pl-margin scrollbar-none flex items-center gap-space-xs pr-margin">
-<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform" data-category="all"><span>Todos (6)</span>
-</button>
+    <!-- Filter Categories (Horizontal Scrollable Chips) -->
+    <section class="-mx-4 px-4 overflow-x-auto scrollbar-none flex items-center gap-2 py-1">
+      <button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-semibold shadow-sm active:scale-95 transition-transform" data-category="all">
+        Todos (3)
+      </button>
+      <button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/60 text-[12px] font-semibold active:scale-95 transition-transform" data-category="caballeros">
+        Caballeros
+      </button>
+      <button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/60 text-[12px] font-semibold active:scale-95 transition-transform" data-category="damas">
+        Damas
+      </button>
+      <button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-secondary/40 text-[12px] font-semibold active:scale-95 transition-transform flex items-center gap-1" data-category="ofertas">
+        <span class="material-symbols-outlined text-[14px] text-secondary">auto_awesome</span>
+        <span>Ofertas</span>
+        <span class="px-1.5 py-0.2 rounded-full bg-secondary text-white text-[9px] font-bold ml-0.5">1</span>
+      </button>
+    </section>
 
-<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform" data-category="caballeros">Caballeros</button>
+    <!-- Watches Feed List (Mobile-Optimized Cards) -->
+    <div id="catalog-feed" class="flex flex-col gap-4">
+      
+      <!-- Card 1 -->
+      <article class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/60 p-4 flex flex-col gap-3 relative transition-all active:border-secondary/50" data-is-offer="true">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">Alta Relojería • Genève</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] uppercase font-bold tracking-wider flex items-center gap-1 bg-green-50 text-green-700 border border-green-200">
+              <span class="material-symbols-outlined text-[11px] text-green-600">local_offer</span>Oferta -15%
+            </span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+            <span class="text-[10px] text-green-800 font-semibold">Disponible</span>
+          </div>
+        </div>
 
-<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform" data-category="damas">Damas</button>
+        <div aria-label="Ampliar imagen de Aero Chrono Diver 300M" class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer group watch-image-card" role="button" tabindex="0">
+          <img alt="Aero Chrono Diver 300M" class="w-full h-full object-contain drop-shadow transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX2UquIFVOBKfEKpBYTNwtezRncbtv6rSNOABbeCEideQa3ILsj4Ka0nPZMNJizSQMMZ29pdVPc1TIhXt_8-HKfXZA0kNLOyajBGvCQq6tlvBGreqHvxXonqIK9J_5oKggZBXTgBL-ySBKRiKKKlijMpZbiQZGYu3Jx3pJFXNK7-cImYnAjh49RzxS04COZZHxuXLV9mKHsuQ_r2aHmSQVOjYzdQEt02VXpMJ4MLp3"/>
+          <div class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface-variant shadow-sm pointer-events-none">
+            <span class="material-symbols-outlined text-[16px]">zoom_in</span>
+          </div>
+          <div class="absolute top-2 left-2 flex flex-col gap-1">
+            <span class="bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. AC-300-TI</span>
+          </div>
+          <button aria-label="Añadir a lista de deseos" class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10 wish-btn">
+            <span class="material-symbols-outlined text-[18px]">favorite</span>
+          </button>
+        </div>
 
-<button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm active:scale-95 transition-transform flex items-center gap-1.5 border border-secondary/30" data-category="ofertas"><span class="material-symbols-outlined text-[15px] text-secondary">auto_awesome</span><span>Ofertas</span>
+        <div class="flex flex-col gap-0.5">
+          <h2 class="font-headline text-[17px] text-on-surface font-semibold">Aero Chrono Diver 300M</h2>
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-baseline gap-1">
+              <span class="font-headline text-[18px] text-secondary font-bold">$12,580</span>
+              <span class="text-[10px] text-on-surface-variant uppercase">USD</span>
+            </div>
+            <span class="text-[11px] text-on-surface-variant">Titanio 42mm • Automático</span>
+          </div>
+        </div>
 
-<span class="px-1.5 py-0.2 rounded-full bg-secondary text-on-secondary text-[10px] font-bold">1</span>
-</button>
-</div>
+        <div class="flex flex-col gap-2 pt-1">
+          <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center gap-2 active:bg-emerald-700 transition-colors shadow-sm" href="https://wa.me/34600000000?text=Hola,%20solicito%20ordenar%20el%20guardatiempos%20en%20OFERTA%20Aero%20Chrono%20Diver%20300M%20(Ref.%20AC-300-TI)">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.766zm9.969 5.766c0 5.518-4.482 10-10 10-1.748 0-3.393-.45-4.832-1.238l-5.168 1.353 1.378-5.039c-.899-1.498-1.378-3.23-1.378-5.076 0-5.518 4.482-10 10-10s10 4.482 10 10z"></path></svg>
+            <span>Comprar vía WhatsApp</span>
+          </a>
+          <div class="flex items-center justify-center gap-1 text-on-surface-variant text-[11px]">
+            <span class="material-symbols-outlined text-[13px] text-emerald-600">verified_user</span>
+            <span>Envío asegurado • Garantía 5 años</span>
+          </div>
+        </div>
+      </article>
 
-<div class="px-margin pt-space-xs pb-space-lg flex flex-col gap-space-md">
-<article class="bg-surface-container-lowest rounded-xl shadow-md p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg" data-is-offer="true"><div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Alta Relojería • Genève</span><span class="px-2 py-0.5 rounded-full font-label-sm text-[10px] uppercase font-bold tracking-wider flex items-center gap-1 border border-tertiary-fixed/40 shadow-sm" style="background-color: rgba(34, 197, 94, 0.16); color: #007032;"><span class="material-symbols-outlined text-[12px]" style="color: #00873d;">local_offer</span>Oferta -15%</span></div><div class="stock-badge-container flex items-center gap-1.5 bg-surface-container-low px-2.5 py-0.5 rounded-full border border-tertiary-fixed/30"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-normal">Disponible</span></div></div><div aria-label="Ampliar imagen de Aero Chrono Diver 300M" class="relative w-full h-56 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden p-space-sm cursor-pointer group watch-image-card" role="button" tabindex="0"><img alt="Aero Chrono Diver 300M" class="w-full h-full object-contain drop-shadow-md transform transition-transform duration-500 group-hover:scale-105" data-alt="Macro product photography of a luxury Swiss Aero Chrono Diver 300M luxury sports watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX2UquIFVOBKfEKpBYTNwtezRncbtv6rSNOABbeCEideQa3ILsj4Ka0nPZMNJizSQMMZ29pdVPc1TIhXt_8-HKfXZA0kNLOyajBGvCQq6tlvBGreqHvxXonqIK9J_5oKggZBXTgBL-ySBKRiKKKlijMpZbiQZGYu3Jx3pJFXNK7-cImYnAjh49RzxS04COZZHxuXLV9mKHsuQ_r2aHmSQVOjYzdQEt02VXpMJ4MLp3"/><div class="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/85 backdrop-blur-md flex items-center justify-center text-on-surface-variant group-hover:text-secondary group-hover:bg-surface-container-lowest shadow-sm transition-all duration-300 pointer-events-none"><span class="material-symbols-outlined text-[18px]">zoom_in</span></div><div class="absolute top-2.5 left-2.5 flex flex-col gap-1"><span class="bg-surface-container-lowest/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. AC-300-TI</span><span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider font-bold shadow-sm flex items-center gap-1 backdrop-blur-md border border-tertiary-fixed/30" style="background-color: rgba(34, 197, 94, 0.22); color: #005a28;"><span class="material-symbols-outlined text-[11px]" style="color: #007032;">percent</span>Edición Oferta</span></div><button aria-label="Añadir a lista de deseos" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10"><span class="material-symbols-outlined text-[18px]">favorite</span></button></div><div class="flex flex-col gap-1"><h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Aero Chrono Diver 300M</h2><div class="flex items-baseline justify-between"><div class="flex items-baseline gap-1.5"><span class="font-headline-md text-headline-md text-secondary font-bold">$12,580</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">USD</span></div><span class="font-body-sm text-body-sm text-on-surface-variant">Ref: AC-300-TI • Titanio 42mm</span></div></div><div class="flex flex-col gap-1.5 pt-1"><a class="w-full py-3 px-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-lg text-label-lg flex items-center justify-center gap-2 active:bg-tertiary-fixed-dim transition-colors shadow-sm font-bold" href="https://wa.me/34600000000?text=Hola,%20solicito%20ordenar%20el%20guardatiempos%20en%20OFERTA%20Aero%20Chrono%20Diver%20300M%20(Ref.%20AC-300-TI)"><svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.766zm9.969 5.766c0 5.518-4.482 10-10 10-1.748 0-3.393-.45-4.832-1.238l-5.168 1.353 1.378-5.039c-.899-1.498-1.378-3.23-1.378-5.076 0-5.518 4.482-10 10-10s10 4.482 10 10z"></path></svg><span>Comprar</span></a><div class="flex items-center justify-center gap-1.5 text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-container">verified_user</span><span class="font-body-sm text-[11px] text-on-surface-variant">Envío express asegurado incluido • Garantía 5 años</span></div></div></article>
-<article class="bg-surface-container-lowest rounded-xl shadow-md p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg" data-is-offer="false">
-<div class="flex items-center justify-between">
+      <!-- Card 2 -->
+      <article class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/60 p-4 flex flex-col gap-3 relative transition-all active:border-secondary/50" data-is-offer="false">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">Horlogerie Scuderia</span>
+          <div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-red-50 border border-red-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+            <span class="text-[10px] text-red-700 font-semibold">Agotado</span>
+          </div>
+        </div>
 
+        <div aria-label="Ampliar imagen de Monaco Racing Edition" class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer group watch-image-card" role="button" tabindex="0">
+          <img alt="Monaco Racing Edition" class="w-full h-full object-contain drop-shadow transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJYGpFugnw7TnWKlbi_jchNpROiBNCGI9H9QVgC20an-v9wrNCXbMcoQzyRvkObuFPTQx1YmjCmChc8lYFY_MgQlrhh5DMzfwQxSLZ0NRzV-mrUdKHKxXMHUyYxaUqAFyjxwlBGkA1-X-BFptjaDT1iRql9TssqsmCitNmZatVJu3Ke5jar5eOIL1QZba84M7xn57_qUxCK7mw96jZqm_C1-pTPjQkYzqEtbiWjBB6"/>
+          <div class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface-variant shadow-sm pointer-events-none">
+            <span class="material-symbols-outlined text-[16px]">zoom_in</span>
+          </div>
+          <div class="absolute top-2 left-2 flex flex-col gap-1">
+            <span class="bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. MRE-71-CH</span>
+          </div>
+          <button aria-label="Añadir a lista de deseos" class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10 wish-btn">
+            <span class="material-symbols-outlined text-[18px]">favorite</span>
+          </button>
+        </div>
 
-<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Horlogerie Scuderia</span>
-<div class="stock-badge-container flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-error-container" style="background-color: rgba(186, 26, 26, 0.08);"><span class="w-2 h-2 rounded-full bg-error"></span>
+        <div class="flex flex-col gap-0.5">
+          <h2 class="font-headline text-[17px] text-on-surface font-semibold">Monaco Racing Edition</h2>
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-baseline gap-1">
+              <span class="font-headline text-[18px] text-on-surface font-bold">$9,250</span>
+              <span class="text-[10px] text-on-surface-variant uppercase">USD</span>
+            </div>
+            <span class="text-[11px] text-on-surface-variant">Cal. 11 • Cuero Perforado</span>
+          </div>
+        </div>
 
-<span class="font-label-sm text-label-sm text-error font-semibold tracking-normal">Agotado</span>
-</div>
-</div>
+        <div class="flex flex-col gap-2 pt-1">
+          <a class="w-full py-2.5 px-4 rounded-full bg-surface-container text-on-surface text-[13px] font-bold flex items-center justify-center gap-1.5 active:scale-95 transition-all border border-outline-variant hover:border-secondary" href="https://wa.me/34600000000?text=Hola,%20deseo%20anotarme%20a%20la%20lista%20de%20espera%20para%20Monaco%20Racing%20Edition%20(Ref.%20MRE-71-CH)">
+            <span class="material-symbols-outlined text-[16px] text-secondary">hourglass_top</span>
+            <span>Lista de Espera</span>
+          </a>
+          <div class="flex items-center justify-center gap-1 text-on-surface-variant text-[11px]">
+            <span class="material-symbols-outlined text-[13px] text-secondary">notifications</span>
+            <span>Notificación prioritaria al ingresar stock</span>
+          </div>
+        </div>
+      </article>
 
-<div aria-label="Ampliar imagen de Monaco Racing Edition" class="relative w-full h-56 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden p-space-sm cursor-pointer group watch-image-card" role="button" tabindex="0">
+      <!-- Card 3 -->
+      <article class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/60 p-4 flex flex-col gap-3 relative transition-all active:border-secondary/50" data-is-offer="false">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">Vanguard Aeronautics</span>
+          <div class="flex items-center gap-1.5 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+            <span class="text-[10px] text-green-800 font-semibold">Disponible</span>
+          </div>
+        </div>
 
-<img alt="Monaco Racing Edition" class="w-full h-full object-contain drop-shadow-md transform transition-transform duration-500 group-hover:scale-105" data-alt="High-end editorial studio product shot of Monaco Racing Edition chronograph sports watch featuring square cushion-shaped steel case, sunray galvanic blue dial with dual registers, orange racing second hand, perforated black leather and rubber hybrid strap, bright clean studio spotlight highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJYGpFugnw7TnWKlbi_jchNpROiBNCGI9H9QVgC20an-v9wrNCXbMcoQzyRvkObuFPTQx1YmjCmChc8lYFY_MgQlrhh5DMzfwQxSLZ0NRzV-mrUdKHKxXMHUyYxaUqAFyjxwlBGkA1-X-BFptjaDT1iRql9TssqsmCitNmZatVJu3Ke5jar5eOIL1QZba84M7xn57_qUxCK7mw96jZqm_C1-pTPjQkYzqEtbiWjBB6"/>
-<div class="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/85 backdrop-blur-md flex items-center justify-center text-on-surface-variant group-hover:text-secondary group-hover:bg-surface-container-lowest shadow-sm transition-all duration-300 pointer-events-none">
-<span class="material-symbols-outlined text-[18px]">zoom_in</span>
-</div>
+        <div aria-label="Ampliar imagen de Titanium GMT Master" class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer group watch-image-card" role="button" tabindex="0">
+          <img alt="Titanium GMT Master" class="w-full h-full object-contain drop-shadow transform transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjFBIwNvevZEH9XuGPcdZRytahE9KJVLPvt_WXgPcCOHl1hIdhyFVLwYKUi3F0jwZIZ-AI0DwhQhewrHygRR67SuEfmz933iwMa0SWI7c5LkovYlRvQb3h29e4ujvR31INvUzcRL7N00kilcUx9OGKS5rzQBj0hlAu1ZwuUbPIkLiHU2cjbv6uWc1_bpWWSSvQQQbZ6wSDZnrVQ3o8tCs0XWDl665f593Xs1Jfzebp"/>
+          <div class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface-variant shadow-sm pointer-events-none">
+            <span class="material-symbols-outlined text-[16px]">zoom_in</span>
+          </div>
+          <div class="absolute top-2 left-2 flex flex-col gap-1">
+            <span class="bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. GMT-TITAN-X</span>
+          </div>
+          <button aria-label="Añadir a lista de deseos" class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10 wish-btn">
+            <span class="material-symbols-outlined text-[18px]">favorite</span>
+          </button>
+        </div>
 
-<div class="absolute top-2.5 left-2.5 flex flex-col gap-1">
-<span class="bg-surface-container-lowest/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. MRE-71-CH</span>
-</div>
+        <div class="flex flex-col gap-0.5">
+          <h2 class="font-headline text-[17px] text-on-surface font-semibold">Titanium GMT Master</h2>
+          <div class="flex items-baseline justify-between">
+            <div class="flex items-baseline gap-1">
+              <span class="font-headline text-[18px] text-on-surface font-bold">$18,400</span>
+              <span class="text-[10px] text-on-surface-variant uppercase">USD</span>
+            </div>
+            <span class="text-[11px] text-on-surface-variant">Bisel Cerámico • GMT 41mm</span>
+          </div>
+        </div>
 
-<button aria-label="Añadir a lista de deseos" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10">
-<span class="material-symbols-outlined text-[18px]">favorite</span>
-</button>
-</div>
+        <div class="flex flex-col gap-2 pt-1">
+          <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center gap-2 active:bg-emerald-700 transition-colors shadow-sm" href="https://wa.me/34600000000?text=Hola,%20deseo%20adquirir%20el%20Titanium%20GMT%20Master%20(Ref.%20GMT-TITAN-X)">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.766zm9.969 5.766c0 5.518-4.482 10-10 10-1.748 0-3.393-.45-4.832-1.238l-5.168 1.353 1.378-5.039c-.899-1.498-1.378-3.23-1.378-5.076 0-5.518 4.482-10 10-10s10 4.482 10 10z"></path></svg>
+            <span>Comprar vía WhatsApp</span>
+          </a>
+          <div class="flex items-center justify-center gap-1 text-on-surface-variant text-[11px]">
+            <span class="material-symbols-outlined text-[13px] text-emerald-600">verified_user</span>
+            <span>Concierge prioritario 24/7</span>
+          </div>
+        </div>
+      </article>
 
-<div class="flex flex-col gap-1">
-<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Monaco Racing Edition</h2>
-<div class="flex items-baseline justify-between">
-<div class="flex items-baseline gap-1.5">
-<span class="font-headline-md text-headline-md text-on-surface font-bold">$9,250</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">USD</span>
-</div>
+    </div>
 
-<span class="font-body-sm text-body-sm text-on-surface-variant">Ref: MRE-71-CH • Cal. 11 39mm</span>
-</div>
-</div>
+    <!-- Concierge Banner -->
+    <section class="p-4 rounded-2xl bg-surface-container border border-outline-variant/60 flex flex-col gap-2 text-center items-center">
+      <div class="w-9 h-9 rounded-full bg-secondary/15 flex items-center justify-center text-secondary">
+        <span class="material-symbols-outlined text-[18px]">diamond</span>
+      </div>
+      <h3 class="font-headline text-[15px] font-semibold text-on-surface">¿Busca una pieza exclusiva?</h3>
+      <p class="text-[12px] text-on-surface-variant max-w-xs leading-normal">
+        Localizamos piezas deportivas de alta relojería suiza y ediciones numeradas en 48 horas.
+      </p>
+      <a class="mt-1 px-4 py-2 rounded-full bg-primary text-white text-[11px] font-bold tracking-wider uppercase flex items-center gap-1.5 active:scale-95 transition-transform" href="https://wa.me/34600000000?text=Hola,%20deseo%20solicitar%20un%20servicio%20personalizado%20de%20búsqueda%20de%20reloj.">
+        <span class="material-symbols-outlined text-[15px]">support_agent</span>
+        <span>Hablar con Concierge</span>
+      </a>
+    </section>
 
-<div class="flex flex-col gap-1.5 pt-1">
-<a class="w-full py-3 px-4 rounded-full bg-surface-container text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-sm font-bold border border-outline-variant/30 hover:border-secondary" href="https://wa.me/584129029550?text=Hola,%20deseo%20anotarme%20a%20la%20lista%20de%20espera%20para%20Monaco%20Racing%20Edition%20(Ref.%20MRE-71-CH)">
-<span class="material-symbols-outlined text-[18px] text-secondary">hourglass_top</span><span>Consultar lista de espera</span></a>
-<div class="flex items-center justify-center gap-1.5 text-on-surface-variant">
-<span class="material-symbols-outlined text-[14px] text-tertiary-container">verified_user</span>
-<span class="font-body-sm text-[11px] text-on-surface-variant">Reposición en curso • Notificación prioritaria por Concierge</span>
-</div>
-</div>
-</article>
-<article class="bg-surface-container-lowest rounded-xl shadow-md p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg" data-is-offer="false">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Vanguard Aeronautics</span>
-<div class="stock-badge-container flex items-center gap-1.5 bg-surface-container-low px-2.5 py-0.5 rounded-full border border-tertiary-fixed/30"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-normal">Disponible</span></div>
-</div>
-<div aria-label="Ampliar imagen de Titanium GMT Master" class="relative w-full h-56 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden p-space-sm cursor-pointer group watch-image-card" role="button" tabindex="0">
-<img alt="Titanium GMT Master" class="w-full h-full object-contain drop-shadow-md transform transition-transform duration-500 group-hover:scale-105" data-alt="Detailed commercial still life of Titanium GMT Master luxury adventure watch with bi-directional black and charcoal ceramic bezel, bright red 24-hour GMT hand, sandblasted titanium bracelet and case, high-contrast crisp white indices on anthracite dial, soft natural daylight in high-end horology atelier" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjFBIwNvevZEH9XuGPcdZRytahE9KJVLPvt_WXgPcCOHl1hIdhyFVLwYKUi3F0jwZIZ-AI0DwhQhewrHygRR67SuEfmz933iwMa0SWI7c5LkovYlRvQb3h29e4ujvR31INvUzcRL7N00kilcUx9OGKS5rzQBj0hlAu1ZwuUbPIkLiHU2cjbv6uWc1_bpWWSSvQQQbZ6wSDZnrVQ3o8tCs0XWDl665f593Xs1Jfzebp"/>
-<div class="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/85 backdrop-blur-md flex items-center justify-center text-on-surface-variant group-hover:text-secondary group-hover:bg-surface-container-lowest shadow-sm transition-all duration-300 pointer-events-none">
-<span class="material-symbols-outlined text-[18px]">zoom_in</span>
-</div>
-<div class="absolute top-2.5 left-2.5 flex flex-col gap-1">
-<span class="bg-surface-container-lowest/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider text-on-surface font-bold shadow-sm">Ref. GMT-TITAN-X</span>
-</div>
-<button aria-label="Añadir a lista de deseos" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10">
-<span class="material-symbols-outlined text-[18px]">favorite</span>
-</button>
-</div>
-<div class="flex flex-col gap-1">
-<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Titanium GMT Master</h2>
-<div class="flex items-baseline justify-between">
-<div class="flex items-baseline gap-1.5">
-<span class="font-headline-md text-headline-md text-on-surface font-bold">$18,400</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">USD</span>
-</div>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Ref: GMT-TITAN-X • GMT 41mm</span>
-</div>
-</div>
-<div class="flex flex-col gap-1.5 pt-1">
-<a class="w-full py-3 px-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-lg text-label-lg flex items-center justify-center gap-2 active:bg-tertiary-fixed-dim transition-colors shadow-sm font-bold" href="https://wa.me/34600000000?text=Hola,%20deseo%20adquirir%20el%20Titanium%20GMT%20Master%20(Ref.%20GMT-TITAN-X)"><svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.766zm9.969 5.766c0 5.518-4.482 10-10 10-1.748 0-3.393-.45-4.832-1.238l-5.168 1.353 1.378-5.039c-.899-1.498-1.378-3.23-1.378-5.076 0-5.518 4.482-10 10-10s10 4.482 10 10z"></path></svg><span>Comprar</span></a>
-<div class="flex items-center justify-center gap-1.5 text-on-surface-variant">
-<span class="material-symbols-outlined text-[14px] text-tertiary-container">verified_user</span>
-<span class="font-body-sm text-[11px] text-on-surface-variant">Envío express asegurado incluido • Concierge prioritario</span>
-</div>
-</div>
-</article>
-</div>
-<section class="mx-margin mb-space-lg p-space-md rounded-xl bg-surface-container flex flex-col gap-space-xs text-center items-center shadow-sm">
-<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed mb-1">
-<span class="material-symbols-outlined text-[20px]">diamond</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface">¿Busca un modelo no listado?</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">Nuestro servicio privado de 'Watch Sourcing' localiza piezas deportivas de edición limitada en 48 horas.</p>
-<a class="mt-space-xs px-5 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md tracking-wider uppercase flex items-center gap-2 active:scale-95 transition-transform" href="https://wa.me/34600000000?text=Hola,%20deseo%20solicitar%20un%20servicio%20personalizado%20de%20búsqueda%20de%20reloj.">
-<span class="material-symbols-outlined text-[16px]">support_agent</span>
-<span>Consultar a Concierge</span>
-</a>
-</section>
-</div>
-<script>
-  (function() {
-    const chips = document.querySelectorAll('.filter-chip');
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        chips.forEach(c => {
-          c.classList.remove('bg-primary', 'text-on-primary');
-          c.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
-        });
-        chip.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
-        chip.classList.add('bg-primary', 'text-on-primary');
-      });
-    });
+  </main>
 
-    const favButtons = document.querySelectorAll('button[aria-label="Añadir a lista de deseos"]');
-    favButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const icon = btn.querySelector('.material-symbols-outlined');
-        if (icon) {
-          const isFilled = icon.style.fontVariationSettings?.includes("'FILL' 1");
-          if (isFilled) {
-            icon.style.fontVariationSettings = "'FILL' 0";
-            btn.classList.remove('text-error');
-            btn.classList.add('text-on-surface');
+  <!-- Mobile Bottom Tab Bar -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/70 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.04)]">
+    <div class="flex justify-around items-center h-14 max-w-md mx-auto px-2">
+      <a class="flex flex-col items-center justify-center w-16 text-primary font-semibold transition-colors nav-tab-item active" data-path="catalogo" href="#">
+        <span class="material-symbols-outlined text-[20px]">grid_view</span>
+        <span class="text-[10px] uppercase font-bold tracking-wider mt-0.5">Catálogo</span>
+      </a>
+      <a class="flex flex-col items-center justify-center w-16 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item" data-path="lujo" href="#">
+        <span class="material-symbols-outlined text-[20px]">watch</span>
+        <span class="text-[10px] uppercase font-medium tracking-wider mt-0.5">Lujo</span>
+      </a>
+      <a class="relative flex flex-col items-center justify-center w-16 text-secondary font-semibold transition-colors nav-tab-item" data-path="ofertas" href="#">
+        <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+        <span class="text-[10px] uppercase font-bold tracking-wider mt-0.5">Ofertas</span>
+        <span class="absolute top-0 right-3 w-3.5 h-3.5 rounded-full bg-secondary text-white text-[8px] font-bold flex items-center justify-center">1</span>
+      </a>
+      <a class="flex flex-col items-center justify-center w-16 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item" data-path="contacto" href="https://wa.me/34600000000">
+        <span class="material-symbols-outlined text-[20px]">forum</span>
+        <span class="text-[10px] uppercase font-medium tracking-wider mt-0.5">Contacto</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Lightbox Modal (Mobile Viewport Optimized) -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true">
+    <button id="lightbox-close-btn" aria-label="Cerrar visor" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white active:scale-95">
+      <span class="material-symbols-outlined text-[22px]">close</span>
+    </button>
+    <div id="lightbox-card" class="relative max-w-sm w-full bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 p-4 flex flex-col gap-3 shadow-2xl transform scale-95 transition-all">
+      <div class="relative w-full h-64 flex items-center justify-center bg-black/40 rounded-xl overflow-hidden p-2">
+        <img id="lightbox-image" alt="Detalle del reloj" class="max-h-full max-w-full object-contain drop-shadow-xl" src=""/>
+      </div>
+      <div class="flex flex-col gap-1 text-white">
+        <div class="flex items-center justify-between">
+          <span id="lightbox-ref" class="text-[10px] text-secondary font-bold uppercase tracking-wider">Ref.</span>
+          <span id="lightbox-price" class="font-headline text-[18px] font-bold text-white">$0 USD</span>
+        </div>
+        <h3 id="lightbox-title" class="font-headline text-[17px] font-bold">Modelo</h3>
+        <p id="lightbox-subtitle" class="text-[11px] text-white/70">Colección de Alta Relojería</p>
+      </div>
+      <div class="flex items-center gap-2 pt-1">
+        <button id="lightbox-dismiss-btn" class="flex-1 py-2 rounded-full bg-white/15 text-white text-[12px] font-semibold active:scale-95 transition-all">
+          Cerrar
+        </button>
+        <a id="lightbox-wa-btn" href="#" class="flex-1 py-2 rounded-full bg-emerald-600 text-white text-[12px] font-bold flex items-center justify-center gap-1 active:scale-95 shadow-sm">
+          <span class="material-symbols-outlined text-[16px]">chat</span>
+          <span>Consultar</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin / Catalog Management Modal (Local, No External Backend) -->
+  <div id="admin-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 hidden" role="dialog" aria-modal="true">
+    <div class="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl shadow-2xl border border-outline-variant/60 flex flex-col max-h-[85vh] overflow-hidden">
+      <div class="flex items-center justify-between px-4 py-3 border-b border-outline-variant/50 bg-surface-container-low">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-[18px]">tune</span>
+          <div class="flex flex-col">
+            <h3 class="font-headline text-[15px] font-bold text-on-surface">Gestión de Catálogo</h3>
+            <span class="text-[9px] text-secondary uppercase font-bold tracking-wider">Modo Local Autónomo</span>
+          </div>
+        </div>
+        <button id="close-admin-modal-btn" aria-label="Cerrar modal" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-90">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-4 overflow-y-auto flex flex-col gap-3">
+        <form id="add-watch-form" class="flex flex-col gap-3">
+          <div>
+            <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Nombre del Modelo</label>
+            <input id="watch-title-input" class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" placeholder="ej. Submariner Stealth" required type="text"/>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Referencia</label>
+              <input id="watch-ref-input" class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" placeholder="Ref. AC-900" required type="text"/>
+            </div>
+            <div>
+              <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Precio USD</label>
+              <input id="watch-price-input" class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" placeholder="15,400" required type="text"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Detalles / Materiales</label>
+            <input id="watch-specs-input" class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" placeholder="Titanio 42mm • Calibre Automático" required type="text"/>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Disponibilidad</label>
+              <select id="watch-stock-select" class="w-full px-2.5 py-2 rounded-xl bg-surface-container border border-outline-variant text-[12px] text-on-surface focus:outline-none focus:border-secondary font-medium">
+                <option value="Disponible">Disponible</option>
+                <option value="Agotado">Agotado</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Oferta</label>
+              <select id="watch-offer-select" class="w-full px-2.5 py-2 rounded-xl bg-surface-container border border-outline-variant text-[12px] text-on-surface focus:outline-none focus:border-secondary font-medium">
+                <option value="no">Normal</option>
+                <option value="si">★ En Oferta (-15%)</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="btn-save-watch" type="submit" class="mt-2 w-full py-2.5 rounded-full bg-primary text-white text-[12px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-[16px]">add_circle</span>
+            <span>Añadir al Catálogo</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Scripts -->
+  <script>
+    (function() {
+      // Filter Chips Interaction
+      const chips = document.querySelectorAll('.filter-chip');
+      const articles = () => document.querySelectorAll('#catalog-feed > article');
+      const navTabs = document.querySelectorAll('.nav-tab-item');
+
+      function applyFilter(category) {
+        const items = articles();
+        items.forEach(article => {
+          if (category === 'ofertas') {
+            const isOffer = article.getAttribute('data-is-offer') === 'true';
+            article.style.display = isOffer ? 'flex' : 'none';
           } else {
-            icon.style.fontVariationSettings = "'FILL' 1";
-            btn.classList.remove('text-on-surface');
-            btn.classList.add('text-error');
+            article.style.display = 'flex';
+          }
+        });
+
+        chips.forEach(c => {
+          if (c.getAttribute('data-category') === category) {
+            c.classList.add('bg-primary', 'text-white');
+            c.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+          } else {
+            c.classList.remove('bg-primary', 'text-white');
+            c.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+          }
+        });
+      }
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const cat = chip.getAttribute('data-category');
+          applyFilter(cat);
+        });
+      });
+
+      // Bottom Nav tabs
+      navTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          const path = tab.getAttribute('data-path');
+          if (path === 'contacto') return;
+          e.preventDefault();
+          navTabs.forEach(t => {
+            t.classList.remove('text-primary');
+            t.classList.add('text-on-surface-variant');
+          });
+          tab.classList.remove('text-on-surface-variant');
+          tab.classList.add('text-primary');
+
+          if (path === 'ofertas') {
+            applyFilter('ofertas');
+          } else {
+            applyFilter('all');
+          }
+        });
+      });
+
+      // Wishlist toggle
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.wish-btn');
+        if (btn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon) {
+            const isFilled = icon.style.fontVariationSettings?.includes("'FILL' 1");
+            if (isFilled) {
+              icon.style.fontVariationSettings = "'FILL' 0";
+              btn.classList.remove('text-error');
+              btn.classList.add('text-on-surface');
+            } else {
+              icon.style.fontVariationSettings = "'FILL' 1";
+              btn.classList.remove('text-on-surface');
+              btn.classList.add('text-error');
+            }
           }
         }
       });
-    });
-  })();
-</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-primary font-semibold transition-colors nav-tab-item" data-path="catalogo" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-sm text-label-sm uppercase tracking-wider">Catálogo</span></a><a class="flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item" data-path="colecciones" href="#"><span class="material-symbols-outlined text-[20px]">watch</span><span class="font-label-sm text-label-sm uppercase tracking-wider">Lujo</span></a><a class="relative flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item" data-path="ofertas" href="#"><span class="material-symbols-outlined text-[20px] text-secondary">auto_awesome</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Ofertas</span><span class="absolute top-1 right-2 w-4 h-4 rounded-full bg-secondary text-on-secondary text-[9px] font-bold flex items-center justify-center shadow-sm">1</span></a><a class="flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item" data-path="contacto" href="#"><span class="material-symbols-outlined text-[20px]">forum</span><span class="font-label-sm text-label-sm uppercase tracking-wider">Contacto</span></a></div></nav><div aria-modal="true" class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-md flex items-center justify-center p-4 hidden" id="admin-modal" role="dialog"><div class="bg-surface-container-lowest w-full max-w-lg rounded-xl shadow-lg border border-outline-variant/30 flex flex-col max-h-[90vh] overflow-hidden"><div class="flex items-center justify-between px-space-md py-3 border-b border-outline-variant/30 bg-surface-container-low"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">admin_panel_settings</span><div class="flex flex-col"><h3 class="font-headline-sm text-[16px] text-on-surface font-semibold">Panel de Control • Supabase</h3><span class="font-label-sm text-[10px] text-secondary uppercase tracking-widest">Acceso Restringido (Admin Role)</span></div></div><button aria-label="Cerrar modal" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-90" id="close-admin-modal-btn"><span class="material-symbols-outlined text-[20px]">close</span></button></div><div class="px-space-md py-2 bg-surface-container flex items-center justify-between text-[11px] font-body-sm text-on-surface-variant border-b border-outline-variant/20"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span><span>Storage Bucket: <strong class="text-on-surface font-semibold">relojes-catalogo</strong></span></div><span class="px-2 py-0.5 rounded bg-surface-container-lowest text-[10px] font-label-sm uppercase font-bold text-secondary">RLS: Rol Admin</span></div><div class="p-space-md overflow-y-auto flex flex-col gap-4"><section class="flex flex-col gap-3" id="admin-auth-view"><div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant/30 flex items-start gap-2.5"><span class="material-symbols-outlined text-secondary text-[20px]">lock_person</span><p class="font-body-sm text-[12px] text-on-surface-variant leading-relaxed">Solo administradores autorizados con rol <strong class="text-on-surface">admin</strong> en <strong class="text-on-surface">Supabase Auth</strong> pueden iniciar sesión para editar o cargar productos.</p></div><form class="flex flex-col gap-3" id="admin-login-form"><div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant font-bold">Email de Administrador</label><input class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface text-[14px] focus:outline-none focus:border-secondary" id="admin-email-input" placeholder="admin@cronosatelier.com" required="" type="email"/></div><div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant font-bold">Contraseña</label><input class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface text-[14px] focus:outline-none focus:border-secondary" id="admin-password-input" placeholder="••••••••••••" required="" type="password"/></div><div class="text-[12px] font-body-sm hidden" id="auth-feedback"></div><button class="w-full py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider font-semibold active:scale-95 transition-transform flex items-center justify-center gap-2" id="btn-login-submit" type="submit"><span class="material-symbols-outlined text-[16px]">key</span><span>Iniciar Sesión como Admin</span></button></form></section><section class="flex flex-col gap-4 hidden" id="admin-catalog-view"><div class="flex items-center justify-between p-2 rounded-lg bg-tertiary-fixed/20 border border-tertiary-fixed text-on-tertiary-fixed"><div class="flex items-center gap-1.5 text-[12px] font-body-sm font-semibold"><span class="material-symbols-outlined text-[16px]">verified</span><span>Sesión activa: Admin verificado</span></div><button class="text-[11px] font-label-sm uppercase underline text-on-surface-variant hover:text-error" id="admin-logout-btn">Cerrar sesión</button></div><div class="flex flex-col gap-1.5"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant font-bold">1. Carga de Fotografía (Supabase Storage)</label><div class="border-2 border-dashed border-outline-variant hover:border-secondary rounded-lg p-4 bg-surface-container-low flex flex-col items-center justify-center gap-1 text-center cursor-pointer transition-colors" id="dropzone-area"><span class="material-symbols-outlined text-secondary text-[28px]">cloud_upload</span><p class="font-body-sm text-[12px] text-on-surface font-semibold">Arrastra una imagen aquí o haz clic para examinar</p><p class="font-body-sm text-[10px] text-on-surface-variant">Sube a bucket: <em>relojes-catalogo/items/</em> (PNG, JPG, WEBP)</p><input accept="image/*" class="hidden" id="watch-image-file" type="file"/><div class="text-[11px] text-secondary font-bold hidden mt-1" id="file-preview-name"></div></div></div><form class="flex flex-col gap-3" id="add-watch-form"><div class="flex items-center justify-between"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant font-bold">2. Ficha Técnica y Fabricación (Supabase DB)</label><span class="font-label-sm text-[10px] text-secondary font-semibold uppercase">Campos Dinámicos</span></div><div class="grid grid-cols-2 gap-2"><input class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" id="watch-title-input" placeholder="Nombre del Modelo" required="" type="text"/><input class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" id="watch-ref-input" placeholder="Ref. Modelo (ej. AC-500-CH)" required="" type="text"/></div><div class="grid grid-cols-2 gap-2"><input class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" id="watch-price-input" placeholder="Precio USD (ej. 16,200)" required="" type="text"/><select class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary font-medium" id="watch-stock-select"><option value="Disponible">● Disponible (En stock)</option><option value="Agotado">○ Agotado (Lista de espera)</option></select></div><div class="flex flex-col gap-1"><label class="font-label-sm text-[11px] uppercase text-secondary font-bold">Especificación Técnica / Ref. Fabricación:</label><input class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" id="watch-specs-input" placeholder="ej. Ref: AC-500-CH • Titanio 43mm" required="" type="text"/></div><div class="p-2.5 rounded-lg bg-surface-container border border-secondary/30 flex flex-col gap-2"><div class="flex items-center justify-between"><label class="font-label-sm text-[11px] uppercase text-secondary font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">auto_awesome</span>Modalidad de Venta:</label><span class="px-2 py-0.5 rounded bg-surface-container-lowest text-[10px] font-label-sm uppercase font-bold text-secondary">Gestión Ofertas</span></div><div class="grid grid-cols-2 gap-2"><select class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary font-medium" id="watch-offer-type-select"><option value="normal">Estándar (Normal)</option><option value="oferta">★ En Oferta / Descuento</option></select><input class="px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary" id="watch-discount-input" placeholder="ej. -15% o $12,580" type="text"/></div></div><button class="w-full py-2.5 rounded-full bg-secondary text-on-secondary font-label-md text-label-md uppercase tracking-wider font-semibold active:scale-95 transition-transform flex items-center justify-center gap-2" id="btn-save-watch" type="submit"><span class="material-symbols-outlined text-[16px]">publish</span><span>Publicar Pieza en Catálogo</span></button></form><div class="text-[12px] font-body-sm hidden p-2 rounded bg-surface-container text-on-surface" id="admin-action-status"></div></section></div></div></div><div aria-modal="true" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none" id="lightbox-modal" role="dialog"><button aria-label="Cerrar visor" class="absolute top-4 right-4 z-50 w-11 h-11 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/40 backdrop-blur-md flex items-center justify-center text-white transition-colors active:scale-95" id="lightbox-close-btn"><span class="material-symbols-outlined text-[26px]">close</span></button><div class="relative max-w-md w-full max-h-[90vh] flex flex-col items-center bg-surface-container-lowest/10 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl p-4 gap-3 transform scale-95 transition-all duration-300" id="lightbox-card"><div class="relative w-full h-72 sm:h-80 flex items-center justify-center bg-black/30 rounded-xl overflow-hidden p-2"><img alt="Detalle del reloj" class="max-h-full max-w-full object-contain drop-shadow-2xl transition-transform duration-300" id="lightbox-image" src=""/><div class="absolute bottom-2 right-2 px-2.5 py-1 rounded bg-black/60 backdrop-blur-sm text-[10px] font-label-sm text-white/90 uppercase tracking-widest flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-secondary">photo_size_select_actual</span><span>Alta Resolución</span></div></div><div class="w-full flex flex-col gap-1.5 px-2 py-1"><div class="flex items-center justify-between"><span class="font-label-sm text-[11px] text-secondary font-bold uppercase tracking-wider" id="lightbox-ref">Ref.</span><span class="font-headline-sm text-headline-sm text-white font-bold" id="lightbox-price">$0 USD</span></div><h3 class="font-headline-md text-headline-md text-white font-semibold" id="lightbox-title">Modelo</h3><p class="font-body-sm text-[12px] text-white/70 line-clamp-1" id="lightbox-subtitle">Colección de Alta Relojería</p></div><div class="w-full pt-1 flex items-center gap-2"><button class="flex-1 py-2.5 px-4 rounded-full bg-surface-container-lowest/20 hover:bg-surface-container-lowest/30 text-white font-label-md text-label-md uppercase tracking-wider font-semibold active:scale-95 transition-all flex items-center justify-center gap-1.5" id="lightbox-dismiss-btn"><span class="material-symbols-outlined text-[18px]">arrow_back</span><span>Volver</span></button><a class="flex-1 py-2.5 px-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-label-md uppercase tracking-wider font-bold active:scale-95 transition-all flex items-center justify-center gap-1.5 shadow-sm" href="#" id="lightbox-wa-btn"><span class="material-symbols-outlined text-[18px]">chat</span><span>Consultar</span></a></div></div></div><script>/* Supabase Client & Admin Catalog Handler */(function(){const SUPABASE_CONFIG={url:"https://yvwldmvbgltyopcqfuvs.supabase.co",anonKey:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dummyKey"};let supabaseClient=null;if(window.supabase&&window.supabase.createClient){supabaseClient=window.supabase.createClient(SUPABASE_CONFIG.url,SUPABASE_CONFIG.anonKey);}const openBtn=document.getElementById("open-admin-btn");const closeBtn=document.getElementById("close-admin-modal-btn");const modal=document.getElementById("admin-modal");const authView=document.getElementById("admin-auth-view");const catalogView=document.getElementById("admin-catalog-view");const loginForm=document.getElementById("admin-login-form");const emailInput=document.getElementById("admin-email-input");const passInput=document.getElementById("admin-password-input");const authFeedback=document.getElementById("auth-feedback");const logoutBtn=document.getElementById("admin-logout-btn");const dropzone=document.getElementById("dropzone-area");const fileInput=document.getElementById("watch-image-file");const previewName=document.getElementById("file-preview-name");const addWatchForm=document.getElementById("add-watch-form");const actionStatus=document.getElementById("admin-action-status");let selectedFile=null;function openModal(){modal.classList.remove("hidden");}function closeModal(){modal.classList.add("hidden");}if(openBtn)openBtn.addEventListener("click",openModal);if(closeBtn)closeBtn.addEventListener("click",closeModal);modal.addEventListener("click",(e)=>{if(e.target===modal)closeModal();});if(dropzone&&fileInput){dropzone.addEventListener("click",()=>fileInput.click());dropzone.addEventListener("dragover",(e)=>{e.preventDefault();dropzone.classList.add("border-secondary","bg-surface-container");});dropzone.addEventListener("dragleave",()=>{dropzone.classList.remove("border-secondary","bg-surface-container");});dropzone.addEventListener("drop",(e)=>{e.preventDefault();dropzone.classList.remove("border-secondary","bg-surface-container");if(e.dataTransfer.files&&e.dataTransfer.files[0]){handleFile(e.dataTransfer.files[0]);}});fileInput.addEventListener("change",(e)=>{if(e.target.files&&e.target.files[0]){handleFile(e.target.files[0]);}});}function handleFile(file){selectedFile=file;previewName.textContent="Archivo seleccionado: "+file.name;previewName.classList.remove("hidden");}if(loginForm){loginForm.addEventListener("submit",async(e)=>{e.preventDefault();authFeedback.classList.remove("hidden","text-error","text-on-tertiary-fixed-variant");authFeedback.textContent="Verificando credenciales y rol admin...";const email=emailInput.value.trim();const password=passInput.value.trim();try{let isAdmin=false;if(supabaseClient&&supabaseClient.auth){const{data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(!error&&data&&data.user){const role=data.user.app_metadata?.role||data.user.user_metadata?.role;if(role==="admin")isAdmin=true;}}if(!isAdmin){if(email.toLowerCase().includes("admin")){isAdmin=true;}else{authFeedback.classList.add("text-error");authFeedback.textContent="Acceso denegado: El usuario no posee el rol 'admin' requerido por la política RLS.";return;}}authFeedback.classList.add("text-on-tertiary-fixed-variant");authFeedback.textContent="Autenticación confirmada con rol admin.";setTimeout(()=>{authView.classList.add("hidden");catalogView.classList.remove("hidden");authFeedback.classList.add("hidden");},500);}catch(err){authFeedback.classList.add("text-error");authFeedback.textContent="Error en conexión con Supabase Auth.";}});}if(logoutBtn){logoutBtn.addEventListener("click",async()=>{if(supabaseClient&&supabaseClient.auth)await supabaseClient.auth.signOut();catalogView.classList.add("hidden");authView.classList.remove("hidden");loginForm.reset();selectedFile=null;previewName.classList.add("hidden");});}if(addWatchForm){addWatchForm.addEventListener("submit",async(e)=>{e.preventDefault();const title=document.getElementById("watch-title-input").value.trim();const ref=document.getElementById("watch-ref-input").value.trim();const price=document.getElementById("watch-price-input").value.trim();const stock=document.getElementById("watch-stock-select").value;const specs=document.getElementById("watch-specs-input").value.trim();actionStatus.classList.remove("hidden","text-error");actionStatus.textContent="Subiendo imagen a bucket 'relojes-catalogo' y publicando...";try{let imageUrl="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80";if(selectedFile&&supabaseClient&&supabaseClient.storage){const fileName=`${Date.now()}_${selectedFile.name.replace(/\s+/g,"_")}`;const{data:uploadData,error:uploadErr}=await supabaseClient.storage.from("relojes-catalogo").upload(`items/${fileName}`,selectedFile);if(!uploadErr){const{data:publicUrlData}=supabaseClient.storage.from("relojes-catalogo").getPublicUrl(`items/${fileName}`);if(publicUrlData)imageUrl=publicUrlData.publicUrl;}}const cardsContainer=document.querySelector("div.px-margin.pt-space-xs.pb-space-lg");if(cardsContainer){const newArticle=document.createElement("article");newArticle.className="bg-surface-container-lowest rounded-xl shadow-md p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg";newArticle.innerHTML=`<div class="flex items-center justify-between"><span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Manufacture Cronos</span><div class="flex items-center gap-1.5 bg-surface-container-low px-2 py-0.5 rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-normal">${stock}</span></div></div><div class="relative w-full h-56 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden p-space-sm cursor-pointer group watch-image-card" role="button" tabindex="0" aria-label="Ampliar imagen de ${title}"><img alt="${title}" class="w-full h-full object-contain drop-shadow-md transform transition-transform duration-500 group-hover:scale-105" src="${imageUrl}"/><div class="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/85 backdrop-blur-md flex items-center justify-center text-on-surface-variant group-hover:text-secondary group-hover:bg-surface-container-lowest shadow-sm transition-all duration-300 pointer-events-none"><span class="material-symbols-outlined text-[18px]">zoom_in</span></div><div class="absolute top-2.5 left-2.5 flex flex-col gap-1"><span class="bg-surface-container-lowest/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider text-on-surface font-bold shadow-sm">${ref}</span></div><button aria-label="Añadir a lista de deseos" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10"><span class="material-symbols-outlined text-[18px]">favorite</span></button></div><div class="flex flex-col gap-1"><h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">${title}</h2><div class="flex items-baseline justify-between"><div class="flex items-baseline gap-1.5"><span class="font-headline-md text-headline-md text-on-surface font-bold">$${price}</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">USD</span></div><span class="font-body-sm text-body-sm text-on-surface-variant">${specs||'Edición Limitada'}</span></div></div><div class="flex flex-col gap-1.5 pt-1"><a class="w-full py-3 px-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-lg text-label-lg flex items-center justify-center gap-2 active:bg-tertiary-fixed-dim transition-colors shadow-sm font-bold" href="https://wa.me/34600000000?text=Hola,%20solicito%20ordenar%20el%20guardatiempos%20${encodeURIComponent(title)}%20(${encodeURIComponent(ref)})"><svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.766zm9.969 5.766c0 5.518-4.482 10-10 10-1.748 0-3.393-.45-4.832-1.238l-5.168 1.353 1.378-5.039c-.899-1.498-1.378-3.23-1.378-5.076 0-5.518 4.482-10 10-10s10 4.482 10 10z"></path></svg><span>Comprar vía WhatsApp</span></a><div class="flex items-center justify-center gap-1.5 text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-tertiary-container">verified_user</span><span class="font-body-sm text-[11px] text-on-surface-variant">Envío express asegurado incluido • Garantía 5 años</span></div></div>`;cardsContainer.prepend(newArticle);}actionStatus.textContent="¡Pieza agregada con éxito al catálogo con Storage Supabase!";addWatchForm.reset();selectedFile=null;previewName.classList.add("hidden");setTimeout(()=>{actionStatus.classList.add("hidden");closeModal();},1200);}catch(err){actionStatus.classList.add("text-error");actionStatus.textContent="Error procesando carga a Supabase: "+err.message;}});}})();</script><script>
-/* Lightbox modal handler */
-(function() {
-  const lightbox = document.getElementById('lightbox-modal');
-  const lightboxCard = document.getElementById('lightbox-card');
-  const lightboxImg = document.getElementById('lightbox-image');
-  const lightboxTitle = document.getElementById('lightbox-title');
-  const lightboxPrice = document.getElementById('lightbox-price');
-  const lightboxRef = document.getElementById('lightbox-ref');
-  const lightboxSubtitle = document.getElementById('lightbox-subtitle');
-  const lightboxWaBtn = document.getElementById('lightbox-wa-btn');
-  const closeBtn = document.getElementById('lightbox-close-btn');
-  const dismissBtn = document.getElementById('lightbox-dismiss-btn');
 
-  function openLightbox(article) {
-    if (!article) return;
-    const imgEl = article.querySelector('img');
-    const titleEl = article.querySelector('h2');
-    const priceEl = article.querySelector('.font-headline-md');
-    const refEl = article.querySelector('.font-label-sm.text-\\[10px\\]');
-    const subEl = article.querySelector('.font-body-sm.text-on-surface-variant');
-    const waLinkEl = article.querySelector('a[href^="https://wa.me"]');
+      // Lightbox logic
+      const lightbox = document.getElementById('lightbox-modal');
+      const lightboxCard = document.getElementById('lightbox-card');
+      const lightboxImg = document.getElementById('lightbox-image');
+      const lightboxTitle = document.getElementById('lightbox-title');
+      const lightboxPrice = document.getElementById('lightbox-price');
+      const lightboxRef = document.getElementById('lightbox-ref');
+      const lightboxSubtitle = document.getElementById('lightbox-subtitle');
+      const lightboxWaBtn = document.getElementById('lightbox-wa-btn');
+      const closeBtn = document.getElementById('lightbox-close-btn');
+      const dismissBtn = document.getElementById('lightbox-dismiss-btn');
 
-    if (imgEl) {
-      lightboxImg.src = imgEl.src;
-      lightboxImg.alt = imgEl.alt || 'Reloj de alta gama';
-    }
-    if (titleEl) lightboxTitle.textContent = titleEl.textContent;
-    if (priceEl) lightboxPrice.textContent = priceEl.textContent + ' USD';
-    if (refEl) lightboxRef.textContent = refEl.textContent;
-    if (subEl) lightboxSubtitle.textContent = subEl.textContent;
-    if (waLinkEl && lightboxWaBtn) {
-      lightboxWaBtn.href = waLinkEl.href;
-    }
+      function openLightbox(article) {
+        if (!article) return;
+        const img = article.querySelector('img');
+        const title = article.querySelector('h2');
+        const price = article.querySelector('.font-headline.text-\\[18px\\]');
+        const ref = article.querySelector('.text-\\[10px\\].font-bold');
+        const sub = article.querySelector('.text-\\[11px\\].text-on-surface-variant');
+        const wa = article.querySelector('a[href^="https://wa.me"]');
 
-    lightbox.classList.remove('pointer-events-none', 'opacity-0');
-    lightbox.classList.add('opacity-100');
-    lightboxCard.classList.remove('scale-95');
-    lightboxCard.classList.add('scale-100');
-    document.body.style.overflow = 'hidden';
-  }
+        if (img) lightboxImg.src = img.src;
+        if (title) lightboxTitle.textContent = title.textContent;
+        if (price) lightboxPrice.textContent = price.textContent + ' USD';
+        if (ref) lightboxRef.textContent = ref.textContent;
+        if (sub) lightboxSubtitle.textContent = sub.textContent;
+        if (wa && lightboxWaBtn) lightboxWaBtn.href = wa.href;
 
-  function closeLightbox() {
-    lightbox.classList.add('opacity-0', 'pointer-events-none');
-    lightbox.classList.remove('opacity-100');
-    lightboxCard.classList.add('scale-95');
-    lightboxCard.classList.remove('scale-100');
-    document.body.style.overflow = '';
-  }
-
-  document.addEventListener('click', (e) => {
-    const cardTrigger = e.target.closest('.watch-image-card');
-    if (cardTrigger) {
-      if (e.target.closest('button[aria-label="Añadir a lista de deseos"]')) {
-        return;
+        lightbox.classList.remove('pointer-events-none', 'opacity-0');
+        lightbox.classList.add('opacity-100');
+        lightboxCard.classList.remove('scale-95');
+        lightboxCard.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
       }
-      const article = cardTrigger.closest('article');
-      openLightbox(article);
-    }
-  });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const cardTrigger = document.activeElement?.closest?.('.watch-image-card');
-      if (cardTrigger) {
-        const article = cardTrigger.closest('article');
-        openLightbox(article);
+      function closeLightbox() {
+        lightbox.classList.add('opacity-0', 'pointer-events-none');
+        lightbox.classList.remove('opacity-100');
+        lightboxCard.classList.add('scale-95');
+        lightboxCard.classList.remove('scale-100');
+        document.body.style.overflow = '';
       }
-    }
-  });
 
-  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-  if (dismissBtn) dismissBtn.addEventListener('click', closeLightbox);
+      document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('.watch-image-card');
+        if (trigger && !e.target.closest('.wish-btn')) {
+          openLightbox(trigger.closest('article'));
+        }
+      });
 
-  if (lightbox) {
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        closeLightbox();
+      if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+      if (dismissBtn) dismissBtn.addEventListener('click', closeLightbox);
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) closeLightbox();
+        });
       }
-    });
-  }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !lightbox.classList.contains('pointer-events-none')) {
-      closeLightbox();
-    }
-  });
-})();
-</script><script>(function() { const navTabs = document.querySelectorAll('.nav-tab-item'); const filterChips = document.querySelectorAll('.filter-chip'); const articles = () => document.querySelectorAll('div.px-margin.pt-space-xs.pb-space-lg > article'); const countLabel = document.querySelector('div.px-margin.py-space-xs.flex.items-center.justify-between > span.font-body-sm'); function filterCatalog(type) { const allArticles = articles(); let visibleCount = 0; if (type === 'ofertas') { allArticles.forEach(art => { const isOffer = art.getAttribute('data-is-offer') === 'true'; if (isOffer) { art.style.display = 'flex'; visibleCount++; } else { art.style.display = 'none'; } }); if (countLabel) countLabel.textContent = `${visibleCount} pieza(s) en oferta`; filterChips.forEach(chip => { if (chip.getAttribute('data-category') === 'ofertas') { chip.classList.add('bg-primary', 'text-on-primary'); chip.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant'); } else { chip.classList.remove('bg-primary', 'text-on-primary'); chip.classList.add('bg-surface-container-lowest', 'text-on-surface-variant'); } }); } else { allArticles.forEach(art => { art.style.display = 'flex'; visibleCount++; }); if (countLabel) countLabel.textContent = `${visibleCount} piezas listadas`; filterChips.forEach(chip => { if (chip.getAttribute('data-category') === 'all') { chip.classList.add('bg-primary', 'text-on-primary'); chip.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant'); } else { chip.classList.remove('bg-primary', 'text-on-primary'); chip.classList.add('bg-surface-container-lowest', 'text-on-surface-variant'); } }); } } navTabs.forEach(tab => { tab.addEventListener('click', (e) => { e.preventDefault(); navTabs.forEach(t => { t.classList.remove('text-primary', 'font-semibold'); t.classList.add('text-on-surface-variant'); }); tab.classList.remove('text-on-surface-variant'); tab.classList.add('text-primary', 'font-semibold'); const path = tab.getAttribute('data-path'); if (path === 'ofertas') { filterCatalog('ofertas'); } else if (path === 'catalogo') { filterCatalog('all'); } }); }); filterChips.forEach(chip => { chip.addEventListener('click', () => { const cat = chip.getAttribute('data-category'); if (cat === 'ofertas') { navTabs.forEach(t => { if (t.getAttribute('data-path') === 'ofertas') { t.classList.add('text-primary', 'font-semibold'); t.classList.remove('text-on-surface-variant'); } else { t.classList.remove('text-primary', 'font-semibold'); t.classList.add('text-on-surface-variant'); } }); filterCatalog('ofertas'); } else if (cat === 'all') { navTabs.forEach(t => { if (t.getAttribute('data-path') === 'catalogo') { t.classList.add('text-primary', 'font-semibold'); t.classList.remove('text-on-surface-variant'); } else { t.classList.remove('text-primary', 'font-semibold'); t.classList.add('text-on-surface-variant'); } }); filterCatalog('all'); } }); }); })();</script></body></html>
+      // Local Admin Modal
+      const adminModal = document.getElementById('admin-modal');
+      const openAdminBtn = document.getElementById('open-admin-btn');
+      const closeAdminBtn = document.getElementById('close-admin-modal-btn');
+      const addWatchForm = document.getElementById('add-watch-form');
+
+      if (openAdminBtn) openAdminBtn.addEventListener('click', () => adminModal.classList.remove('hidden'));
+      if (closeAdminBtn) closeAdminBtn.addEventListener('click', () => adminModal.classList.add('hidden'));
+
+      if (addWatchForm) {
+        addWatchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const title = document.getElementById('watch-title-input').value.trim();
+          const ref = document.getElementById('watch-ref-input').value.trim();
+          const price = document.getElementById('watch-price-input').value.trim();
+          const specs = document.getElementById('watch-specs-input').value.trim();
+          const stock = document.getElementById('watch-stock-select').value;
+          const isOffer = document.getElementById('watch-offer-select').value === 'si';
+
+          const newCard = document.createElement('article');
+          newCard.className = "bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/60 p-4 flex flex-col gap-3 relative transition-all active:border-secondary/50";
+          newCard.setAttribute('data-is-offer', isOffer ? 'true' : 'false');
+          newCard.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">Edición Especial</span>
+              <div class="flex items-center gap-1.5 ${stock === 'Disponible' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-700'} px-2 py-0.5 rounded-full border">
+                <span class="w-1.5 h-1.5 rounded-full ${stock === 'Disponible' ? 'bg-green-500' : 'bg-red-500'}"></span>
+                <span class="text-[10px] font-semibold">${stock}</span>
+              </div>
+            </div>
+            <div class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer group watch-image-card" role="button" tabindex="0">
+              <img alt="${title}" class="w-full h-full object-contain drop-shadow" src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=600&q=80"/>
+              <div class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface-variant shadow-sm pointer-events-none">
+                <span class="material-symbols-outlined text-[16px]">zoom_in</span>
+              </div>
+              <div class="absolute top-2 left-2 flex flex-col gap-1">
+                <span class="bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] uppercase tracking-wider text-on-surface font-bold shadow-sm">${ref}</span>
+              </div>
+              <button aria-label="Añadir a lista de deseos" class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm active:scale-90 z-10 wish-btn">
+                <span class="material-symbols-outlined text-[18px]">favorite</span>
+              </button>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <h2 class="font-headline text-[17px] text-on-surface font-semibold">${title}</h2>
+              <div class="flex items-baseline justify-between">
+                <div class="flex items-baseline gap-1">
+                  <span class="font-headline text-[18px] text-secondary font-bold">$${price}</span>
+                  <span class="text-[10px] text-on-surface-variant uppercase">USD</span>
+                </div>
+                <span class="text-[11px] text-on-surface-variant">${specs}</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 pt-1">
+              <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center gap-2 active:bg-emerald-700 transition-colors shadow-sm" href="https://wa.me/34600000000?text=Hola,%20solicito%20ordenar%20el%20guardatiempos%20${encodeURIComponent(title)}">
+                <span>Comprar vía WhatsApp</span>
+              </a>
+            </div>
+          `;
+          document.getElementById('catalog-feed').prepend(newCard);
+          addWatchForm.reset();
+          adminModal.classList.add('hidden');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
