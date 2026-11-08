@@ -429,6 +429,18 @@
 
   let activeFilter = 'all';
   let imagePreviewUrl = null;
+  let adminMode = false;
+  
+  function clearImagePreview() {
+  if (imagePreviewUrl) {
+    URL.revokeObjectURL(imagePreviewUrl);
+    imagePreviewUrl = null;
+  }
+
+  imagePreview.removeAttribute('src');
+  imagePreview.classList.add('hidden');
+}
+
 
   function escapeHTML(value) {
     return String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -670,9 +682,15 @@
 
   async function refreshAdminPanel() {
     const allowed = await isAdmin();
+    const changed = adminMode !== allowed;
+
+    adminMode = allowed;
     loginForm.hidden = allowed;
     addWatchForm.hidden = !allowed;
     signOutBtn.hidden = !allowed;
+
+    if (changed) await loadWatches();
+
     return allowed;
   }
 
@@ -894,7 +912,8 @@
   document.getElementById('lightbox-dismiss-btn')
     ?.addEventListener('click', closeLightbox);
 
-  document.addEventListener('click', event => {
+  
+ document.addEventListener('click', async event => { 
     const target = event.target;
     if (!(target instanceof Element)) return;
 
