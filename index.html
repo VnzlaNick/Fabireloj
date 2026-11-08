@@ -533,25 +533,71 @@
   const extraFields = document.createElement('div');
   extraFields.className = 'flex flex-col gap-3';
   extraFields.innerHTML = `
-    <div>
-      <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-        Categoría
-      </label>
-      <select id="watch-category-input"
-        class="w-full px-2.5 py-2 rounded-xl bg-surface-container border border-outline-variant text-[12px]">
-        <option value="caballeros">Caballeros</option>
-        <option value="damas">Damas</option>
-      </select>
-    </div>
-    <div>
-      <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-        URL de imagen (opcional)
-      </label>
-      <input id="watch-image-input" type="url" placeholder="https://..."
-        class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px]">
-    </div>
+   
+   
+   <div>
+  <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+    Imagen del reloj
+  </label>
+  <input
+    id="watch-image-file-input"
+    type="file"
+    accept="image/*"
+    class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px]"
+  >
+  <img
+    id="watch-image-preview"
+    alt="Vista previa de la imagen seleccionada"
+    class="hidden mt-2 h-32 w-full rounded-xl bg-surface-container object-contain"
+  >
+</div>
+   
   `;
-  addWatchForm.insertBefore(extraFields, document.getElementById('btn-save-watch'));
+addWatchForm.insertBefore(
+    extraFields,
+    document.getElementById('btn-save-watch')
+  );
+
+  const imageFileInput = document.getElementById('watch-image-file-input');
+  const imagePreview = document.getElementById('watch-image-preview');
+  let imagePreviewUrl = null;
+
+  function clearImagePreview() {
+    if (imagePreviewUrl) {
+      URL.revokeObjectURL(imagePreviewUrl);
+      imagePreviewUrl = null;
+    }
+
+    if (imagePreview) {
+      imagePreview.removeAttribute('src');
+      imagePreview.classList.add('hidden');
+    }
+  }
+
+  imageFileInput?.addEventListener('change', () => {
+    clearImagePreview();
+
+    const file = imageFileInput.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Selecciona un archivo de imagen.');
+      imageFileInput.value = '';
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('La imagen no debe superar los 5 MB.');
+      imageFileInput.value = '';
+      return;
+    }
+
+    if (imagePreview) {
+      imagePreviewUrl = URL.createObjectURL(file);
+      imagePreview.src = imagePreviewUrl;
+      imagePreview.classList.remove('hidden');
+    }
+  });
 
   async function refreshAdminPanel() {
     const allowed = await isAdmin();
@@ -564,10 +610,18 @@
   loginForm.addEventListener('submit', async event => {
     event.preventDefault();
 
-    const email = document.getElementById('catalog-admin-email').value.trim();
-    const password = document.getElementById('catalog-admin-password').value;
+    const email = document
+      .getElementById('catalog-admin-email')
+      .value.trim();
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const password = document
+      .getElementById('catalog-admin-password')
+      .value;
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
 
     if (error) {
       alert('No se pudo iniciar sesión: ' + error.message);
@@ -586,7 +640,11 @@
 
   signOutBtn.addEventListener('click', async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) alert('No se pudo cerrar sesión: ' + error.message);
+
+    if (error) {
+      alert('No se pudo cerrar sesión: ' + error.message);
+    }
+
     await refreshAdminPanel();
   });
 
@@ -599,38 +657,96 @@
       return;
     }
 
-    const title = document.getElementById('watch-title-input').value.trim();
-    const reference = document.getElementById('watch-ref-input').value.trim();
-    const rawPrice = document.getElementById('watch-price-input').value
+    const title = document
+      .getElementById('watch-title-input')
+      .value.trim();
+
+    const reference = document
+      .getElementById('watch-ref-input')
+      .value.trim();
+
+    const rawPrice = document
+      .getElementById('watch-price-input')
+      .value
       .replace(/[,$\s]/g, '');
+
     const price = Number(rawPrice);
-    const imageInput = document.getElementById('watch-image-input').value.trim();
+    const imageFile = imageFileInput?.files?.[0] ?? null;
 
     if (!Number.isFinite(price) || price < 0) {
       alert('Introduce un precio válido.');
       return;
     }
 
-    if (imageInput && !safeImageURL(imageInput)) {
-      alert('La imagen debe tener una URL HTTPS válida.');
-      return;
+    const offer =
+      document.getElementById('watch-offer-select').value === 'si';
+
+    let imageURL = null;
+
+    if (imageFile) {
+      const extensions = {
+        'image/jpeg': 'jpg',
+        'image/png': 'png',
+        'image/webp': 'webp',
+        'image/gif': 'gif'
+      };
+
+      const extension = extensions[imageFile.type];
+
+      if (!extension) {
+        alert('Formato de imagen no admitido. Usa JPG, PNG, WEBP o GIF.');
+        return;
+      }
+
+      if (imageFile.size > 5 * 1024 * 1024) {
+        alert('La imagen no debe superar los 5 MB.');
+        return;
+      }
+
+      const uniqueId = window.crypto?.randomUUID
+        ? window.crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+      const filePath = `items/${uniqueId}.${extension}`;
+
+      const { data: uploadedFile, error: uploadError } =
+        await supabase.storage
+          .from('relojes-catalogo')
+          .upload(filePath, imageFile, {
+            contentType: imageFile.type,
+            cacheControl: '3600',
+            upsert: false
+          });
+
+      if (uploadError) {
+        alert('No se pudo subir la imagen: ' + uploadError.message);
+        return;
+      }
+
+      imageURL = supabase.storage
+        .from('relojes-catalogo')
+        .getPublicUrl(uploadedFile.path)
+        .data.publicUrl;
     }
 
-    const offer = document.getElementById('watch-offer-select').value === 'si';
     const payload = {
       title,
       reference,
       price,
-      specs: document.getElementById('watch-specs-input').value.trim(),
+      specs: document
+        .getElementById('watch-specs-input')
+        .value.trim(),
       stock: document.getElementById('watch-stock-select').value,
       offer_type: offer ? 'oferta' : 'normal',
       discount: offer ? '15%' : null,
       brand: 'Alta Relojería',
       category: document.getElementById('watch-category-input').value,
-      image_url: imageInput || null
+      image_url: imageURL
     };
 
-    const { error } = await supabase.from('watches').insert(payload);
+    const { error } = await supabase
+      .from('watches')
+      .insert(payload);
 
     if (error) {
       alert('No se pudo guardar el reloj: ' + error.message);
@@ -638,29 +754,42 @@
     }
 
     addWatchForm.reset();
+    clearImagePreview();
     adminModal.classList.add('hidden');
     await loadWatches();
   });
 
-  document.getElementById('open-admin-btn')?.addEventListener('click', async () => {
-    adminModal.classList.remove('hidden');
-    await refreshAdminPanel();
-  });
+  document
+    .getElementById('open-admin-btn')
+    ?.addEventListener('click', async () => {
+      adminModal.classList.remove('hidden');
+      await refreshAdminPanel();
+    });
 
-  document.getElementById('close-admin-modal-btn')?.addEventListener('click', () => {
-    adminModal.classList.add('hidden');
-  });
+  document
+    .getElementById('close-admin-modal-btn')
+    ?.addEventListener('click', () => {
+      adminModal.classList.add('hidden');
+    });
 
   adminModal.addEventListener('click', event => {
-    if (event.target === adminModal) adminModal.classList.add('hidden');
+    if (event.target === adminModal) {
+      adminModal.classList.add('hidden');
+    }
   });
 
-  document.getElementById('lightbox-close-btn')?.addEventListener('click', closeLightbox);
-  document.getElementById('lightbox-dismiss-btn')?.addEventListener('click', closeLightbox);
+  document
+    .getElementById('lightbox-close-btn')
+    ?.addEventListener('click', closeLightbox);
+
+  document
+    .getElementById('lightbox-dismiss-btn')
+    ?.addEventListener('click', closeLightbox);
 
   function closeLightbox() {
     const modal = document.getElementById('lightbox-modal');
     const card = document.getElementById('lightbox-card');
+
     if (!modal || !card) return;
 
     modal.classList.add('opacity-0', 'pointer-events-none');
@@ -675,19 +804,40 @@
     const card = document.getElementById('lightbox-card');
     const image = imageCard.querySelector('img');
 
-    if (!article || !modal || !card || !image) return;
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxRef = document.getElementById('lightbox-ref');
+    const lightboxSubtitle = document.getElementById('lightbox-subtitle');
+    const lightboxPrice = document.getElementById('lightbox-price');
+    const lightboxWhatsApp = document.getElementById('lightbox-wa-btn');
 
-    document.getElementById('lightbox-image').src = image.src;
-    document.getElementById('lightbox-title').textContent = article.dataset.title || '';
-    document.getElementById('lightbox-ref').textContent = article.dataset.reference || '';
-    document.getElementById('lightbox-subtitle').textContent = article.dataset.specs || '';
-    document.getElementById('lightbox-price').textContent =
+    if (
+      !article ||
+      !modal ||
+      !card ||
+      !image ||
+      !lightboxImage ||
+      !lightboxTitle ||
+      !lightboxRef ||
+      !lightboxSubtitle ||
+      !lightboxPrice ||
+      !lightboxWhatsApp
+    ) {
+      return;
+    }
+
+    lightboxImage.src = image.src;
+    lightboxTitle.textContent = article.dataset.title || '';
+    lightboxRef.textContent = article.dataset.reference || '';
+    lightboxSubtitle.textContent = article.dataset.specs || '';
+    lightboxPrice.textContent =
       `$${formatPrice(article.dataset.price)} USD`;
 
-    const whatsappURL =
+    lightboxWhatsApp.href =
       `https://wa.me/${WHATSAPP_NUMBER}?text=` +
-      encodeURIComponent(`Hola, quiero consultar por ${article.dataset.title || 'este reloj'}.`);
-    document.getElementById('lightbox-wa-btn').href = whatsappURL;
+      encodeURIComponent(
+        `Hola, quiero consultar por ${article.dataset.title || 'este reloj'}.`
+      );
 
     modal.classList.remove('opacity-0', 'pointer-events-none');
     modal.classList.add('opacity-100');
@@ -700,11 +850,14 @@
     if (!(target instanceof Element)) return;
 
     const wishButton = target.closest('.wish-btn');
+
     if (wishButton) {
       event.preventDefault();
       event.stopPropagation();
 
-      const pressed = wishButton.getAttribute('aria-pressed') === 'true';
+      const pressed =
+        wishButton.getAttribute('aria-pressed') === 'true';
+
       wishButton.setAttribute('aria-pressed', String(!pressed));
       wishButton.classList.toggle('text-error', !pressed);
       return;
@@ -722,7 +875,9 @@
   });
 
   chips.forEach(chip => {
-    chip.addEventListener('click', () => applyFilter(chip.dataset.category));
+    chip.addEventListener('click', () => {
+      applyFilter(chip.dataset.category);
+    });
   });
 
   navTabs.forEach(tab => {
