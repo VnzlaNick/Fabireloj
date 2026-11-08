@@ -564,50 +564,24 @@
     return article;
   }
 
+  async function loadWatches() {
+    const { data, error } = await supabase
+      .from('watches')
+      .select(
+        'id,title,reference,price,stock,specs,offer_type,discount,image_url,brand,category,created_at'
+      )
+      .order('created_at', { ascending: false });
 
-async function updateWatch(watchId, changes) {
-  const { error } = await supabase
-    .from('watches')
-    .update({
-      title: changes.title,
-      reference: changes.reference,
-      price: Number(changes.price),
-      stock: changes.stock,
-      specs: changes.specs,
-      offer_type: changes.offer_type,
-      discount: changes.discount,
-      image_url: changes.image_url,
-      brand: changes.brand,
-      category: changes.category
-    })
-    .eq('id', watchId);
+    if (error) {
+      console.error('No se pudo cargar el catálogo:', error.message);
+      feed.textContent =
+        'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
+      return;
+    }
 
-  if (error) {
-    console.error(error);
-    alert('No se pudo guardar el reloj.');
-    return;
+    feed.replaceChildren(...(data || []).map(makeCard));
+    applyFilter(activeFilter);
   }
-
-  await loadWatches();
-}
-
-async function deleteWatch(watchId) {
-  if (!confirm('¿Seguro que quieres eliminar este reloj?')) return;
-
-  const { error } = await supabase
-    .from('watches')
-    .delete()
-    .eq('id', watchId);
-
-  if (error) {
-    console.error(error);
-    alert('No se pudo eliminar el reloj.');
-    return;
-  }
-
-  await loadWatches();
-}
-
 
   async function isAdmin() {
     try {
