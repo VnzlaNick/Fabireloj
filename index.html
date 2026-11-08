@@ -427,22 +427,14 @@
     return;
   }
 
-
-
-
-
-
-let activeFilter = 'all';
-let watchesById = new Map();
-let editingWatchId = null;
-let editingImageURL = null;
-let imagePreviewUrl = null;
-let adminMode = false;
-
-// Más adelante, junto a los elementos del formulario:
-const imagePreview = document.getElementById('watch-image-preview');
-
-function clearImagePreview() {
+  let activeFilter = 'all';
+  let watchesById = new Map();
+  let editingWatchId = null;
+  let editingImageURL = null;
+  let imagePreviewUrl = null;
+  let adminMode = false;
+  
+  function clearImagePreview() {
   if (imagePreviewUrl) {
     URL.revokeObjectURL(imagePreviewUrl);
     imagePreviewUrl = null;
@@ -524,7 +516,6 @@ function clearImagePreview() {
     article.dataset.reference = watch.reference ?? '';
     article.dataset.title = watch.title ?? '';
     article.dataset.specs = watch.specs ?? '';
-    article.dataset.id = String(watch.id);
 
     article.innerHTML = `
       <div class="flex items-center justify-between">
