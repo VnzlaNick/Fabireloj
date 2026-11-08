@@ -316,17 +316,27 @@
   </div>
 
 
-<script>
 
+<!-- Inclúyelo antes del script de tu aplicación si aún no cargas Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 (() => {
   const SUPABASE_URL = 'https://tpidmniocervffdiibyp.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY = 'PEGA_AQUI_TU_CLAVE_PUBLISHABLE';
-  const WHATSAPP_NUMBER = '34600000000'; // Reemplázalo por tu número, sin + ni espacios.
 
-  if (!window.supabase || SUPABASE_PUBLISHABLE_KEY.includes('PEGA_AQUI')) {
-    console.error('Revisa que Supabase JS esté cargado y configura la clave publishable.');
+  // Reemplaza este marcador por la clave publishable de tu proyecto.
+  // No uses una clave service_role o secreta, ni la compartas aquí.
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_U_4sNRRN26XoUxp71yGvIQ_TVwo6Vle';
+
+  const WHATSAPP_NUMBER = '4129029550';
+
+  if (!window.supabase) {
+    console.error('No se cargó Supabase JS. Comprueba la etiqueta <script> de la librería.');
+    return;
+  }
+
+  if (SUPABASE_PUBLISHABLE_KEY.startsWith('REEMPLAZA_')) {
+    console.error('Configura SUPABASE_PUBLISHABLE_KEY con la clave publishable de tu proyecto.');
     return;
   }
 
@@ -334,6 +344,10 @@
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
+
+  // Conserva aquí el resto de tu código, desde:
+  // const feed = document.getElementById('catalog-feed');
+
 
   const feed = document.getElementById('catalog-feed');
   const adminModal = document.getElementById('admin-modal');
