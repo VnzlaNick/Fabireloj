@@ -379,6 +379,7 @@
   </div>
 
 
+<!-- Script -->
 
 <!-- Inclúyelo antes del script de tu aplicación si aún no cargas Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -433,17 +434,6 @@
   let editingImageURL = null;
   let imagePreviewUrl = null;
   let adminMode = false;
-  
-  function clearImagePreview() {
-  if (imagePreviewUrl) {
-    URL.revokeObjectURL(imagePreviewUrl);
-    imagePreviewUrl = null;
-  }
-
-  imagePreview.removeAttribute('src');
-  imagePreview.classList.add('hidden');
-}
-
 
   function escapeHTML(value) {
     return String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -467,6 +457,16 @@
   function formatPrice(value) {
     const price = Number(value);
     return Number.isFinite(price) ? price.toLocaleString('en-US') : '0';
+  }
+
+  function clearImagePreview() {
+    if (imagePreviewUrl) {
+      URL.revokeObjectURL(imagePreviewUrl);
+      imagePreviewUrl = null;
+    }
+
+    imagePreview.removeAttribute('src');
+    imagePreview.classList.add('hidden');
   }
 
   function applyFilter(category) {
@@ -510,6 +510,7 @@
 
     article.className =
       'bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/60 p-4 flex flex-col gap-3 relative transition-all';
+    article.dataset.id = String(watch.id ?? '');
     article.dataset.isOffer = String(isOffer);
     article.dataset.category = category;
     article.dataset.price = String(watch.price ?? '');
@@ -562,6 +563,27 @@
          href="${escapeHTML(whatsappURL)}" target="_blank" rel="noopener noreferrer">
         Comprar vía WhatsApp
       </a>
+
+      ${adminMode ? `
+        <div class="grid grid-cols-1 gap-2 border-t border-outline-variant pt-3">
+          <button type="button" data-admin-action="toggle-stock"
+            data-watch-id="${escapeHTML(watch.id)}"
+            class="w-full py-2 rounded-full bg-surface-container text-[12px] font-bold">
+            ${watch.stock === 'Disponible' ? 'Marcar agotado' : 'Marcar disponible'}
+          </button>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" data-admin-action="edit"
+              data-watch-id="${escapeHTML(watch.id)}"
+              class="py-2 rounded-full bg-primary text-white text-[12px] font-bold">
+              Editar
+            </button>
+            <button type="button" data-admin-action="delete"
+              data-watch-id="${escapeHTML(watch.id)}"
+              class="py-2 rounded-full bg-red-600 text-white text-[12px] font-bold">
+              Eliminar
+            </button>
+          </div>
+        </div>` : ''}
     `;
 
     return article;
@@ -582,6 +604,7 @@
       return;
     }
 
+    watchesById = new Map((data || []).map(watch => [String(watch.id), watch]));
     feed.replaceChildren(...(data || []).map(makeCard));
     applyFilter(activeFilter);
   }
@@ -648,14 +671,22 @@
   const imageFileInput = document.getElementById('watch-image-file-input');
   const imagePreview = document.getElementById('watch-image-preview');
 
-  function clearImagePreview() {
-    if (imagePreviewUrl) {
-      URL.revokeObjectURL(imagePreviewUrl);
-      imagePreviewUrl = null;
-    }
+  const cancelEditButton = document.createElement('button');
+  cancelEditButton.type = 'button';
+  cancelEditButton.textContent = 'Cancelar edición';
+  cancelEditButton.className =
+    'hidden w-full py-2 rounded-full bg-surface-container text-[12px] font-bold';
+  addWatchForm.appendChild(cancelEditButton);
 
-    imagePreview.removeAttribute('src');
-    imagePreview.classList.add('hidden');
+  function resetEditForm() {
+    editingWatchId = null;
+    editingImageURL = null;
+    addWatchForm.reset();
+    imageFileInput.value = '';
+    clearImagePreview();
+
+    if (saveButton) saveButton.textContent = 'Guardar reloj';
+    cancelEditButton.classList.add('hidden');
   }
 
   imageFileInput.addEventListener('change', () => {
@@ -729,8 +760,75 @@
       return;
     }
 
+    resetEditForm();
     await refreshAdminPanel();
   });
+
+  function startEditing(watch) {
+    if (!watch) return;
+
+    editingWatchId = String(watch.id);
+    editingImageURL = watch.image_url || '';
+
+    document.getElementById('watch-title-input').value = watch.title || '';
+    document.getElementById('watch-ref-input').value = watch.reference || '';
+    document.getElementById('watch-price-input').value = watch.price ?? '';
+    document.getElementById('watch-specs-input').value = watch.specs || '';
+    document.getElementById('watch-stock-select').value = watch.stock || 'Disponible';
+    document.getElementById('watch-offer-select').value =
+      watch.offer_type === 'oferta' ? 'si' : 'no';
+    document.getElementById('watch-category-input').value =
+      watch.category || 'caballeros';
+
+    imageFileInput.value = '';
+    clearImagePreview();
+
+    const existingImage = safeImageURL(watch.image_url);
+    if (existingImage) {
+      imagePreview.src = existingImage;
+      imagePreview.classList.remove('hidden');
+    }
+
+    if (saveButton) saveButton.textContent = 'Actualizar reloj';
+    cancelEditButton.classList.remove('hidden');
+    addWatchForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  cancelEditButton.addEventListener('click', resetEditForm);
+
+  async function uploadWatchImage(file) {
+    const extensions = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'image/webp': 'webp'
+    };
+    const extension = extensions[file.type];
+
+    if (!extension || file.size > MAX_IMAGE_SIZE) {
+      throw new Error('Usa una imagen JPG, PNG o WEBP de máximo 5 MB.');
+    }
+
+    const uniqueId = window.crypto?.randomUUID
+      ? window.crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+    const filePath = `items/${uniqueId}.${extension}`;
+
+    const { data, error } = await supabase.storage
+      .from(STORAGE_BUCKET)
+      .upload(filePath, file, {
+        contentType: file.type,
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) throw error;
+
+    return supabase.storage
+      .from(STORAGE_BUCKET)
+      .getPublicUrl(data.path)
+      .data.publicUrl;
+  }
 
   addWatchForm.addEventListener('submit', async event => {
     event.preventDefault();
@@ -770,47 +868,21 @@
         return;
       }
 
+      const stock =
+        document.getElementById('watch-stock-select').value;
+
+      if (!['Disponible', 'Agotado'].includes(stock)) {
+        alert('Selecciona un estado de inventario válido.');
+        return;
+      }
+
       const offer =
         document.getElementById('watch-offer-select').value === 'si';
 
-      let imageURL = null;
+      let imageURL = editingImageURL || null;
 
       if (imageFile) {
-        const extensions = {
-          'image/jpeg': 'jpg',
-          'image/png': 'png',
-          'image/webp': 'webp'
-        };
-        const extension = extensions[imageFile.type];
-
-        if (!extension || imageFile.size > MAX_IMAGE_SIZE) {
-          alert('Usa una imagen JPG, PNG o WEBP de máximo 5 MB.');
-          return;
-        }
-
-        const uniqueId = window.crypto?.randomUUID
-          ? window.crypto.randomUUID()
-          : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
-        const filePath = `items/${uniqueId}.${extension}`;
-
-        const { data: uploadedFile, error: uploadError } = await supabase.storage
-          .from(STORAGE_BUCKET)
-          .upload(filePath, imageFile, {
-            contentType: imageFile.type,
-            cacheControl: '3600',
-            upsert: false
-          });
-
-        if (uploadError) {
-          alert('No se pudo subir la imagen: ' + uploadError.message);
-          return;
-        }
-
-        imageURL = supabase.storage
-          .from(STORAGE_BUCKET)
-          .getPublicUrl(uploadedFile.path)
-          .data.publicUrl;
+        imageURL = await uploadWatchImage(imageFile);
       }
 
       const payload = {
@@ -818,7 +890,7 @@
         reference,
         price,
         specs: document.getElementById('watch-specs-input').value.trim(),
-        stock: document.getElementById('watch-stock-select').value,
+        stock,
         offer_type: offer ? 'oferta' : 'normal',
         discount: offer ? '15%' : null,
         brand: 'Alta Relojería',
@@ -826,20 +898,34 @@
         image_url: imageURL
       };
 
-      const { error } = await supabase.from('watches').insert(payload);
+      let error;
+
+      if (editingWatchId) {
+        ({ error } = await supabase
+          .from('watches')
+          .update(payload)
+          .eq('id', editingWatchId));
+      } else {
+        ({ error } = await supabase
+          .from('watches')
+          .insert(payload));
+      }
 
       if (error) {
-        alert('No se pudo guardar el reloj: ' + error.message);
+        alert(
+          editingWatchId
+            ? 'No se pudo actualizar el reloj: ' + error.message
+            : 'No se pudo guardar el reloj: ' + error.message
+        );
         return;
       }
 
-      addWatchForm.reset();
-      clearImagePreview();
+      resetEditForm();
       adminModal.classList.add('hidden');
       await loadWatches();
     } catch (error) {
       console.error('Error al guardar el reloj:', error);
-      alert('Ocurrió un error inesperado al guardar el reloj.');
+      alert(error.message || 'Ocurrió un error inesperado al guardar el reloj.');
     }
   });
 
@@ -857,6 +943,67 @@
       adminModal.classList.add('hidden');
     }
   });
+
+  async function handleAdminAction(button) {
+    if (!(await isAdmin())) {
+      alert('Inicia sesión con una cuenta administradora.');
+      await refreshAdminPanel();
+      return;
+    }
+
+    const action = button.dataset.adminAction;
+    const watchId = button.dataset.watchId;
+    const watch = watchesById.get(String(watchId));
+
+    if (!watch) {
+      alert('No se encontró ese reloj. Actualiza el catálogo e inténtalo de nuevo.');
+      await loadWatches();
+      return;
+    }
+
+    if (action === 'edit') {
+      startEditing(watch);
+      return;
+    }
+
+    if (action === 'delete') {
+      const confirmed = confirm(
+        `¿Eliminar permanentemente "${watch.title}" (${watch.reference})?`
+      );
+      if (!confirmed) return;
+
+      const { error } = await supabase
+        .from('watches')
+        .delete()
+        .eq('id', watchId);
+
+      if (error) {
+        alert('No se pudo eliminar el reloj: ' + error.message);
+        return;
+      }
+
+      if (editingWatchId === String(watchId)) resetEditForm();
+      await loadWatches();
+      return;
+    }
+
+    if (action === 'toggle-stock') {
+      const nextStock =
+        watch.stock === 'Disponible' ? 'Agotado' : 'Disponible';
+
+      const { error } = await supabase
+        .from('watches')
+        .update({ stock: nextStock })
+        .eq('id', watchId);
+
+      if (error) {
+        alert('No se pudo actualizar el inventario: ' + error.message);
+        return;
+      }
+
+      await loadWatches();
+    }
+  }
 
   function closeLightbox() {
     const modal = document.getElementById('lightbox-modal');
@@ -915,13 +1062,19 @@
   document.getElementById('lightbox-dismiss-btn')
     ?.addEventListener('click', closeLightbox);
 
-  
- document.addEventListener('click', async event => { 
+  document.addEventListener('click', async event => {
     const target = event.target;
     if (!(target instanceof Element)) return;
 
-    const wishButton = target.closest('.wish-btn');
+    const adminButton = target.closest('[data-admin-action]');
+    if (adminButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      await handleAdminAction(adminButton);
+      return;
+    }
 
+    const wishButton = target.closest('.wish-btn');
     if (wishButton) {
       event.preventDefault();
       event.stopPropagation();
@@ -969,7 +1122,6 @@
     });
   });
 
-  // Usa el mismo número en los enlaces fijos y dinámicos de WhatsApp.
   document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
     try {
       const url = new URL(link.href);
