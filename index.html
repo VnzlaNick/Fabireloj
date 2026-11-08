@@ -250,133 +250,197 @@
     </div>
   </div>
 
-  <!-- Admin / Catalog Management Modal (Local, No External Backend) -->
-  <div id="admin-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 hidden" role="dialog" aria-modal="true">
+<!-- Admin / Catalog Management Modal -->
+  <div
+    id="admin-modal"
+    class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-modal-title"
+  >
     <div class="bg-surface-container-lowest w-full max-w-md rounded-t-2xl sm:rounded-2xl shadow-2xl border border-outline-variant/60 flex flex-col max-h-[85vh] overflow-hidden">
+
       <div class="flex items-center justify-between px-4 py-3 border-b border-outline-variant/50 bg-surface-container-low">
         <div class="flex items-center gap-2">
           <span class="material-symbols-outlined text-secondary text-[18px]">tune</span>
           <div class="flex flex-col">
-            <h3 class="font-headline text-[15px] font-bold text-on-surface">Gestión de Catálogo</h3>
-            <span class="text-[9px] text-secondary uppercase font-bold tracking-wider">Modo Local Autónomo</span>
+            <h3 id="admin-modal-title" class="font-headline text-[15px] font-bold text-on-surface">
+              Gestión de Catálogo
+            </h3>
+            <span class="text-[9px] text-secondary uppercase font-bold tracking-wider">
+              Modo local
+            </span>
           </div>
         </div>
-        <button id="close-admin-modal-btn" aria-label="Cerrar modal" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-90">
+
+        <button
+          id="close-admin-modal-btn"
+          type="button"
+          aria-label="Cerrar panel de administración"
+          class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-90"
+        >
           <span class="material-symbols-outlined text-[18px]">close</span>
         </button>
       </div>
 
-      <div class="p-4 overflow-y-auto flex flex-col gap-3">
-  
-  <form id="add-watch-form" class="flex flex-col gap-3">
-  <div>
-    <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-      Nombre del Modelo
-    </label>
-    <input
-      id="watch-title-input"
-      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
-      placeholder="ej. Submariner Stealth"
-      required
-      type="text"
-    />
-  </div>
+      <div class="p-4 overflow-y-auto flex flex-col gap-5">
 
-  <div class="grid grid-cols-2 gap-2">
-    <div>
-      <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-        Referencia
-      </label>
-      <input
-        id="watch-ref-input"
-        class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
-        placeholder="Ref. AC-900"
-        required
-        type="text"
-      />
-    </div>
+        <form id="add-watch-form" class="flex flex-col gap-3">
+          <input id="watch-id-input" type="hidden" value=""/>
 
-    <div>
-      <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-        Precio USD
-      </label>
-      <input
-        id="watch-price-input"
-        class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
-        placeholder="15,400"
-        required
-        type="text"
-      />
-    </div>
-  </div>
+          <div>
+            <label for="watch-title-input" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+              Nombre del modelo
+            </label>
+            <input
+              id="watch-title-input"
+              name="title"
+              class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
+              placeholder="Ej. Submariner Stealth"
+              required
+              type="text"
+            />
+          </div>
 
-  <div>
-    <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-      Detalles / Materiales
-    </label>
-    <input
-      id="watch-specs-input"
-      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
-      placeholder="Titanio 42mm • Calibre Automático"
-      required
-      type="text"
-    />
-  </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label for="watch-ref-input" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+                Referencia
+              </label>
+              <input
+                id="watch-ref-input"
+                name="reference"
+                class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
+                placeholder="AC-900"
+                required
+                type="text"
+              />
+            </div>
 
-  <div class="grid grid-cols-2 gap-2">
-    <div>
-      <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-        Disponibilidad
-      </label>
-      <select
-        id="watch-stock-select"
-        class="w-full px-2.5 py-2 rounded-xl bg-surface-container border border-outline-variant text-[12px] text-on-surface focus:outline-none focus:border-secondary font-medium"
-      >
-        <option value="Disponible">Disponible</option>
-        <option value="Agotado">Agotado</option>
-      </select>
-    </div>
+            <div>
+              <label for="watch-price-input" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+                Precio USD
+              </label>
+              <input
+                id="watch-price-input"
+                name="price"
+                class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
+                placeholder="15400"
+                required
+                type="number"
+                min="0"
+                step="0.01"
+              />
+            </div>
+          </div>
 
-    <div>
-      <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-        Oferta
-      </label>
-      <select
-        id="watch-offer-select"
-        class="w-full px-2.5 py-2 rounded-xl bg-surface-container border border-outline-variant text-[12px] text-on-surface focus:outline-none focus:border-secondary font-medium"
-      >
-        <option value="no">Normal</option>
-        <option value="si">★ En Oferta (-15%)</option>
-      </select>
-    </div>
-  </div>
+          <div>
+            <label for="watch-specs-input" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+              Detalles / materiales
+            </label>
+            <input
+              id="watch-specs-input"
+              name="specs"
+              class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
+              placeholder="Titanio 42mm • Calibre automático"
+              required
+              type="text"
+            />
+          </div>
 
-  <div>
-    <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
-      Categoría
-    </label>
-    <select
-      id="watch-category-input"
-      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
-      required
-    >
-      <option value="caballeros">Caballeros</option>
-      <option value="damas">Damas</option>
-    </select>
-  </div>
+          <div>
+            <label for="watch-image-input" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+              URL de la imagen
+            </label>
+            <input
+              id="watch-image-input"
+              name="image"
+              class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
+              placeholder="https://ejemplo.com/reloj.jpg"
+              type="url"
+            />
+          </div>
 
-  <button
-    id="btn-save-watch"
-    type="submit"
-    class="mt-2 w-full py-2.5 rounded-full bg-primary text-white text-[12px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-transform"
-  >
-    <span class="material-symbols-outlined text-[16px]">add_circle</span>
-    <span>Añadir al Catálogo</span>
-  </button>
-</form>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label for="watch-stock-select" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+                Disponibilidad
+              </label>
+              <select
+                id="watch-stock-select"
+                name="stock"
+                class="w-full px-2.5 py-2 rounded-xl bg-surface-container border border-outline-variant text-[12px] text-on-surface focus:outline-none focus:border-secondary font-medium"
+              >
+                <option value="Disponible">Disponible</option>
+                <option value="Agotado">Agotado</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="watch-offer-select" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+                Oferta
+              </label>
+              <select
+                id="watch-offer-select"
+                name="offer"
+                class="w-full px-2.5 py-2 rounded-xl bg-surface-container border border-outline-variant text-[12px] text-on-surface focus:outline-none focus:border-secondary font-medium"
+              >
+                <option value="no">Normal</option>
+                <option value="si">En oferta (-15%)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="watch-category-input" class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+              Categoría
+            </label>
+            <select
+              id="watch-category-input"
+              name="category"
+              class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface focus:outline-none focus:border-secondary"
+              required
+            >
+              <option value="caballeros">Caballeros</option>
+              <option value="damas">Damas</option>
+            </select>
+          </div>
+
+          <div class="flex gap-2 mt-2">
+            <button
+              id="btn-save-watch"
+              type="submit"
+              class="flex-1 py-2.5 rounded-full bg-primary text-white text-[12px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-transform"
+            >
+              <span class="material-symbols-outlined text-[16px]">add_circle</span>
+              <span>Añadir al catálogo</span>
+            </button>
+
+            <button
+              id="cancel-edit-btn"
+              type="button"
+              class="hidden px-4 py-2.5 rounded-full border border-outline-variant text-on-surface-variant text-[12px] font-bold active:scale-95 transition-transform"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+
+        <section class="border-t border-outline-variant/60 pt-4">
+          <h4 class="font-headline text-[13px] font-bold text-on-surface mb-2">
+            Relojes del catálogo
+          </h4>
+          <div id="admin-watch-list" class="flex flex-col gap-2">
+            <p class="text-[11px] text-on-surface-variant">
+              La lista de relojes aparecerá aquí.
+            </p>
+          </div>
+        </section>
+
       </div>
     </div>
   </div>
+
 
 
 <!-- Script -->
@@ -1146,3 +1210,6 @@ cancelEditButton.addEventListener('click', resetEditForm);
   void refreshAdminPanel();
 })();
 </script>
+
+</body>
+</html>
