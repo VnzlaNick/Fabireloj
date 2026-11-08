@@ -381,7 +381,6 @@
 
 
 <!-- Inclúyelo antes del script de tu aplicación si aún no cargas Supabase JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
   const SUPABASE_URL = 'https://tpidmniocervffdiibyp.supabase.co';
@@ -391,8 +390,8 @@
   const STORAGE_BUCKET = 'relojes-catalogo';
   const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
-  if (!window.supabase) {
-    console.error('No se cargó Supabase JS. Comprueba la etiqueta <script> de la librería.');
+  if (!window.supabase?.createClient) {
+    console.error('No se cargó Supabase JS.');
     return;
   }
 
@@ -406,6 +405,12 @@
   const addWatchForm = document.getElementById('add-watch-form');
   const chips = document.querySelectorAll('.filter-chip');
   const navTabs = document.querySelectorAll('.nav-tab-item');
+  const saveButton = document.getElementById('btn-save-watch');
+
+  if (!feed || !adminModal || !addWatchForm || !saveButton) {
+    console.error('Faltan elementos necesarios del catálogo o del formulario.');
+    return;
+  }
 
   const requiredIds = [
     'watch-title-input',
@@ -413,102 +418,22 @@
     'watch-price-input',
     'watch-specs-input',
     'watch-stock-select',
-    'watch-offer-select',
     'watch-category-input'
   ];
 
   const missingIds = requiredIds.filter(id => !document.getElementById(id));
 
-  if (!feed || !adminModal || !addWatchForm || missingIds.length > 0) {
-    console.error(
-      'Faltan elementos necesarios del catálogo o del formulario:',
-      missingIds
-    );
+  if (missingIds.length) {
+    console.error('Faltan campos del formulario:', missingIds);
     return;
   }
 
-
-let activeFilter = 'all';
-let watchesById = new Map();
-let editingWatchId = null;
-let editingImageURL = null;
-let imagePreviewUrl = null;
-let adminMode = false;
-
-// Ejecuta este código cuando el HTML ya esté cargado.
-const imagePreview = document.getElementById('watch-image-preview');
-
-function clearImagePreview() {
-  if (imagePreviewUrl) {
-    URL.revokeObjectURL(imagePreviewUrl);
-    imagePreviewUrl = null;
-  }
-
-  imagePreview?.removeAttribute('src');
-  imagePreview?.classList.add('hidden');
-}
-
-const cancelEditButton = document.createElement('button');
-cancelEditButton.type = 'button';
-cancelEditButton.textContent = 'Cancelar edición';
-cancelEditButton.className =
-  'w-full py-2 rounded-full border border-outline-variant text-on-surface-variant text-[12px] font-semibold';
-cancelEditButton.hidden = true;
-saveButton?.insertAdjacentElement('afterend', cancelEditButton);
-
-function resetWatchEditor() {
-  editingWatchId = null;
-  editingImageURL = null;
-  addWatchForm?.reset();
-  clearImagePreview();
-
-  if (saveButton) {
-    saveButton.innerHTML = `
-      <span class="material-symbols-outlined text-[16px]">add_circle</span>
-      <span>Añadir al Catálogo</span>
-    `;
-  }
-
-  cancelEditButton.hidden = true;
-}
-
-function startEditingWatch(watch) {
-  editingWatchId = String(watch.id);
-  editingImageURL = watch.image_url || null;
-
-  document.getElementById('watch-title-input').value = watch.title || '';
-  document.getElementById('watch-ref-input').value = watch.reference || '';
-  document.getElementById('watch-price-input').value = String(watch.price ?? '');
-  document.getElementById('watch-specs-input').value = watch.specs || '';
-  document.getElementById('watch-stock-select').value =
-    watch.stock || 'Disponible';
-  document.getElementById('watch-offer-select').value =
-    watch.offer_type === 'oferta' ? 'si' : 'no';
-  document.getElementById('watch-category-input').value =
-    watch.category || 'caballeros';
-
-  imageFileInput.value = '';
-  clearImagePreview();
-
-  const existingImage = safeImageURL(watch.image_url);
-  if (existingImage && imagePreview) {
-    imagePreview.src = existingImage;
-    imagePreview.classList.remove('hidden');
-  }
-
-  if (saveButton) {
-    saveButton.innerHTML = `
-      <span class="material-symbols-outlined text-[16px]">save</span>
-      <span>Guardar cambios</span>
-    `;
-  }
-
-  cancelEditButton.hidden = false;
-  adminModal.classList.remove('hidden');
-}
-
-cancelEditButton.addEventListener('click', resetWatchEditor);
-
+  let activeFilter = 'all';
+  let watchesById = new Map();
+  let editingWatchId = null;
+  let editingImageURL = null;
+  let imagePreviewUrl = null;
+  let adminMode = false;
 
   function escapeHTML(value) {
     return String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -534,186 +459,19 @@ cancelEditButton.addEventListener('click', resetWatchEditor);
     return Number.isFinite(price) ? price.toLocaleString('en-US') : '0';
   }
 
-  function applyFilter(category) {
-    activeFilter = category || 'all';
-
-    feed.querySelectorAll(':scope > article').forEach(article => {
-      const visible =
-        activeFilter === 'all' ||
-        (activeFilter === 'ofertas' && article.dataset.isOffer === 'true') ||
-        article.dataset.category === activeFilter;
-
-      article.style.display = visible ? 'flex' : 'none';
-    });
-
-    chips.forEach(chip => {
-      const selected = chip.dataset.category === activeFilter;
-      chip.classList.toggle('bg-primary', selected);
-      chip.classList.toggle('text-white', selected);
-      chip.classList.toggle('bg-surface-container-lowest', !selected);
-      chip.classList.toggle('text-on-surface-variant', !selected);
-    });
-  }
-
-  function makeCard(watch) {
-    const article = document.createElement('article');
-    const isOffer = watch.offer_type === 'oferta';
-    const image =
-      safeImageURL(watch.image_url) ||
-      'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=800&q=80';
-
-    const title = escapeHTML(watch.title);
-    const reference = escapeHTML(watch.reference);
-    const brand = escapeHTML(watch.brand || 'Alta Relojería');
-    const specs = escapeHTML(watch.specs);
-    const stock = escapeHTML(watch.stock);
-    const category = watch.category === 'damas' ? 'damas' : 'caballeros';
-
-    const whatsappURL =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=` +
-      encodeURIComponent(`Hola, solicito información sobre el reloj ${watch.title}.`);
-
-    article.className =
-      'bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/60 p-4 flex flex-col gap-3 relative transition-all';
-    article.dataset.isOffer = String(isOffer);
-    article.dataset.category = category;
-    article.dataset.price = String(watch.price ?? '');
-    article.dataset.reference = watch.reference ?? '';
-    article.dataset.title = watch.title ?? '';
-    article.dataset.specs = watch.specs ?? '';
-    article.dataset.id = String(watch.id);
-
-article.innerHTML = `
-  <div class="flex items-center justify-between">
-    <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">
-      ${escapeHTML(brand)}
-    </span>
-    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border
-      ${watch.stock === 'Disponible'
-        ? 'bg-green-50 border-green-200 text-green-800'
-        : 'bg-red-50 border-red-200 text-red-700'}">
-      ${escapeHTML(watch.stock ?? '')}
-    </span>
-  </div>
-
-  <div class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer watch-image-card"
-       role="button" tabindex="0"
-       aria-label="Ampliar imagen de ${escapeHTML(title)}">
-    <img alt="${escapeHTML(title)}"
-         class="w-full h-full object-contain drop-shadow"
-         src="${escapeHTML(image)}">
-    <span class="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold">
-      ${escapeHTML(reference)}
-    </span>
-    <button type="button" aria-label="Añadir a lista de deseos"
-            aria-pressed="false"
-            class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center wish-btn">
-      <span class="material-symbols-outlined text-[18px]">favorite</span>
-    </button>
-    ${isOffer ? `
-      <span class="absolute bottom-2 left-2 bg-secondary text-white px-2 py-1 rounded text-[10px] font-bold">
-        Oferta -${escapeHTML(watch.discount || '15%')}
-      </span>` : ''}
-  </div>
-
-  <div class="flex flex-col gap-0.5">
-    <h2 class="font-headline text-[17px] text-on-surface font-semibold">
-      ${escapeHTML(title)}
-    </h2>
-    <div class="flex items-baseline justify-between gap-2">
-      <span class="font-headline text-[18px] text-secondary font-bold">
-        $${escapeHTML(formatPrice(watch.price))}
-      </span>
-      <span class="text-[11px] text-on-surface-variant">
-        ${escapeHTML(specs)}
-      </span>
-    </div>
-  </div>
-
-  <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center"
-     href="${escapeHTML(whatsappURL)}" target="_blank" rel="noopener noreferrer">
-    Comprar vía WhatsApp
-  </a>
-
-  ${adminMode ? `
-    <div class="flex gap-2 pt-1">
-      <button type="button" data-admin-action="edit"
-        class="flex-1 py-2 rounded-full border border-outline-variant text-on-surface text-[12px] font-bold">
-        Editar
-      </button>
-      <button type="button" data-admin-action="delete"
-        class="flex-1 py-2 rounded-full bg-red-50 text-red-700 border border-red-200 text-[12px] font-bold">
-        Eliminar
-      </button>
-    </div>
-  ` : ''}
-`;
-
-return article;
-} // Cierra makeCard()
-
-async function loadWatches() {
-  const { data, error } = await supabase
-    .from('watches')
-    .select(
-      'id,title,reference,price,stock,specs,offer_type,discount,image_url,brand,category,created_at'
-    )
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('No se pudo cargar el catálogo:', error.message);
-    feed.textContent =
-      'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
-    return;
-  }
-
-  const watches = data ?? [];
-  watchesById = new Map(watches.map(watch => [String(watch.id), watch]));
-  feed.replaceChildren(...watches.map(makeCard));
-}
-
-loadWatches();
-
-
-  async function isAdmin() {
-    try {
-      const { data, error } = await supabase.auth.getUser();
-      return !error && data.user?.app_metadata?.role === 'admin';
-    } catch {
-      return false;
-    }
-  }
-
-  const loginForm = document.createElement('form');
-  loginForm.id = 'catalog-admin-login';
-  loginForm.className = 'mb-3 flex flex-col gap-2';
-  loginForm.hidden = true;
-  loginForm.innerHTML = `
-    <p class="text-[12px] text-on-surface-variant">
-      Inicia sesión con tu cuenta administradora para gestionar el catálogo.
-    </p>
-    <input id="catalog-admin-email" type="email" required autocomplete="username"
-      placeholder="Correo"
-      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px]">
-    <input id="catalog-admin-password" type="password" required autocomplete="current-password"
-      placeholder="Contraseña"
-      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px]">
-    <button type="submit"
-      class="w-full py-2 rounded-full bg-primary text-white text-[12px] font-bold">
-      Iniciar sesión
-    </button>
+  // Estos campos se crean aquí porque no estaban en el HTML original.
+  const offerField = document.createElement('div');
+  offerField.innerHTML = `
+    <label for="watch-offer-select"
+      class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">
+      Oferta
+    </label>
+    <select id="watch-offer-select"
+      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px] text-on-surface">
+      <option value="no">No</option>
+      <option value="si">Sí — 15%</option>
+    </select>
   `;
-
-  addWatchForm.parentNode.insertBefore(loginForm, addWatchForm);
-
-  const signOutBtn = document.createElement('button');
-  signOutBtn.type = 'button';
-  signOutBtn.textContent = 'Cerrar sesión de administración';
-  signOutBtn.className = 'mb-3 text-[11px] text-on-surface-variant underline';
-  signOutBtn.hidden = true;
-  loginForm.parentNode.insertBefore(signOutBtn, addWatchForm);
-
-  addWatchForm.hidden = true;
 
   const extraFields = document.createElement('div');
   extraFields.className = 'flex flex-col gap-3';
@@ -726,16 +484,17 @@ loadWatches();
       <input id="watch-image-file-input" type="file"
         accept="image/jpeg,image/png,image/webp"
         class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px]">
-      <img id="watch-image-preview" alt="Vista previa de la imagen seleccionada"
+      <img id="watch-image-preview" alt="Vista previa de la imagen"
         class="hidden mt-2 h-32 w-full rounded-xl bg-surface-container object-contain">
     </div>
   `;
 
-  const saveButton = document.getElementById('btn-save-watch');
-  addWatchForm.insertBefore(extraFields, saveButton || null);
+  addWatchForm.insertBefore(offerField, saveButton);
+  addWatchForm.insertBefore(extraFields, saveButton);
 
   const imageFileInput = document.getElementById('watch-image-file-input');
   const imagePreview = document.getElementById('watch-image-preview');
+  const offerSelect = document.getElementById('watch-offer-select');
 
   function clearImagePreview() {
     if (imagePreviewUrl) {
@@ -772,18 +531,260 @@ loadWatches();
     imagePreview.classList.remove('hidden');
   });
 
+  const cancelEditButton = document.createElement('button');
+  cancelEditButton.type = 'button';
+  cancelEditButton.textContent = 'Cancelar edición';
+  cancelEditButton.className =
+    'w-full py-2 rounded-full border border-outline-variant text-on-surface-variant text-[12px] font-semibold';
+  cancelEditButton.hidden = true;
+  saveButton.insertAdjacentElement('afterend', cancelEditButton);
+
+  function resetWatchEditor() {
+    editingWatchId = null;
+    editingImageURL = null;
+    addWatchForm.reset();
+    clearImagePreview();
+    imageFileInput.value = '';
+    offerSelect.value = 'no';
+
+    saveButton.innerHTML = `
+      <span class="material-symbols-outlined text-[16px]">add_circle</span>
+      <span>Añadir al Catálogo</span>
+    `;
+
+    cancelEditButton.hidden = true;
+  }
+
+  function startEditingWatch(watch) {
+    editingWatchId = String(watch.id);
+    editingImageURL = watch.image_url || null;
+
+    document.getElementById('watch-title-input').value = watch.title || '';
+    document.getElementById('watch-ref-input').value = watch.reference || '';
+    document.getElementById('watch-price-input').value =
+      String(watch.price ?? '');
+    document.getElementById('watch-specs-input').value = watch.specs || '';
+    document.getElementById('watch-stock-select').value =
+      watch.stock || 'Disponible';
+    offerSelect.value = watch.offer_type === 'oferta' ? 'si' : 'no';
+    document.getElementById('watch-category-input').value =
+      watch.category || 'caballeros';
+
+    imageFileInput.value = '';
+    clearImagePreview();
+
+    const existingImage = safeImageURL(watch.image_url);
+    if (existingImage) {
+      imagePreview.src = existingImage;
+      imagePreview.classList.remove('hidden');
+    }
+
+    saveButton.innerHTML = `
+      <span class="material-symbols-outlined text-[16px]">save</span>
+      <span>Guardar cambios</span>
+    `;
+
+    cancelEditButton.hidden = false;
+    adminModal.classList.remove('hidden');
+  }
+
+  cancelEditButton.addEventListener('click', resetWatchEditor);
+
+  async function isAdmin() {
+    try {
+      const { data, error } = await supabase.auth.getUser();
+      return !error && data.user?.app_metadata?.role === 'admin';
+    } catch {
+      return false;
+    }
+  }
+
+  function makeCard(watch) {
+    const article = document.createElement('article');
+    const isOffer = watch.offer_type === 'oferta';
+    const image = safeImageURL(watch.image_url) ||
+      'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=800&q=80';
+
+    const title = escapeHTML(watch.title);
+    const reference = escapeHTML(watch.reference);
+    const brand = escapeHTML(watch.brand || 'Alta Relojería');
+    const specs = escapeHTML(watch.specs);
+    const stock = escapeHTML(watch.stock);
+    const category = watch.category === 'damas' ? 'damas' : 'caballeros';
+    const price = escapeHTML(formatPrice(watch.price));
+    const whatsappURL =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=` +
+      encodeURIComponent(`Hola, solicito información sobre el reloj ${watch.title}.`);
+
+    article.className =
+      'bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/60 p-4 flex flex-col gap-3 relative transition-all';
+    article.dataset.isOffer = String(isOffer);
+    article.dataset.category = category;
+    article.dataset.price = String(watch.price ?? '');
+    article.dataset.reference = watch.reference ?? '';
+    article.dataset.title = watch.title ?? '';
+    article.dataset.specs = watch.specs ?? '';
+    article.dataset.id = String(watch.id);
+
+    article.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">
+          ${brand}
+        </span>
+        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border
+          ${watch.stock === 'Disponible'
+            ? 'bg-green-50 border-green-200 text-green-800'
+            : 'bg-red-50 border-red-200 text-red-700'}">
+          ${stock}
+        </span>
+      </div>
+
+      <div class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer watch-image-card"
+           role="button" tabindex="0"
+           aria-label="Ampliar imagen de ${title}">
+        <img alt="${title}" class="w-full h-full object-contain drop-shadow"
+             src="${escapeHTML(image)}">
+        <span class="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold">
+          ${reference}
+        </span>
+        <button type="button" aria-label="Añadir a lista de deseos"
+                aria-pressed="false"
+                class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center wish-btn">
+          <span class="material-symbols-outlined text-[18px]">favorite</span>
+        </button>
+        ${isOffer ? `
+          <span class="absolute bottom-2 left-2 bg-secondary text-white px-2 py-1 rounded text-[10px] font-bold">
+            Oferta -${escapeHTML(watch.discount || '15%')}
+          </span>` : ''}
+      </div>
+
+      <div class="flex flex-col gap-0.5">
+        <h2 class="font-headline text-[17px] text-on-surface font-semibold">
+          ${title}
+        </h2>
+        <div class="flex items-baseline justify-between gap-2">
+          <span class="font-headline text-[18px] text-secondary font-bold">
+            $${price}
+          </span>
+          <span class="text-[11px] text-on-surface-variant">${specs}</span>
+        </div>
+      </div>
+
+      <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center"
+         href="${escapeHTML(whatsappURL)}" target="_blank" rel="noopener noreferrer">
+        Comprar vía WhatsApp
+      </a>
+
+      ${adminMode ? `
+        <div class="flex gap-2 pt-1">
+          <button type="button" data-admin-action="edit"
+            class="flex-1 py-2 rounded-full border border-outline-variant text-on-surface text-[12px] font-bold">
+            Editar
+          </button>
+          <button type="button" data-admin-action="delete"
+            class="flex-1 py-2 rounded-full bg-red-50 text-red-700 border border-red-200 text-[12px] font-bold">
+            Eliminar
+          </button>
+        </div>
+      ` : ''}
+    `;
+
+    return article;
+  }
+
+  async function loadWatches() {
+    const { data, error } = await supabase
+      .from('watches')
+      .select(
+        'id,title,reference,price,stock,specs,offer_type,discount,image_url,brand,category,created_at'
+      )
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('No se pudo cargar el catálogo:', error.message);
+      feed.textContent =
+        'No se pudo cargar el catálogo. Revisa la conexión, las columnas y las políticas RLS.';
+      return;
+    }
+
+    const watches = data ?? [];
+    watchesById = new Map(watches.map(watch => [String(watch.id), watch]));
+    feed.replaceChildren(...watches.map(makeCard));
+
+    const allChip = document.querySelector('.filter-chip[data-category="all"]');
+    if (allChip) allChip.textContent = `Todos (${watches.length})`;
+
+    const offersChip = document.querySelector(
+      '.filter-chip[data-category="ofertas"]'
+    );
+    const offerBadge = offersChip?.querySelector('span:last-child');
+    if (offerBadge) {
+      offerBadge.textContent = String(
+        watches.filter(watch => watch.offer_type === 'oferta').length
+      );
+    }
+
+    applyFilter(activeFilter);
+  }
+
+  function applyFilter(category) {
+    activeFilter = category || 'all';
+
+    feed.querySelectorAll(':scope > article').forEach(article => {
+      const visible =
+        activeFilter === 'all' ||
+        (activeFilter === 'ofertas' && article.dataset.isOffer === 'true') ||
+        article.dataset.category === activeFilter;
+
+      article.style.display = visible ? 'flex' : 'none';
+    });
+
+    chips.forEach(chip => {
+      const selected = chip.dataset.category === activeFilter;
+      chip.classList.toggle('bg-primary', selected);
+      chip.classList.toggle('text-white', selected);
+      chip.classList.toggle('bg-surface-container-lowest', !selected);
+      chip.classList.toggle('text-on-surface-variant', !selected);
+    });
+  }
+
+  const loginForm = document.createElement('form');
+  loginForm.id = 'catalog-admin-login';
+  loginForm.className = 'mb-3 flex flex-col gap-2';
+  loginForm.hidden = true;
+  loginForm.innerHTML = `
+    <p class="text-[12px] text-on-surface-variant">
+      Inicia sesión con tu cuenta administradora para gestionar el catálogo.
+    </p>
+    <input id="catalog-admin-email" type="email" required autocomplete="username"
+      placeholder="Correo"
+      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px]">
+    <input id="catalog-admin-password" type="password" required autocomplete="current-password"
+      placeholder="Contraseña"
+      class="w-full px-3 py-2 rounded-xl bg-surface-container border border-outline-variant text-[13px]">
+    <button type="submit"
+      class="w-full py-2 rounded-full bg-primary text-white text-[12px] font-bold">
+      Iniciar sesión
+    </button>
+  `;
+
+  addWatchForm.parentNode.insertBefore(loginForm, addWatchForm);
+
+  const signOutButton = document.createElement('button');
+  signOutButton.type = 'button';
+  signOutButton.textContent = 'Cerrar sesión de administración';
+  signOutButton.className =
+    'mb-3 text-[11px] text-on-surface-variant underline';
+  signOutButton.hidden = true;
+  loginForm.parentNode.insertBefore(signOutButton, addWatchForm);
+
+  addWatchForm.hidden = true;
+
   async function refreshAdminPanel() {
-    const allowed = await isAdmin();
-    const changed = adminMode !== allowed;
-
-    adminMode = allowed;
-    loginForm.hidden = allowed;
-    addWatchForm.hidden = !allowed;
-    signOutBtn.hidden = !allowed;
-
-    if (changed) await loadWatches();
-
-    return allowed;
+    adminMode = await isAdmin();
+    loginForm.hidden = adminMode;
+    addWatchForm.hidden = !adminMode;
+    signOutButton.hidden = !adminMode;
   }
 
   loginForm.addEventListener('submit', async event => {
@@ -799,18 +800,21 @@ loadWatches();
       return;
     }
 
-    if (!(await refreshAdminPanel())) {
+    await refreshAdminPanel();
+
+    if (!adminMode) {
       await supabase.auth.signOut();
       loginForm.reset();
-      await refreshAdminPanel();
       alert('La cuenta no tiene el rol de administrador.');
+      await refreshAdminPanel();
       return;
     }
 
     loginForm.reset();
+    await loadWatches();
   });
 
-  signOutBtn.addEventListener('click', async () => {
+  signOutButton.addEventListener('click', async () => {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
@@ -818,7 +822,9 @@ loadWatches();
       return;
     }
 
+    resetWatchEditor();
     await refreshAdminPanel();
+    await loadWatches();
   });
 
   addWatchForm.addEventListener('submit', async event => {
@@ -831,14 +837,17 @@ loadWatches();
         return;
       }
 
-      const title = document.getElementById('watch-title-input').value.trim();
-      const reference = document.getElementById('watch-ref-input').value.trim();
+      const title =
+        document.getElementById('watch-title-input').value.trim();
+      const reference =
+        document.getElementById('watch-ref-input').value.trim();
       const rawPrice = document
         .getElementById('watch-price-input')
         .value
         .replace(/[,$\s]/g, '');
-
       const price = Number(rawPrice);
+      const category =
+        document.getElementById('watch-category-input').value;
       const imageFile = imageFileInput.files?.[0] ?? null;
 
       if (!title || !reference) {
@@ -851,37 +860,20 @@ loadWatches();
         return;
       }
 
-      const category =
-        document.getElementById('watch-category-input').value;
-
       if (!['caballeros', 'damas'].includes(category)) {
         alert('Selecciona una categoría válida.');
         return;
       }
 
-   const offerType =
-  document.getElementById('watch-offer-select').value === 'si'
-    ? 'oferta'
-    : 'normal';
+      const offerType = offerSelect.value === 'si' ? 'oferta' : 'normal';
+      let imageURL = editingImageURL;
 
-let imageURL = editingImageURL;
-
-if (imageFile) {
-  const extensions = {
-    'image/jpeg': 'jpg',
-    'image/png': 'png',
-    'image/webp': 'webp'
-  };
-
-  const extension = extensions[imageFile.type];
-
-  if (!extension) {
-    console.error('Formato de imagen no admitido');
-    return;
-  }
-
-  // Continúa aquí con el código que sube la imagen.
-}
+      if (imageFile) {
+        const extensions = {
+          'image/jpeg': 'jpg',
+          'image/png': 'png',
+          'image/webp': 'webp'
+        };
         const extension = extensions[imageFile.type];
 
         if (!extension || imageFile.size > MAX_IMAGE_SIZE) {
@@ -892,10 +884,10 @@ if (imageFile) {
         const uniqueId = window.crypto?.randomUUID
           ? window.crypto.randomUUID()
           : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
         const filePath = `items/${uniqueId}.${extension}`;
 
-        const { data: uploadedFile, error: uploadError } = await supabase.storage
+        const { data: uploadedFile, error: uploadError } = await supabase
+          .storage
           .from(STORAGE_BUCKET)
           .upload(filePath, imageFile, {
             contentType: imageFile.type,
@@ -908,7 +900,8 @@ if (imageFile) {
           return;
         }
 
-        imageURL = supabase.storage
+        imageURL = supabase
+          .storage
           .from(STORAGE_BUCKET)
           .getPublicUrl(uploadedFile.path)
           .data.publicUrl;
@@ -920,30 +913,30 @@ if (imageFile) {
         price,
         specs: document.getElementById('watch-specs-input').value.trim(),
         stock: document.getElementById('watch-stock-select').value,
-        offer_type: offer ? 'oferta' : 'normal',
-        discount: offer ? '15%' : null,
+        offer_type: offerType,
+        discount: offerType === 'oferta' ? '15%' : null,
         brand: 'Alta Relojería',
         category,
         image_url: imageURL
       };
 
- const result = editingWatchId
-  ? await supabase
-      .from('watches')
-      .update(payload)
-      .eq('id', editingWatchId)
-  : await supabase
-      .from('watches')
-      .insert(payload);
+      const result = editingWatchId
+        ? await supabase
+            .from('watches')
+            .update(payload)
+            .eq('id', editingWatchId)
+        : await supabase
+            .from('watches')
+            .insert(payload);
 
-if (result.error) {
-  alert('No se pudo guardar el reloj: ' + result.error.message);
-  return;
-}
+      if (result.error) {
+        alert('No se pudo guardar el reloj: ' + result.error.message);
+        return;
+      }
 
-resetWatchEditor();
-adminModal.classList.add('hidden');
-await loadWatches();
+      resetWatchEditor();
+      adminModal.classList.add('hidden');
+      await loadWatches();
     } catch (error) {
       console.error('Error al guardar el reloj:', error);
       alert('Ocurrió un error inesperado al guardar el reloj.');
@@ -955,9 +948,10 @@ await loadWatches();
     await refreshAdminPanel();
   });
 
-  document.getElementById('close-admin-modal-btn')?.addEventListener('click', () => {
-    adminModal.classList.add('hidden');
-  });
+  document.getElementById('close-admin-modal-btn')?.addEventListener(
+    'click',
+    () => adminModal.classList.add('hidden')
+  );
 
   adminModal.addEventListener('click', event => {
     if (event.target === adminModal) {
@@ -968,7 +962,6 @@ await loadWatches();
   function closeLightbox() {
     const modal = document.getElementById('lightbox-modal');
     const card = document.getElementById('lightbox-card');
-
     if (!modal || !card) return;
 
     modal.classList.add('opacity-0', 'pointer-events-none');
@@ -983,28 +976,19 @@ await loadWatches();
     const card = document.getElementById('lightbox-card');
     const image = imageCard.querySelector('img');
 
-    const lightboxImage = document.getElementById('lightbox-image');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxRef = document.getElementById('lightbox-ref');
-    const lightboxSubtitle = document.getElementById('lightbox-subtitle');
-    const lightboxPrice = document.getElementById('lightbox-price');
-    const lightboxWhatsApp = document.getElementById('lightbox-wa-btn');
+    if (!article || !modal || !card || !image) return;
 
-    if (
-      !article || !modal || !card || !image || !lightboxImage ||
-      !lightboxTitle || !lightboxRef || !lightboxSubtitle ||
-      !lightboxPrice || !lightboxWhatsApp
-    ) {
-      return;
-    }
+    document.getElementById('lightbox-image').src = image.src;
+    document.getElementById('lightbox-title').textContent =
+      article.dataset.title || '';
+    document.getElementById('lightbox-ref').textContent =
+      article.dataset.reference || '';
+    document.getElementById('lightbox-subtitle').textContent =
+      article.dataset.specs || '';
+    document.getElementById('lightbox-price').textContent =
+      `$${formatPrice(article.dataset.price)} USD`;
 
-    lightboxImage.src = image.src;
-    lightboxTitle.textContent = article.dataset.title || '';
-    lightboxRef.textContent = article.dataset.reference || '';
-    lightboxSubtitle.textContent = article.dataset.specs || '';
-    lightboxPrice.textContent = `$${formatPrice(article.dataset.price)} USD`;
-
-    lightboxWhatsApp.href =
+    document.getElementById('lightbox-wa-btn').href =
       `https://wa.me/${WHATSAPP_NUMBER}?text=` +
       encodeURIComponent(
         `Hola, quiero consultar por ${article.dataset.title || 'este reloj'}.`
@@ -1018,66 +1002,58 @@ await loadWatches();
 
   document.getElementById('lightbox-close-btn')
     ?.addEventListener('click', closeLightbox);
-
   document.getElementById('lightbox-dismiss-btn')
     ?.addEventListener('click', closeLightbox);
 
-  
-document.addEventListener('click', async event => {
-  const target = event.target;
-  if (!(target instanceof Element)) return;
+  document.addEventListener('click', async event => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
 
-  const adminButton = target.closest('[data-admin-action]');
+    const adminButton = target.closest('[data-admin-action]');
 
-  if (adminButton) {
-    event.preventDefault();
-    event.stopPropagation();
+    if (adminButton) {
+      event.preventDefault();
+      event.stopPropagation();
 
-    if (!(await isAdmin())) {
-      alert('Inicia sesión con una cuenta administradora.');
-      await refreshAdminPanel();
-      return;
-    }
-
-    const article = adminButton.closest('article');
-    const id = article?.dataset.id;
-    const watch = id ? watchesById.get(id) : null;
-
-    if (!watch) return;
-
-    if (adminButton.dataset.adminAction === 'edit') {
-      startEditingWatch(watch);
-      return;
-    }
-
-    if (adminButton.dataset.adminAction === 'delete') {
-      const confirmed = confirm(
-        `¿Eliminar "${watch.title}"? Esta acción no se puede deshacer.`
-      );
-
-      if (!confirmed) return;
-
-      const { error } = await supabase
-        .from('watches')
-        .delete()
-        .eq('id', id);
-
-      if (error) {
-        alert('No se pudo eliminar el reloj: ' + error.message);
+      if (!(await isAdmin())) {
+        alert('Inicia sesión con una cuenta administradora.');
+        await refreshAdminPanel();
         return;
       }
 
-      if (editingWatchId === id) resetWatchEditor();
-      await loadWatches();
-      return;
-    }
-  }
+      const article = adminButton.closest('article');
+      const id = article?.dataset.id;
+      const watch = id ? watchesById.get(id) : null;
+      if (!watch) return;
 
-  // Deja aquí el resto del manejo de clics, si lo tienes.
-});
+      if (adminButton.dataset.adminAction === 'edit') {
+        startEditingWatch(watch);
+        return;
+      }
+
+      if (adminButton.dataset.adminAction === 'delete') {
+        const confirmed = confirm(
+          `¿Eliminar "${watch.title}"? Esta acción no se puede deshacer.`
+        );
+        if (!confirmed) return;
+
+        const { error } = await supabase
+          .from('watches')
+          .delete()
+          .eq('id', id);
+
+        if (error) {
+          alert('No se pudo eliminar el reloj: ' + error.message);
+          return;
+        }
+
+        if (editingWatchId === id) resetWatchEditor();
+        await loadWatches();
+        return;
+      }
+    }
 
     const wishButton = target.closest('.wish-btn');
-
     if (wishButton) {
       event.preventDefault();
       event.stopPropagation();
@@ -1125,18 +1101,21 @@ document.addEventListener('click', async event => {
     });
   });
 
-  // Usa el mismo número en los enlaces fijos y dinámicos de WhatsApp.
   document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
     try {
       const url = new URL(link.href);
       url.pathname = `/${WHATSAPP_NUMBER}`;
       link.href = url.href;
     } catch {
-      // Deja intacto cualquier enlace con formato no válido.
+      // Conserva enlaces cuyo formato no sea válido.
     }
   });
 
-  void loadWatches();
-  void refreshAdminPanel();
+  async function initialize() {
+    await refreshAdminPanel();
+    await loadWatches();
+  }
+
+  void initialize();
 })();
 </script>
