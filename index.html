@@ -764,37 +764,47 @@
     await refreshAdminPanel();
   });
 
-  function startEditing(watch) {
-    if (!watch) return;
 
-    editingWatchId = String(watch.id);
-    editingImageURL = watch.image_url || '';
+function startEditing(watch) {
+  if (!watch) return;
 
-    document.getElementById('watch-title-input').value = watch.title || '';
-    document.getElementById('watch-ref-input').value = watch.reference || '';
-    document.getElementById('watch-price-input').value = watch.price ?? '';
-    document.getElementById('watch-specs-input').value = watch.specs || '';
-    document.getElementById('watch-stock-select').value = watch.stock || 'Disponible';
-    document.getElementById('watch-offer-select').value =
-      watch.offer_type === 'oferta' ? 'si' : 'no';
-    document.getElementById('watch-category-input').value =
-      watch.category || 'caballeros';
+  editingWatchId = String(watch.id);
+  editingImageURL = watch.image_url || '';
 
-    imageFileInput.value = '';
-    clearImagePreview();
+  document.getElementById('watch-title-input').value = watch.title || '';
+  document.getElementById('watch-ref-input').value = watch.reference || '';
+  document.getElementById('watch-price-input').value = watch.price ?? '';
+  document.getElementById('watch-specs-input').value = watch.specs || '';
+  document.getElementById('watch-stock-select').value =
+    watch.stock || 'Disponible';
+  document.getElementById('watch-offer-select').value =
+    watch.offer_type === 'oferta' ? 'si' : 'no';
+  document.getElementById('watch-category-input').value =
+    watch.category || 'caballeros';
 
-    const existingImage = safeImageURL(watch.image_url);
-    if (existingImage) {
-      imagePreview.src = existingImage;
-      imagePreview.classList.remove('hidden');
-    }
+  imageFileInput.value = '';
+  clearImagePreview();
 
-    if (saveButton) saveButton.textContent = 'Actualizar reloj';
-    cancelEditButton.classList.remove('hidden');
-    addWatchForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const existingImage = safeImageURL(watch.image_url);
+  if (existingImage) {
+    imagePreview.src = existingImage;
+    imagePreview.classList.remove('hidden');
   }
 
-  cancelEditButton.addEventListener('click', resetEditForm);
+  if (saveButton) saveButton.textContent = 'Actualizar reloj';
+  cancelEditButton.classList.remove('hidden');
+
+  adminModal.classList.remove('hidden');
+
+  requestAnimationFrame(() => {
+    addWatchForm.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+}
+
+cancelEditButton.addEventListener('click', resetEditForm);
 
   async function uploadWatchImage(file) {
     const extensions = {
