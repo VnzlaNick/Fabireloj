@@ -526,73 +526,55 @@ function clearImagePreview() {
     article.dataset.specs = watch.specs ?? '';
     article.dataset.id = String(watch.id);
 
-article.innerHTML = `
-  <div class="flex items-center justify-between">
-    <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">
-      ${escapeHTML(brand)}
-    </span>
-    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border
-      ${watch.stock === 'Disponible'
-        ? 'bg-green-50 border-green-200 text-green-800'
-        : 'bg-red-50 border-red-200 text-red-700'}">
-      ${escapeHTML(watch.stock ?? '')}
-    </span>
-  </div>
+    article.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">
+          ${brand}
+        </span>
+        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border
+          ${watch.stock === 'Disponible'
+            ? 'bg-green-50 border-green-200 text-green-800'
+            : 'bg-red-50 border-red-200 text-red-700'}">
+          ${stock}
+        </span>
+      </div>
 
-  <div class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer watch-image-card"
-       role="button" tabindex="0"
-       aria-label="Ampliar imagen de ${escapeHTML(title)}">
-    <img alt="${escapeHTML(title)}"
-         class="w-full h-full object-contain drop-shadow"
-         src="${escapeHTML(image)}">
-    <span class="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold">
-      ${escapeHTML(reference)}
-    </span>
-    <button type="button" aria-label="Añadir a lista de deseos"
-            aria-pressed="false"
-            class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center wish-btn">
-      <span class="material-symbols-outlined text-[18px]">favorite</span>
-    </button>
-    ${isOffer ? `
-      <span class="absolute bottom-2 left-2 bg-secondary text-white px-2 py-1 rounded text-[10px] font-bold">
-        Oferta -${escapeHTML(watch.discount || '15%')}
-      </span>` : ''}
-  </div>
+      <div class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer watch-image-card"
+           role="button" tabindex="0" aria-label="Ampliar imagen de ${title}">
+        <img alt="${title}" class="w-full h-full object-contain drop-shadow"
+             src="${escapeHTML(image)}">
+        <span class="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold">
+          ${reference}
+        </span>
+        <button type="button" aria-label="Añadir a lista de deseos"
+                aria-pressed="false"
+                class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center wish-btn">
+          <span class="material-symbols-outlined text-[18px]">favorite</span>
+        </button>
+        ${isOffer ? `
+          <span class="absolute bottom-2 left-2 bg-secondary text-white px-2 py-1 rounded text-[10px] font-bold">
+            Oferta -${escapeHTML(watch.discount || '15%')}
+          </span>` : ''}
+      </div>
 
-  <div class="flex flex-col gap-0.5">
-    <h2 class="font-headline text-[17px] text-on-surface font-semibold">
-      ${escapeHTML(title)}
-    </h2>
-    <div class="flex items-baseline justify-between gap-2">
-      <span class="font-headline text-[18px] text-secondary font-bold">
-        $${escapeHTML(formatPrice(watch.price))}
-      </span>
-      <span class="text-[11px] text-on-surface-variant">
-        ${escapeHTML(specs)}
-      </span>
-    </div>
-  </div>
+      <div class="flex flex-col gap-0.5">
+        <h2 class="font-headline text-[17px] text-on-surface font-semibold">${title}</h2>
+        <div class="flex items-baseline justify-between gap-2">
+          <span class="font-headline text-[18px] text-secondary font-bold">
+            $${formatPrice(watch.price)}
+          </span>
+          <span class="text-[11px] text-on-surface-variant">${specs}</span>
+        </div>
+      </div>
 
-  <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center"
-     href="${escapeHTML(whatsappURL)}" target="_blank" rel="noopener noreferrer">
-    Comprar vía WhatsApp
-  </a>
+      <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center"
+         href="${escapeHTML(whatsappURL)}" target="_blank" rel="noopener noreferrer">
+        Comprar vía WhatsApp
+      </a>
+    `;
 
-  ${adminMode ? `
-    <div class="flex gap-2 pt-1">
-      <button type="button" data-admin-action="edit"
-        class="flex-1 py-2 rounded-full border border-outline-variant text-on-surface text-[12px] font-bold">
-        Editar
-      </button>
-      <button type="button" data-admin-action="delete"
-        class="flex-1 py-2 rounded-full bg-red-50 text-red-700 border border-red-200 text-[12px] font-bold">
-        Eliminar
-      </button>
-    </div>
-  ` : ''}
-`;
-
-return article;
+    return article;
+  }
 
   async function loadWatches() {
     const { data, error } = await supabase
@@ -609,11 +591,8 @@ return article;
       return;
     }
 
-    const watches = data || [];
-    watchesById = new Map(watches.map(watch => [String(watch.id), watch]));
-    feed.replaceChildren(...watches.map(makeCard));
-
-
+    feed.replaceChildren(...(data || []).map(makeCard));
+    applyFilter(activeFilter);
   }
 
   async function isAdmin() {
