@@ -427,19 +427,87 @@
     return;
   }
 
-  let activeFilter = 'all';
-  let imagePreviewUrl = null;
-  let adminMode = false;
-  
-  function clearImagePreview() {
+
+let activeFilter = 'all';
+let watchesById = new Map();
+let editingWatchId = null;
+let editingImageURL = null;
+let imagePreviewUrl = null;
+let adminMode = false;
+
+// Ejecuta este código cuando el HTML ya esté cargado.
+const imagePreview = document.getElementById('watch-image-preview');
+
+function clearImagePreview() {
   if (imagePreviewUrl) {
     URL.revokeObjectURL(imagePreviewUrl);
     imagePreviewUrl = null;
   }
 
-  imagePreview.removeAttribute('src');
-  imagePreview.classList.add('hidden');
+  imagePreview?.removeAttribute('src');
+  imagePreview?.classList.add('hidden');
 }
+
+const cancelEditButton = document.createElement('button');
+cancelEditButton.type = 'button';
+cancelEditButton.textContent = 'Cancelar edición';
+cancelEditButton.className =
+  'w-full py-2 rounded-full border border-outline-variant text-on-surface-variant text-[12px] font-semibold';
+cancelEditButton.hidden = true;
+saveButton?.insertAdjacentElement('afterend', cancelEditButton);
+
+function resetWatchEditor() {
+  editingWatchId = null;
+  editingImageURL = null;
+  addWatchForm?.reset();
+  clearImagePreview();
+
+  if (saveButton) {
+    saveButton.innerHTML = `
+      <span class="material-symbols-outlined text-[16px]">add_circle</span>
+      <span>Añadir al Catálogo</span>
+    `;
+  }
+
+  cancelEditButton.hidden = true;
+}
+
+function startEditingWatch(watch) {
+  editingWatchId = String(watch.id);
+  editingImageURL = watch.image_url || null;
+
+  document.getElementById('watch-title-input').value = watch.title || '';
+  document.getElementById('watch-ref-input').value = watch.reference || '';
+  document.getElementById('watch-price-input').value = String(watch.price ?? '');
+  document.getElementById('watch-specs-input').value = watch.specs || '';
+  document.getElementById('watch-stock-select').value =
+    watch.stock || 'Disponible';
+  document.getElementById('watch-offer-select').value =
+    watch.offer_type === 'oferta' ? 'si' : 'no';
+  document.getElementById('watch-category-input').value =
+    watch.category || 'caballeros';
+
+  imageFileInput.value = '';
+  clearImagePreview();
+
+  const existingImage = safeImageURL(watch.image_url);
+  if (existingImage && imagePreview) {
+    imagePreview.src = existingImage;
+    imagePreview.classList.remove('hidden');
+  }
+
+  if (saveButton) {
+    saveButton.innerHTML = `
+      <span class="material-symbols-outlined text-[16px]">save</span>
+      <span>Guardar cambios</span>
+    `;
+  }
+
+  cancelEditButton.hidden = false;
+  adminModal.classList.remove('hidden');
+}
+
+cancelEditButton.addEventListener('click', resetWatchEditor);
 
 
   function escapeHTML(value) {
@@ -513,75 +581,99 @@
     article.dataset.reference = watch.reference ?? '';
     article.dataset.title = watch.title ?? '';
     article.dataset.specs = watch.specs ?? '';
+    article.dataset.id = String(watch.id);
 
-    article.innerHTML = `
-      <div class="flex items-center justify-between">
-        <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">
-          ${brand}
-        </span>
-        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border
-          ${watch.stock === 'Disponible'
-            ? 'bg-green-50 border-green-200 text-green-800'
-            : 'bg-red-50 border-red-200 text-red-700'}">
-          ${stock}
-        </span>
-      </div>
+article.innerHTML = `
+  <div class="flex items-center justify-between">
+    <span class="text-[10px] uppercase tracking-widest text-secondary font-bold">
+      ${escapeHTML(brand)}
+    </span>
+    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border
+      ${watch.stock === 'Disponible'
+        ? 'bg-green-50 border-green-200 text-green-800'
+        : 'bg-red-50 border-red-200 text-red-700'}">
+      ${escapeHTML(watch.stock ?? '')}
+    </span>
+  </div>
 
-      <div class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer watch-image-card"
-           role="button" tabindex="0" aria-label="Ampliar imagen de ${title}">
-        <img alt="${title}" class="w-full h-full object-contain drop-shadow"
-             src="${escapeHTML(image)}">
-        <span class="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold">
-          ${reference}
-        </span>
-        <button type="button" aria-label="Añadir a lista de deseos"
-                aria-pressed="false"
-                class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center wish-btn">
-          <span class="material-symbols-outlined text-[18px]">favorite</span>
-        </button>
-        ${isOffer ? `
-          <span class="absolute bottom-2 left-2 bg-secondary text-white px-2 py-1 rounded text-[10px] font-bold">
-            Oferta -${escapeHTML(watch.discount || '15%')}
-          </span>` : ''}
-      </div>
+  <div class="relative w-full h-52 rounded-xl bg-surface-container-low flex items-center justify-center overflow-hidden p-2 cursor-pointer watch-image-card"
+       role="button" tabindex="0"
+       aria-label="Ampliar imagen de ${escapeHTML(title)}">
+    <img alt="${escapeHTML(title)}"
+         class="w-full h-full object-contain drop-shadow"
+         src="${escapeHTML(image)}">
+    <span class="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold">
+      ${escapeHTML(reference)}
+    </span>
+    <button type="button" aria-label="Añadir a lista de deseos"
+            aria-pressed="false"
+            class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center wish-btn">
+      <span class="material-symbols-outlined text-[18px]">favorite</span>
+    </button>
+    ${isOffer ? `
+      <span class="absolute bottom-2 left-2 bg-secondary text-white px-2 py-1 rounded text-[10px] font-bold">
+        Oferta -${escapeHTML(watch.discount || '15%')}
+      </span>` : ''}
+  </div>
 
-      <div class="flex flex-col gap-0.5">
-        <h2 class="font-headline text-[17px] text-on-surface font-semibold">${title}</h2>
-        <div class="flex items-baseline justify-between gap-2">
-          <span class="font-headline text-[18px] text-secondary font-bold">
-            $${formatPrice(watch.price)}
-          </span>
-          <span class="text-[11px] text-on-surface-variant">${specs}</span>
-        </div>
-      </div>
+  <div class="flex flex-col gap-0.5">
+    <h2 class="font-headline text-[17px] text-on-surface font-semibold">
+      ${escapeHTML(title)}
+    </h2>
+    <div class="flex items-baseline justify-between gap-2">
+      <span class="font-headline text-[18px] text-secondary font-bold">
+        $${escapeHTML(formatPrice(watch.price))}
+      </span>
+      <span class="text-[11px] text-on-surface-variant">
+        ${escapeHTML(specs)}
+      </span>
+    </div>
+  </div>
 
-      <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center"
-         href="${escapeHTML(whatsappURL)}" target="_blank" rel="noopener noreferrer">
-        Comprar vía WhatsApp
-      </a>
-    `;
+  <a class="w-full py-2.5 px-4 rounded-full bg-emerald-600 text-white text-[13px] font-bold flex items-center justify-center"
+     href="${escapeHTML(whatsappURL)}" target="_blank" rel="noopener noreferrer">
+    Comprar vía WhatsApp
+  </a>
 
-    return article;
+  ${adminMode ? `
+    <div class="flex gap-2 pt-1">
+      <button type="button" data-admin-action="edit"
+        class="flex-1 py-2 rounded-full border border-outline-variant text-on-surface text-[12px] font-bold">
+        Editar
+      </button>
+      <button type="button" data-admin-action="delete"
+        class="flex-1 py-2 rounded-full bg-red-50 text-red-700 border border-red-200 text-[12px] font-bold">
+        Eliminar
+      </button>
+    </div>
+  ` : ''}
+`;
+
+return article;
+} // Cierra makeCard()
+
+async function loadWatches() {
+  const { data, error } = await supabase
+    .from('watches')
+    .select(
+      'id,title,reference,price,stock,specs,offer_type,discount,image_url,brand,category,created_at'
+    )
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('No se pudo cargar el catálogo:', error.message);
+    feed.textContent =
+      'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
+    return;
   }
 
-  async function loadWatches() {
-    const { data, error } = await supabase
-      .from('watches')
-      .select(
-        'id,title,reference,price,stock,specs,offer_type,discount,image_url,brand,category,created_at'
-      )
-      .order('created_at', { ascending: false });
+  const watches = data ?? [];
+  watchesById = new Map(watches.map(watch => [String(watch.id), watch]));
+  feed.replaceChildren(...watches.map(makeCard));
+}
 
-    if (error) {
-      console.error('No se pudo cargar el catálogo:', error.message);
-      feed.textContent =
-        'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
-      return;
-    }
+loadWatches();
 
-    feed.replaceChildren(...(data || []).map(makeCard));
-    applyFilter(activeFilter);
-  }
 
   async function isAdmin() {
     try {
@@ -767,17 +859,29 @@
         return;
       }
 
-      const offer =
-        document.getElementById('watch-offer-select').value === 'si';
+   const offerType =
+  document.getElementById('watch-offer-select').value === 'si'
+    ? 'oferta'
+    : 'normal';
 
-      let imageURL = null;
+let imageURL = editingImageURL;
 
-      if (imageFile) {
-        const extensions = {
-          'image/jpeg': 'jpg',
-          'image/png': 'png',
-          'image/webp': 'webp'
-        };
+if (imageFile) {
+  const extensions = {
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'image/webp': 'webp'
+  };
+
+  const extension = extensions[imageFile.type];
+
+  if (!extension) {
+    console.error('Formato de imagen no admitido');
+    return;
+  }
+
+  // Continúa aquí con el código que sube la imagen.
+}
         const extension = extensions[imageFile.type];
 
         if (!extension || imageFile.size > MAX_IMAGE_SIZE) {
@@ -823,17 +927,23 @@
         image_url: imageURL
       };
 
-      const { error } = await supabase.from('watches').insert(payload);
+ const result = editingWatchId
+  ? await supabase
+      .from('watches')
+      .update(payload)
+      .eq('id', editingWatchId)
+  : await supabase
+      .from('watches')
+      .insert(payload);
 
-      if (error) {
-        alert('No se pudo guardar el reloj: ' + error.message);
-        return;
-      }
+if (result.error) {
+  alert('No se pudo guardar el reloj: ' + result.error.message);
+  return;
+}
 
-      addWatchForm.reset();
-      clearImagePreview();
-      adminModal.classList.add('hidden');
-      await loadWatches();
+resetWatchEditor();
+adminModal.classList.add('hidden');
+await loadWatches();
     } catch (error) {
       console.error('Error al guardar el reloj:', error);
       alert('Ocurrió un error inesperado al guardar el reloj.');
@@ -913,9 +1023,58 @@
     ?.addEventListener('click', closeLightbox);
 
   
- document.addEventListener('click', async event => { 
-    const target = event.target;
-    if (!(target instanceof Element)) return;
+document.addEventListener('click', async event => {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+
+  const adminButton = target.closest('[data-admin-action]');
+
+  if (adminButton) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!(await isAdmin())) {
+      alert('Inicia sesión con una cuenta administradora.');
+      await refreshAdminPanel();
+      return;
+    }
+
+    const article = adminButton.closest('article');
+    const id = article?.dataset.id;
+    const watch = id ? watchesById.get(id) : null;
+
+    if (!watch) return;
+
+    if (adminButton.dataset.adminAction === 'edit') {
+      startEditingWatch(watch);
+      return;
+    }
+
+    if (adminButton.dataset.adminAction === 'delete') {
+      const confirmed = confirm(
+        `¿Eliminar "${watch.title}"? Esta acción no se puede deshacer.`
+      );
+
+      if (!confirmed) return;
+
+      const { error } = await supabase
+        .from('watches')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert('No se pudo eliminar el reloj: ' + error.message);
+        return;
+      }
+
+      if (editingWatchId === id) resetWatchEditor();
+      await loadWatches();
+      return;
+    }
+  }
+
+  // Deja aquí el resto del manejo de clics, si lo tienes.
+});
 
     const wishButton = target.closest('.wish-btn');
 
