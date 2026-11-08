@@ -628,28 +628,29 @@
         Comprar vía WhatsApp
       </a>
 
-      ${adminMode ? `
+${adminMode ? `
         <div class="grid grid-cols-1 gap-2 border-t border-outline-variant pt-3">
           <button type="button" data-admin-action="toggle-stock"
             data-watch-id="${escapeHTML(watch.id)}"
-            class="w-full py-2 rounded-full bg-surface-container text-[12px] font-bold">
+            class="w-full py-2 rounded-full text-white text-[12px] font-bold transition-colors
+              ${watch.stock === 'Disponible'
+                ? 'bg-red-600 hover:bg-red-700'
+                : 'bg-green-600 hover:bg-green-700'}">
             ${watch.stock === 'Disponible' ? 'Marcar agotado' : 'Marcar disponible'}
           </button>
           <div class="grid grid-cols-2 gap-2">
             <button type="button" data-admin-action="edit"
               data-watch-id="${escapeHTML(watch.id)}"
-              class="py-2 rounded-full bg-primary text-white text-[12px] font-bold">
+              class="py-2 rounded-full bg-primary hover:opacity-90 text-white text-[12px] font-bold">
               Editar
             </button>
             <button type="button" data-admin-action="delete"
               data-watch-id="${escapeHTML(watch.id)}"
-              class="py-2 rounded-full bg-red-600 text-white text-[12px] font-bold">
+              class="py-2 rounded-full bg-red-600 hover:bg-red-700 text-white text-[12px] font-bold">
               Eliminar
             </button>
           </div>
         </div>` : ''}
-    `;
-
     return article;
   }
 
