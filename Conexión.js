@@ -1,7 +1,7 @@
 // connection.js
 (() => {
   const SUPABASE_URL = "https://tpidmniocervffdiibyp.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "TU_PUBLISHABLE_KEY";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_U_4sNRRN26XoUxp71yGvIQ_TVwo6Vle";
 
   if (!window.supabase) {
     throw new Error(
