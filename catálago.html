@@ -1,94 +1,402 @@
 <!DOCTYPE html>
 
-<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.animate-pop-in{animation:popIn 0.35s cubic-bezier(0.16,1,0.3,1) forwards;}@keyframes popIn{0%{opacity:0;transform:scale(0.85) translateY(6px);}100%{opacity:1;transform:scale(1) translateY(0);}}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "error": "#ba1a1a", "inverse-on-surface": "#f1f1ef", "primary": "#785600", "surface-variant": "#e2e3e1", "on-tertiary": "#ffffff", "secondary-container": "#d9dff5", "surface-container-low": "#f4f4f2", "tertiary-container": "#00855d", "on-primary-fixed": "#271900", "outline": "#817563", "surface-tint": "#7b5800", "surface-card": "#FFFFFF", "surface-bright": "#f9f9f7", "primary-fixed": "#ffdea6", "surface-container": "#eeeeec", "border-subtle": "#EBEAE6", "on-primary-fixed-variant": "#5d4200", "surface": "#f9f9f7", "inverse-surface": "#2f3130", "gold-light": "#D4AF37", "tertiary": "#006948", "tertiary-fixed": "#85f8c4", "primary-fixed-dim": "#f7bd48", "secondary-fixed-dim": "#c0c6db", "error-container": "#ffdad6", "on-secondary": "#ffffff", "on-primary-container": "#fffbff", "on-secondary-fixed": "#141b2b", "surface-warm": "#F6F5F0", "on-error": "#ffffff", "on-surface-variant": "#4f4535", "on-secondary-container": "#5c6274", "surface-container-highest": "#e2e3e1", "on-surface": "#1a1c1b", "border-gold": "#E5D2A0", "slate-muted": "#64748B", "secondary": "#575e70", "whatsapp-green": "#059669", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "secondary-fixed": "#dce2f7", "tertiary-fixed-dim": "#68dba9", "on-error-container": "#93000a", "on-tertiary-fixed": "#002114", "on-tertiary-container": "#f5fff7", "on-tertiary-fixed-variant": "#005137", "surface-container-high": "#e8e8e6", "on-background": "#1a1c1b", "surface-dim": "#dadad8", "whatsapp-active": "#047857", "outline-variant": "#d3c4af", "background": "#f9f9f7", "gold-deep": "#8F6705", "primary-container": "#986d00", "on-secondary-fixed-variant": "#404758", "inverse-primary": "#f7bd48" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-md": "0.875rem", "space-xs": "0.25rem", "margin-desktop": "3.5rem", "space-lg": "1.25rem", "gutter-desktop": "1.5rem", "gutter": "1rem", "space-sm": "0.5rem", "margin": "1rem", "margin-tablet": "2rem", "space-xl": "2rem", "space-2xl": "3rem" }, fontFamily: { "label-sm": ["Inter"], "body-md": ["Inter"], "headline-xl": ["Playfair Display"], "label-code": ["Inter"], "headline-lg": ["Playfair Display"], "body-lg": ["Inter"], "headline-md": ["Playfair Display"], "label-caps": ["Inter"], "headline-sm": ["Playfair Display"], "headline-xl-mobile": ["Playfair Display"], "body-sm": ["Inter"], "label-md": ["Inter"] }, fontSize: { "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-code": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "30px", "fontWeight": "500" }], "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-xl-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }] } } } }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Buen Tiempo Watchmaker Emblem" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrDvrqVq4YViv0-lrsrrNwVtMvzQ5jelsVQa2565bqb4kd5sovcQM6hNxidWu1iAizYr5orPIiIjlicB4DFeP4FcA7zqd2l4aWBBXnkLy8tT5eFaQdWl7G34y6WPXRRmkkClzwijr-mY8x7qyw9evd__XrOkRK8UewxqN-QWfV8q-O1nU-eeeUe_-mpa9dMuPg91Rf-VPjshRqRTa8DqNjGsUiu1FIqTaRrfhEJPFwQ"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm tracking-wide text-on-surface uppercase truncate">BUEN TIEMPO</span><span class="font-label-caps text-label-caps uppercase text-gold-deep tracking-widest truncate">Catálogo</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Buscar guardatiempos" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><a aria-label="WhatsApp Concierge" class="w-11 h-11 flex items-center justify-center text-whatsapp-green hover:text-whatsapp-active transition-colors" href="https://wa.me/" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[22px]">chat</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 ml-space-xs"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 bg-surface"><div class="relative w-full min-h-screen overflow-hidden"><!-- Dimmed Background Store Page Content --><div class="px-margin pt-space-md opacity-40 blur-[2px] pointer-events-none select-none"><div class="flex items-center justify-between mb-space-sm"><span class="font-label-caps text-label-caps uppercase text-gold-deep tracking-widest">Colección Oficial</span><span class="font-label-caps text-label-caps text-secondary">2025</span></div><h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-xs">Alta Relojería Suiza</h2><p class="font-body-sm text-body-sm text-secondary mb-space-md leading-relaxed">Guardatiempos seleccionados con certificación de manufactura y cronometría oficial.</p><div class="grid grid-cols-2 gap-space-sm"><div class="bg-surface-card rounded-xl p-space-sm border border-border-subtle shadow-sm"><div class="aspect-square bg-surface-container rounded-lg mb-space-xs overflow-hidden"><img alt="Reloj" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsWDIFK1kPmbCumojnqakmfji4yvQ2DFVYxB_qA0njXNSNtJS2Sd9roCoE2MiMXOV9aEpI9uvX5V3TiZ0l--rruGdRkG0XxVVny1YhsznH_vFaGK6YHOwmvGVdnVma85iN17gWyVWke76mhTAy3ArU_KENmX1LNWgNIUxeK79JfX-LNv46W7PJN34JpMZ7zzkf9AeayE_R2J9JnrMWIofOqZwbeR6QAiq2yZiXcjU"/></div><span class="font-headline-sm text-[16px] text-on-surface block">Aero Chrono</span><span class="font-label-caps text-gold-deep text-[10px]">Ref. AC-300-TI</span></div><div class="bg-surface-card rounded-xl p-space-sm border border-border-subtle shadow-sm"><div class="aspect-square bg-surface-container rounded-lg mb-space-xs overflow-hidden"><img alt="Reloj" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9-1VelaiUEl2fltNzg7Yseu_i7tZaGV_rcKVSAZAxr7HBCvIiQ9_RCRVlS58JMajev4UJLblubWPTcQjcFjppEJPPvtIYQQuJHi7X0xXUq91W4J1-ihflr5A6D7nTw5iw_aQKrzIUV7hTzzbZ4NsP7h1YtPvlS5CEpejZrd7i6CVN1la00MmzdH0-_avtLDycS0_q6UNle7ln0EW0JUlhQfwqKs-MjD5IiNFqZpA"/></div><span class="font-headline-sm text-[16px] text-on-surface block">Nautic Deep</span><span class="font-label-caps text-gold-deep text-[10px]">Ref. NAUTIC-44</span></div></div></div><!-- Modal Backdrop Overlay --><div class="fixed inset-0 bg-black/60 backdrop-blur-[3px] z-40 transition-opacity duration-300"></div><!-- Notification Toast --><div class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-[-8px]" id="toastNotification"><div class="bg-inverse-surface/95 text-inverse-on-surface px-4 py-2 rounded-full shadow-lg border border-border-gold/30 flex items-center gap-2 backdrop-blur-md"><span class="material-symbols-outlined text-whatsapp-green text-[18px]">check_circle</span><span class="font-label-sm text-[12px] font-medium tracking-wide" id="toastMessage">Referencia agregada con éxito</span></div></div><!-- Modal Dialog / Bottom Sheet Overlay --><div class="fixed inset-x-0 bottom-0 z-50 flex flex-col justify-end max-w-lg mx-auto pb-safe"><div class="bg-surface-warm border-t border-border-gold/40 rounded-t-3xl shadow-2xl flex flex-col max-h-[85vh] overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom"><!-- Drag Grab Handle --><div class="w-full pt-3 pb-1 flex justify-center"><div class="w-12 h-1.5 rounded-full bg-outline-variant/60"></div></div><!-- Modal Header --><div class="px-margin pt-1 pb-space-sm border-b border-border-subtle"><div class="flex items-center justify-between mb-1"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gold-deep animate-pulse"></span><span class="font-label-caps text-label-caps uppercase text-gold-deep tracking-widest">ÍNDICE DE REFERENCIAS</span><span class="bg-surface-container text-on-surface-variant font-label-caps text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider ml-1" id="badgeCounter">10 PIEZAS</span></div><button aria-label="Cerrar subcatálogo" class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button></div><div class="flex items-baseline justify-between"><h2 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Subcatálogo de Piezas</h2><span class="font-label-caps text-secondary text-[11px] uppercase tracking-wider">Selección Inmediata</span></div></div><!-- Quick Action Bar: Toggle Mini Form & Simulate Instant Add --><div class="px-margin py-2 bg-surface-container-lowest/70 border-b border-border-subtle/70 flex items-center justify-between gap-2"><div class="flex items-center gap-1.5 overflow-x-auto"><button class="bg-gold-deep/10 text-gold-deep border border-gold-deep/30 hover:bg-gold-deep/20 px-2.5 py-1 rounded-full font-label-sm text-[11px] font-semibold flex items-center gap-1 transition-all active:scale-95" id="btnToggleForm" onclick="toggleAddForm()"><span class="material-symbols-outlined text-[14px]">add_circle</span><span>+ Nueva Referencia</span></button><button class="bg-surface-card border border-border-subtle hover:border-gold-deep/40 text-on-surface px-2.5 py-1 rounded-full font-label-sm text-[11px] font-medium flex items-center gap-1 transition-all active:scale-95 shadow-2xs" id="btnQuickAdd" onclick="simulateQuickAdd()"><span class="material-symbols-outlined text-[13px] text-whatsapp-green">bolt</span><span>+ Simular Entrada Rápida</span></button></div><span class="font-label-caps text-[9px] text-secondary tracking-widest uppercase flex-shrink-0">AUTO-SYNC</span></div><!-- Collapsible Mini Form to Add Product --><div class="hidden px-margin py-2.5 bg-surface-container-low border-b border-border-gold/30 transition-all duration-300" id="addFormDrawer"><form class="flex flex-col gap-2" id="manualAddForm" onsubmit="handleManualAdd(event)"><div class="flex items-center justify-between"><span class="font-label-caps text-[10px] text-gold-deep uppercase tracking-widest font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">playlist_add</span> Registrar en Subcatálogo</span><button class="text-secondary hover:text-on-surface text-[12px]" onclick="toggleAddForm()" type="button"><span class="material-symbols-outlined text-[16px]">expand_less</span></button></div><div class="grid grid-cols-2 gap-2"><div class="flex flex-col"><label class="font-label-sm text-[10px] text-secondary mb-0.5">Código / Ref.</label><input class="bg-surface-card border border-border-subtle rounded-md px-2.5 py-1 text-on-surface font-label-code text-[11px] focus:outline-none focus:border-gold-deep uppercase" id="inputRefCode" placeholder="Ej: REF. SPORT-X" required="" type="text"/></div><div class="flex flex-col"><label class="font-label-sm text-[10px] text-secondary mb-0.5">Estilo / Foto</label><select class="bg-surface-card border border-border-subtle rounded-md px-2 py-1 text-on-surface font-label-sm text-[11px] focus:outline-none focus:border-gold-deep" id="inputImageSelect"><option value="https://lh3.googleusercontent.com/aida-public/AB6AXuASk86FojOnYVdyHS9GQRSRvxpqKmn6RGV03UWD_w3t8FGycZWZqKt0k-9Clzmb-iDX3hpyty1dbNQ9Hy05lOaS8RN_5WLnk5NU7czZGMRicCTSUJZXJrBUMEwl8qcNciDDdC3ZAC2aAKzv8IQcnCZg3Kypl03JRlhKgToUoimyvVS_hur29YP-TVJLiCPdy6sGDX9Ccewhtg_cL6N1Rj9LoLgZE69vxygP8jD95g4">Aero Sport Titanio</option><option value="https://lh3.googleusercontent.com/aida-public/AB6AXuBsWDIFK1kPmbCumojnqakmfji4yvQ2DFVYxB_qA0njXNSNtJS2Sd9roCoE2MiMXOV9aEpI9uvX5V3TiZ0l--rruGdRkG0XxVVny1YhsznH_vFaGK6YHOwmvGVdnVma85iN17gWyVWke76mhTAy3ArU_KENmX1LNWgNIUxeK79JfX-LNv46W7PJN34JpMZ7zzkf9AeayE_R2J9JnrMWIofOqZwbeR6QAiq2yZiXcjU">Chrono Acero 316L</option><option value="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ikUJurr4Op-nx9rMiL7P3VhrPP57aBlrwtBe_-Xcwj9uLhMSkc139afZAX0mTZvkCnIrSC7mkFDFfp98BAiTgQf5BujzrQReJWxas3C2uvrYGpbRQUfKmLrBNOZjqLAbtxZZ93He41udDPIZupS6f31HiFn1wL1LvWEWYaftRcsT-jnd7zhD211aahwk5_mJ1Ckpy1i3y0OFS7J6yiT9mQfPy_RZCvtmXy6R7pQ">Calibre Oro 18k</option><option value="https://lh3.googleusercontent.com/aida-public/AB6AXuC9-1VelaiUEl2fltNzg7Yseu_i7tZaGV_rcKVSAZAxr7HBCvIiQ9_RCRVlS58JMajev4UJLblubWPTcQjcFjppEJPPvtIYQQuJHi7X0xXUq91W4J1-ihflr5A6D7nTw5iw_aQKrzIUV7hTzzbZ4NsP7h1YtPvlS5CEpejZrd7i6CVN1la00MmzdH0-_avtLDycS0_q6UNle7ln0EW0JUlhQfwqKs-MjD5IiNFqZpA">Diver Submariner</option></select></div></div><div class="flex justify-end gap-1.5 pt-1"><button class="px-2.5 py-1 rounded text-secondary font-label-sm text-[11px] hover:text-on-surface" onclick="toggleAddForm()" type="button">Cancelar</button><button class="bg-inverse-surface text-inverse-on-surface hover:bg-black px-3 py-1 rounded-md font-label-sm text-[11px] font-semibold flex items-center gap-1 shadow-sm active:scale-95" type="submit"><span class="material-symbols-outlined text-[13px]">add</span><span>Añadir al Subcatálogo</span></button></div></form></div><!-- Filter Pills inside Modal --><div class="px-margin py-2 bg-surface-container-low border-b border-border-subtle/80 flex items-center gap-1.5 overflow-x-auto no-scrollbar"><button class="bg-inverse-surface text-inverse-on-surface px-3 py-1 rounded-full font-label-sm text-[12px] font-semibold flex items-center gap-1 flex-shrink-0 shadow-sm"><span>Todos</span><span class="opacity-80 text-[10px]" id="filterAllCount">(10)</span></button><button class="bg-surface-card border border-border-subtle text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-[12px] flex items-center gap-1 flex-shrink-0 hover:text-on-surface transition-colors">Cronógrafos</button><button class="bg-surface-card border border-border-subtle text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-[12px] flex items-center gap-1 flex-shrink-0 hover:text-on-surface transition-colors">Buceo</button><button class="bg-surface-card border border-border-subtle text-on-surface-variant px-3 py-1 rounded-full font-label-sm text-[12px] flex items-center gap-1 flex-shrink-0 hover:text-on-surface transition-colors">Oro 18k</button><button class="bg-primary-fixed text-on-primary-fixed-variant px-2.5 py-1 rounded-full font-label-sm text-[11px] font-semibold flex items-center gap-1 flex-shrink-0 ml-auto"><span class="material-symbols-outlined text-[13px]">grid_view</span><span>5x</span></button></div><!-- Modal Body: 5-column Subcatalog Grid --><div class="px-margin py-space-md overflow-y-auto max-h-[46vh]"><div class="flex items-center justify-between mb-2"><span class="font-label-caps text-[10px] text-secondary uppercase tracking-widest">Guardatiempos en Stock</span><span class="font-label-code text-[11px] text-gold-deep font-semibold">Toque para solicitar</span></div><div class="grid grid-cols-5 gap-1.5" id="subcatalogGrid"><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20AC-300-TI" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. AC-300-TI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsWDIFK1kPmbCumojnqakmfji4yvQ2DFVYxB_qA0njXNSNtJS2Sd9roCoE2MiMXOV9aEpI9uvX5V3TiZ0l--rruGdRkG0XxVVny1YhsznH_vFaGK6YHOwmvGVdnVma85iN17gWyVWke76mhTAy3ArU_KENmX1LNWgNIUxeK79JfX-LNv46W7PJN34JpMZ7zzkf9AeayE_R2J9JnrMWIofOqZwbeR6QAiq2yZiXcjU"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">AC-300-TI</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20NAUTIC-DEEP-44" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. NAUTIC-DEEP-44" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9-1VelaiUEl2fltNzg7Yseu_i7tZaGV_rcKVSAZAxr7HBCvIiQ9_RCRVlS58JMajev4UJLblubWPTcQjcFjppEJPPvtIYQQuJHi7X0xXUq91W4J1-ihflr5A6D7nTw5iw_aQKrzIUV7hTzzbZ4NsP7h1YtPvlS5CEpejZrd7i6CVN1la00MmzdH0-_avtLDycS0_q6UNle7ln0EW0JUlhQfwqKs-MjD5IiNFqZpA"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">NAUTIC-44</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20SM-T01-AERO" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. SM-T01-AERO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASk86FojOnYVdyHS9GQRSRvxpqKmn6RGV03UWD_w3t8FGycZWZqKt0k-9Clzmb-iDX3hpyty1dbNQ9Hy05lOaS8RN_5WLnk5NU7czZGMRicCTSUJZXJrBUMEwl8qcNciDDdC3ZAC2aAKzv8IQcnCZg3Kypl03JRlhKgToUoimyvVS_hur29YP-TVJLiCPdy6sGDX9Ccewhtg_cL6N1Rj9LoLgZE69vxygP8jD95g4"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">SM-T01</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20CALIBRE-GOLD-X" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. CALIBRE-GOLD-X" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ikUJurr4Op-nx9rMiL7P3VhrPP57aBlrwtBe_-Xcwj9uLhMSkc139afZAX0mTZvkCnIrSC7mkFDFfp98BAiTgQf5BujzrQReJWxas3C2uvrYGpbRQUfKmLrBNOZjqLAbtxZZ93He41udDPIZupS6f31HiFn1wL1LvWEWYaftRcsT-jnd7zhD211aahwk5_mJ1Ckpy1i3y0OFS7J6yiT9mQfPy_RZCvtmXy6R7pQ"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">CALIBRE-X</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20TOURB-99-TITAN" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. TOURB-99-TITAN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0jTKxkbSj6S9Yxifba1iluiXHKipN9CBlcee018pkUDB3oG0UQ1Oiz1X1NQjuWlYko_aqmoxb-h6bp9lol73yn3SjQuwL7wHAlJCrGeeqNQGA8Wp87kMX-6uQBzs4-9kyVoln9LgN6vVQ5WpbsXfo5FCnOmgehQQ79049zV-o_gB-hbUyCJCvoAQ2m1geR4ZztHSWMQ2LTHEdILyHGRN5Glgz0s7RXY6MH6SNQXg"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">TOURB-99</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20BT-CHRONO-01" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. BT-CHRONO-01" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_TT34KaG9eLTkG5F5p1vIjCOMjE1X3LRropQ2NtTVE0HX2jX3U1TTxKEtKs-WXTQxIyAN9aKl-okAftq83rVenrOk_LvUTV2MuZgiOQqytP2qGDqVJkaRSv3qP51dSKH6wHlxXgocRos2nVfVbz-5CXm4VWr2Jef8vrqn1dkUdXX6soWyDr7kju3GEa_NTjaK25A9--F7IdS-7UaFm06pCvOJJH9YP7V8LASA0YA"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">CHRONO-01</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20AC-300-TI" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. AC-300-TI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsWDIFK1kPmbCumojnqakmfji4yvQ2DFVYxB_qA0njXNSNtJS2Sd9roCoE2MiMXOV9aEpI9uvX5V3TiZ0l--rruGdRkG0XxVVny1YhsznH_vFaGK6YHOwmvGVdnVma85iN17gWyVWke76mhTAy3ArU_KENmX1LNWgNIUxeK79JfX-LNv46W7PJN34JpMZ7zzkf9AeayE_R2J9JnrMWIofOqZwbeR6QAiq2yZiXcjU"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">AC-300-TI</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20CALIBRE-GOLD-X" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. CALIBRE-GOLD-X" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ikUJurr4Op-nx9rMiL7P3VhrPP57aBlrwtBe_-Xcwj9uLhMSkc139afZAX0mTZvkCnIrSC7mkFDFfp98BAiTgQf5BujzrQReJWxas3C2uvrYGpbRQUfKmLrBNOZjqLAbtxZZ93He41udDPIZupS6f31HiFn1wL1LvWEWYaftRcsT-jnd7zhD211aahwk5_mJ1Ckpy1i3y0OFS7J6yiT9mQfPy_RZCvtmXy6R7pQ"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">CALIBRE-X</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20TOURB-99-TITAN" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. TOURB-99-TITAN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0jTKxkbSj6S9Yxifba1iluiXHKipN9CBlcee018pkUDB3oG0UQ1Oiz1X1NQjuWlYko_aqmoxb-h6bp9lol73yn3SjQuwL7wHAlJCrGeeqNQGA8Wp87kMX-6uQBzs4-9kyVoln9LgN6vVQ5WpbsXfo5FCnOmgehQQ79049zV-o_gB-hbUyCJCvoAQ2m1geR4ZztHSWMQ2LTHEdILyHGRN5Glgz0s7RXY6MH6SNQXg"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">TOURB-99</span></a><a class="bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-subtle flex flex-col items-center hover:shadow-md transition-all active:scale-95 group" href="https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20Ref.%20NAUTIC-DEEP-44" rel="noopener noreferrer" target="_blank"><div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative"><img alt="REF. NAUTIC-DEEP-44" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9-1VelaiUEl2fltNzg7Yseu_i7tZaGV_rcKVSAZAxr7HBCvIiQ9_RCRVlS58JMajev4UJLblubWPTcQjcFjppEJPPvtIYQQuJHi7X0xXUq91W4J1-ihflr5A6D7nTw5iw_aQKrzIUV7hTzzbZ4NsP7h1YtPvlS5CEpejZrd7i6CVN1la00MmzdH0-_avtLDycS0_q6UNle7ln0EW0JUlhQfwqKs-MjD5IiNFqZpA"/></div><span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">NAUTIC-44</span></a></div></div><!-- Modal Footer Actions --><div class="px-margin py-3 bg-surface-card border-t border-border-subtle flex items-center gap-space-sm"><button class="w-1/3 py-2.5 rounded-full border border-border-subtle text-secondary font-label-md text-label-md hover:bg-surface-container transition-colors">Cerrar</button><a class="flex-1 inline-flex items-center justify-center gap-2 bg-inverse-surface text-inverse-on-surface py-2.5 px-4 rounded-full font-label-md text-label-md font-semibold tracking-wide hover:bg-black transition-all active:scale-98 shadow-sm" href="https://wa.me/584241650425?text=Hola,%20deseo%20consultar%20una%20referencia%20del%20subcatálogo." rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[18px] text-whatsapp-green">support_agent</span><span>Consultar Concierge</span></a></div></div></div></div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-gold-deep font-semibold"><div class="flex justify-around items-center h-16 px-space-sm"><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="catalogo" href="#"><span class="material-symbols-outlined text-[22px]">watch</span><span class="font-label-caps text-label-caps tracking-widest uppercase mt-space-xs">Catálogo</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="lujo" href="#"><span class="material-symbols-outlined text-[22px]">diamond</span><span class="font-label-caps text-label-caps tracking-widest uppercase mt-space-xs">Lujo</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="ofertas" href="#"><span class="material-symbols-outlined text-[22px]">sell</span><span class="font-label-caps text-label-caps tracking-widest uppercase mt-space-xs">Ofertas</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="concierge" href="#"><span class="material-symbols-outlined text-[22px]">support_agent</span><span class="font-label-caps text-label-caps tracking-widest uppercase mt-space-xs">Concierge</span></a></div></nav><script>
-  const sampleProducts = [
-    { code: "SPORT-X", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuASk86FojOnYVdyHS9GQRSRvxpqKmn6RGV03UWD_w3t8FGycZWZqKt0k-9Clzmb-iDX3hpyty1dbNQ9Hy05lOaS8RN_5WLnk5NU7czZGMRicCTSUJZXJrBUMEwl8qcNciDDdC3ZAC2aAKzv8IQcnCZg3Kypl03JRlhKgToUoimyvVS_hur29YP-TVJLiCPdy6sGDX9Ccewhtg_cL6N1Rj9LoLgZE69vxygP8jD95g4" },
-    { code: "DEEP-90", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuC9-1VelaiUEl2fltNzg7Yseu_i7tZaGV_rcKVSAZAxr7HBCvIiQ9_RCRVlS58JMajev4UJLblubWPTcQjcFjppEJPPvtIYQQuJHi7X0xXUq91W4J1-ihflr5A6D7nTw5iw_aQKrzIUV7hTzzbZ4NsP7h1YtPvlS5CEpejZrd7i6CVN1la00MmzdH0-_avtLDycS0_q6UNle7ln0EW0JUlhQfwqKs-MjD5IiNFqZpA" },
-    { code: "ROYAL-07", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD4ikUJurr4Op-nx9rMiL7P3VhrPP57aBlrwtBe_-Xcwj9uLhMSkc139afZAX0mTZvkCnIrSC7mkFDFfp98BAiTgQf5BujzrQReJWxas3C2uvrYGpbRQUfKmLrBNOZjqLAbtxZZ93He41udDPIZupS6f31HiFn1wL1LvWEWYaftRcsT-jnd7zhD211aahwk5_mJ1Ckpy1i3y0OFS7J6yiT9mQfPy_RZCvtmXy6R7pQ" },
-    { code: "PILOT-38", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBsWDIFK1kPmbCumojnqakmfji4yvQ2DFVYxB_qA0njXNSNtJS2Sd9roCoE2MiMXOV9aEpI9uvX5V3TiZ0l--rruGdRkG0XxVVny1YhsznH_vFaGK6YHOwmvGVdnVma85iN17gWyVWke76mhTAy3ArU_KENmX1LNWgNIUxeK79JfX-LNv46W7PJN34JpMZ7zzkf9AeayE_R2J9JnrMWIofOqZwbeR6QAiq2yZiXcjU" },
-    { code: "TOURB-X2", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuC0jTKxkbSj6S9Yxifba1iluiXHKipN9CBlcee018pkUDB3oG0UQ1Oiz1X1NQjuWlYko_aqmoxb-h6bp9lol73yn3SjQuwL7wHAlJCrGeeqNQGA8Wp87kMX-6uQBzs4-9kyVoln9LgN6vVQ5WpbsXfo5FCnOmgehQQ79049zV-o_gB-hbUyCJCvoAQ2m1geR4ZztHSWMQ2LTHEdILyHGRN5Glgz0s7RXY6MH6SNQXg" }
-  ];
-
-  let sampleIndex = 0;
-  let toastTimer = null;
-
-  function showToast(message) {
-    const toast = document.getElementById('toastNotification');
-    const toastMsg = document.getElementById('toastMessage');
-    if (!toast || !toastMsg) return;
-    toastMsg.textContent = message;
-    toast.classList.remove('opacity-0', 'translate-y-[-8px]', 'pointer-events-none');
-    toast.classList.add('opacity-100', 'translate-y-0');
-    if (toastTimer) clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-      toast.classList.remove('opacity-100', 'translate-y-0');
-      toast.classList.add('opacity-0', 'translate-y-[-8px]', 'pointer-events-none');
-    }, 2400);
-  }
-
-  function updateItemCount() {
-    const grid = document.getElementById('subcatalogGrid');
-    if (!grid) return;
-    const total = grid.children.length;
-    const badge = document.getElementById('badgeCounter');
-    const pill = document.getElementById('filterAllCount');
-    if (badge) badge.textContent = `${total} PIEZAS`;
-    if (pill) pill.textContent = `(${total})`;
-  }
-
-  function appendPieceToGrid(refCode, imageUrl, isManual = false) {
-    const grid = document.getElementById('subcatalogGrid');
-    if (!grid) return;
-
-    const cleanCode = refCode.trim().toUpperCase().replace(/^REF\.\s*/i, '');
-    const fullRef = cleanCode.startsWith('REF.') ? cleanCode : `REF. ${cleanCode}`;
-    const encCode = encodeURIComponent(fullRef);
-
-    const item = document.createElement('a');
-    item.className = "bg-surface-card rounded-md overflow-hidden p-1 shadow-sm border border-border-gold/60 flex flex-col items-center hover:shadow-md transition-all active:scale-95 group animate-pop-in ring-1 ring-gold-deep/20";
-    item.href = `https://wa.me/584241650425?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20${encCode}`;
-    item.target = "_blank";
-    item.rel = "noopener noreferrer";
-
-    item.innerHTML = `
-      <div class="w-full aspect-square rounded overflow-hidden bg-surface-container mb-0.5 relative">
-        <span class="absolute top-0.5 right-0.5 z-10 w-1.5 h-1.5 rounded-full bg-tertiary"></span>
-        <img alt="${fullRef}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="${imageUrl}">
-      </div>
-      <span class="font-label-code text-[8px] font-semibold tracking-tight text-on-surface text-center truncate w-full">${cleanCode}</span>
-    `;
-
-    // Insert at beginning of grid for immediate visibility
-    grid.insertBefore(item, grid.firstChild);
-    updateItemCount();
-    showToast(isManual ? `Referencia ${cleanCode} agregada` : `Nueva pieza ${cleanCode} agregada`);
-  }
-
-  function simulateQuickAdd() {
-    const current = sampleProducts[sampleIndex % sampleProducts.length];
-    sampleIndex++;
-    appendPieceToGrid(current.code, current.img, false);
-  }
-
-  function toggleAddForm() {
-    const drawer = document.getElementById('addFormDrawer');
-    if (!drawer) return;
-    drawer.classList.toggle('hidden');
-    if (!drawer.classList.contains('hidden')) {
-      const input = document.getElementById('inputRefCode');
-      if (input) input.focus();
+<html class="h-full bg-[#F5F2EB]" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Biblioteca de Relojes de Lujo</title>
+<!-- Tailwind CSS v3 CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              50: '#FDFBF7',
+              100: '#F5F2EB',
+              200: '#EBE5D8',
+              300: '#DDD3C1'
+            },
+            champagne: {
+              DEFAULT: '#C5A880',
+              light: '#DFCCA6',
+              dark: '#A6885E'
+            },
+            charcoal: {
+              DEFAULT: '#1E1E20',
+              soft: '#2D2D30',
+              muted: '#666563'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Segoe UI"', 'Roboto', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif']
+          },
+          boxShadow: {
+            'card': '0 4px 16px -2px rgba(30, 30, 32, 0.05), 0 1px 3px rgba(30, 30, 32, 0.03)',
+            'floating': '0 12px 28px -4px rgba(30, 30, 32, 0.12), 0 4px 10px -2px rgba(30, 30, 32, 0.05)'
+          }
+        }
+      }
     }
-  }
+  </script>
+<style data-purpose="custom-scroll-and-tap">
+    /* Prevent iOS rubber-band overshoot artifacts and customize tap highlight */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Elegant smooth animations */
+    .transition-custom {
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+  </style>
+</head>
+<body class="h-full text-charcoal font-sans antialiased flex flex-col justify-between max-w-md mx-auto bg-[#F7F5EE] shadow-2xl relative overflow-hidden">
+<!-- BEGIN: MobileStatusBar -->
+<header class="w-full pt-2 px-6 flex justify-between items-center text-xs font-semibold text-charcoal tracking-tight shrink-0 select-none z-30">
+<span>9:41</span>
+<!-- Dynamic Island / Speaker notch simulation -->
+<div class="h-4 w-24 bg-charcoal/10 rounded-full mx-auto hidden sm:block"></div>
+<div class="flex items-center space-x-1.5 text-charcoal">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path></svg>
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zm-2.829 2.828a3 3 0 00-4.242 0 1 1 0 01-1.415-1.414 5 5 0 017.072 0 1 1 0 01-1.415 1.414zM10 16a1 1 0 100-2 1 1 0 000 2z" fill-rule="evenodd"></path></svg>
+<div class="w-5 h-2.5 border border-charcoal rounded-[3px] p-0.5 flex items-center">
+<div class="h-full w-full bg-charcoal rounded-sm"></div>
+</div>
+</div>
+</header>
+<!-- END: MobileStatusBar -->
+<!-- BEGIN: MainContentScrollArea -->
+<main class="flex-1 overflow-y-auto no-scrollbar px-4 pb-28 pt-2" id="main-catalog-view">
+<!-- BEGIN: HeaderSection -->
+<section class="pt-3 pb-4">
+<div class="flex items-center justify-between">
+<div>
+<span class="text-[11px] font-bold tracking-[0.2em] text-champagne uppercase">Colección Privada</span>
+<h1 class="text-2xl font-serif text-charcoal font-bold tracking-tight mt-0.5">Catálogo Horológico</h1>
+</div>
+<!-- Reference overview thumbnail icon inspired by snapshot -->
+<button aria-label="Ver vista previa de snapshot" class="w-10 h-10 rounded-full bg-white shadow-card border border-champagne/20 flex items-center justify-center text-charcoal hover:bg-cream-100 transition-custom" id="btn-snapshot-inspect">
+<svg class="w-5 h-5 text-champagne-dark" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</button>
+</div>
+<p class="text-xs text-charcoal-muted mt-1">10 calibres registrados en bóveda de alta precisión</p>
+</section>
+<!-- END: HeaderSection -->
+<!-- BEGIN: SearchAndSortBar -->
+<section class="mb-4">
+<div class="relative flex items-center">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-muted">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<input class="w-full bg-white text-xs text-charcoal placeholder-charcoal-muted/60 pl-10 pr-9 py-2.5 rounded-xl border-0 shadow-card focus:ring-1.5 focus:ring-champagne focus:outline-none transition-custom" id="search-input" placeholder="Buscar referencia (ej. AC-300, CALIBRE)..." type="text"/>
+<button aria-label="Limpiar búsqueda" class="absolute right-2.5 text-charcoal-muted hover:text-charcoal" onclick="document.getElementById('search-input').value=''; filterWatches();">
+<svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</section>
+<!-- END: SearchAndSortBar -->
+<!-- BEGIN: QuickCategoryFilters -->
+<nav aria-label="Filtros de categoría" class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-3 mb-1 text-xs">
+<button class="filter-btn active-filter px-3.5 py-1.5 rounded-full font-medium whitespace-nowrap bg-charcoal text-white shadow-sm transition-custom" data-filter="all">Todos</button>
+<button class="filter-btn px-3.5 py-1.5 rounded-full font-medium whitespace-nowrap bg-white text-charcoal hover:bg-cream-100 border border-charcoal/5 shadow-card transition-custom" data-filter="chronograph">Cronógrafo</button>
+<button class="filter-btn px-3.5 py-1.5 rounded-full font-medium whitespace-nowrap bg-white text-charcoal hover:bg-cream-100 border border-charcoal/5 shadow-card transition-custom" data-filter="skeleton">Skeleton</button>
+<button class="filter-btn px-3.5 py-1.5 rounded-full font-medium whitespace-nowrap bg-white text-charcoal hover:bg-cream-100 border border-charcoal/5 shadow-card transition-custom" data-filter="diver">Diver (300m+)</button>
+<button class="filter-btn px-3.5 py-1.5 rounded-full font-medium whitespace-nowrap bg-white text-charcoal hover:bg-cream-100 border border-charcoal/5 shadow-card transition-custom" data-filter="tourbillon">Tourbillon</button>
+</nav>
+<!-- END: QuickCategoryFilters -->
+<!-- BEGIN: ReferenceImageBanner -->
+<!-- Displays the requested source snapshot with visual context -->
+<!-- END: ReferenceImageBanner -->
+<!-- BEGIN: GridHeaderControls -->
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="text-xs font-semibold text-charcoal-muted" id="results-counter">Mostrando 10 piezas</span>
+<div class="flex items-center space-x-2 text-xs text-charcoal font-medium">
+<span class="text-charcoal-muted">Ordenar:</span>
+<select class="bg-transparent border-0 text-xs font-semibold text-charcoal py-0 pl-1 pr-6 focus:ring-0 cursor-pointer" id="sort-select">
+<option value="code-asc">Referencia (A-Z)</option>
+<option value="code-desc">Referencia (Z-A)</option>
+<option value="rarity">Rareza</option>
+</select>
+</div>
+</div>
+<!-- END: GridHeaderControls -->
+<!-- BEGIN: WatchCatalogGrid -->
+<!-- Exact styling replicated from image cards: white square-like cards, soft rounded corners, crisp bold model codes -->
+<section class="grid" data-purpose="watch-cards-container" id="watch-grid" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.375rem;"><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="diver" data-code="AC-300-TI" data-complication="Calibre Titanio 300M" data-desc="Monocasco de titanio cepillado con jaula de protección antimagnética y bisel graduado." data-material="Titanio Grado 5" data-power="54 Horas" data-price="€ 9.400"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 1% 15%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">AC-300-TI</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Titanio cepillado</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="diver" data-code="NAUTIC-44" data-complication="Diver Azul Marino 500M" data-desc="Caja de acero macizo con bisel cerámico cobalto y brazalete de eslabones sólidos pulidos." data-material="Acero Marino 904L" data-power="70 Horas" data-price="€ 8.200"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 25.5% 15%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">NAUTIC-44</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Esfera Azul Cobalto</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="chronograph" data-code="SM-T01" data-complication="Dual Táctico Ana-Digi" data-desc="Reloj deportivo multifunción con carátula turquesa de alto contraste y correa de caucho vulcano." data-material="Polímero &amp; Titanio" data-power="Solar 5 Años" data-price="€ 3.650"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 50% 15%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">SM-T01</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Táctico Turquesa</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="skeleton" data-code="CALIBRE-X" data-complication="Esqueleto Calado 18K" data-desc="Engranajes dorados minuciosamente descubiertos bajo zafiro antirreflectante con correa de piel artesanal." data-material="Oro Amarillo 18K" data-power="48 Horas" data-price="€ 24.500"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 74.5% 15%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">CALIBRE-X</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Esqueleto Oro 18K</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="tourbillon" data-code="TOURB-99" data-complication="Tourbillon Volante 60s" data-desc="Arquitectura hexagonal vanguardista en carbono técnico con turbillón compensador expuesto." data-material="Carbono &amp; Cerámica" data-power="120 Horas" data-price="€ 48.000"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 99% 15%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">TOURB-99</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Carbón Forjado</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="chronograph" data-code="CHRONO-01" data-complication="Cronógrafo Bicompax" data-desc="Esfera blanca clásica con agujas pavonadas en azul cobalto y escala telemétrica perimetral." data-material="Acero Pulido &amp; Piel" data-power="65 Horas" data-price="€ 11.800"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 1% 85%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">CHRONO-01</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Soleil Plateada</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="diver" data-code="AC-300-TI" data-complication="Edición Bóveda Titanio II" data-desc="Variante premium con esfera oscura y mecanismo de cuerda automática reforzada." data-material="Titanio Microgranallado" data-power="54 Horas" data-price="€ 9.900"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 25.5% 85%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">AC-300-TI</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Segunda Serie</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="skeleton" data-code="CALIBRE-X" data-complication="Esqueleto Noble Oro Rosa" data-desc="Arquitectura abierta con acabados biselados a mano e indicación de reserva de marcha integrada." data-material="Oro Rosa 18K &amp; Piel Café" data-power="50 Horas" data-price="€ 26.000"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 50% 85%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">CALIBRE-X</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Oro Rosa 18K</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="tourbillon" data-code="TOURB-99" data-complication="Tourbillon Edición Studio" data-desc="Montaje sobre pedestal cerámico con complicaciones esqueletadas y jaula de titanio de 0.28g." data-material="Cerámica Mate &amp; DLC" data-power="100 Horas" data-price="€ 52.000"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 74.5% 85%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">TOURB-99</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">DLC Cerámico</p></div></article><article class="watch-card bg-white rounded-xl p-1 shadow-card border border-black/[0.03] flex flex-col items-center justify-between cursor-pointer active:scale-95 transition-custom hover:shadow-floating" data-category="diver" data-code="NAUTIC-44" data-complication="Edición Marina Roca Profunda" data-desc="Hermeticidad extrema certificada con válvula de helio y marcadores luminescentes SuperLuminova BGW9." data-material="Acero Marino Inox" data-power="72 Horas" data-price="€ 8.900"><div class="w-full aspect-square rounded-lg bg-[#F4F1EA] overflow-hidden relative flex items-center justify-center"><div class="w-full h-full" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0TvCW-9EmKb-klWmeiIB3oawdhc6e74haDL3AyaQpgHgN6IPMW_bX_BkOg4kM-4wRfi1YjJxOUQQxm8Q4oTM1XXh7j8txB9-TIpYQ_Ne6LUN-eiqNgKyV3e19osEOTU-Z9d0xoR4ULx7Tz368i7JOq69Vmi_de1ECdIlzm72WZQw1Mk5xc9BrIRVsAQH3d2a4GUdQ6RgbEUEUuHTmarmvRgRGVyo_V75s7ARkVvj4u_GHoZSzYPB'); background-size: 510% 205%; background-position: 99% 85%;"></div></div><div class="w-full text-center mt-1 pb-0.5"><h3 class="text-[10px] font-black tracking-tight text-charcoal font-sans leading-tight">NAUTIC-44</h3><p class="text-[10px] text-charcoal-muted font-medium mt-0.5 hidden">Armis Macizo</p></div></article></section>
+<!-- END: WatchCatalogGrid -->
+<!-- BEGIN: VaultSummaryBadge -->
+<section class="mt-6 mb-2 bg-[#EFECE3] border border-champagne/30 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-xl bg-charcoal text-champagne flex items-center justify-center">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<div>
+<h4 class="text-xs font-bold text-charcoal uppercase tracking-wider">Bóveda Asegurada</h4>
+<p class="text-[11px] text-charcoal-muted">Valor asegurado: € 194.350</p>
+</div>
+</div>
+<button class="text-xs font-semibold text-champagne-dark hover:underline">Auditoría</button>
+</section>
+<!-- END: VaultSummaryBadge -->
+</main>
+<!-- END: MainContentScrollArea -->
+<!-- BEGIN: DetailModal -->
+<div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-charcoal/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300" id="detail-modal">
+<div class="w-full max-w-md bg-white rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl transform translate-y-full sm:translate-y-8 transition-transform duration-300 max-h-[85vh] overflow-y-auto no-scrollbar" id="modal-card">
+<!-- Drag handle for mobile gesture aesthetic -->
+<div class="w-12 h-1 bg-charcoal/20 rounded-full mx-auto mb-4 sm:hidden"></div>
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[11px] font-bold text-champagne-dark uppercase tracking-wider" id="modal-category">Categoría</span>
+<h2 class="text-2xl font-bold font-sans text-charcoal mt-0.5 tracking-tight" id="modal-title">AC-300-TI</h2>
+</div>
+<button aria-label="Cerrar ficha" class="w-8 h-8 rounded-full bg-cream-100 flex items-center justify-center text-charcoal hover:bg-cream-200" id="modal-close">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Modal Image Mockup Display -->
+<div class="my-5 w-full h-44 rounded-2xl bg-cream-100 flex items-center justify-center border border-charcoal/5 relative overflow-hidden" id="modal-graphic-container">
+<div class="scale-125" id="modal-dynamic-art"></div>
+</div>
+<!-- Specifications Grid -->
+<div class="grid grid-cols-2 gap-3 text-xs mb-4">
+<div class="bg-cream-50 p-2.5 rounded-xl border border-cream-200">
+<span class="text-charcoal-muted block text-[10px] uppercase font-semibold">Material</span>
+<span class="font-bold text-charcoal" id="modal-material">Titanio Grado 5</span>
+</div>
+<div class="bg-cream-50 p-2.5 rounded-xl border border-cream-200">
+<span class="text-charcoal-muted block text-[10px] uppercase font-semibold">Reserva de Marcha</span>
+<span class="font-bold text-charcoal" id="modal-power">54 Horas</span>
+</div>
+<div class="bg-cream-50 p-2.5 rounded-xl border border-cream-200">
+<span class="text-charcoal-muted block text-[10px] uppercase font-semibold">Complicación</span>
+<span class="font-bold text-charcoal" id="modal-complication">Diver Automático</span>
+</div>
+<div class="bg-cream-50 p-2.5 rounded-xl border border-cream-200">
+<span class="text-charcoal-muted block text-[10px] uppercase font-semibold">Valor Estimado</span>
+<span class="font-bold text-champagne-dark" id="modal-price">€ 9.400</span>
+</div>
+</div>
+<p class="text-xs text-charcoal-muted leading-relaxed mb-6" id="modal-desc">
+        Descripción detallada de la pieza y manufactura suiza.
+      </p>
+<div class="flex space-x-3">
+<button class="flex-1 py-3 px-4 rounded-xl border border-charcoal/15 text-xs font-semibold text-charcoal hover:bg-cream-100 flex items-center justify-center space-x-2 transition-custom" id="modal-favorite-btn">
+<svg class="w-4 h-4 text-champagne" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span id="fav-label-text">Añadir a Deseos</span>
+</button>
+<button class="flex-1 py-3 px-4 rounded-xl bg-charcoal text-white text-xs font-semibold hover:bg-charcoal-soft shadow-card flex items-center justify-center space-x-1.5 transition-custom">
+<span>Ficha Técnica PDF</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</div>
+<!-- END: DetailModal -->
+<!-- BEGIN: BottomNavigation -->
+<nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-charcoal/5 px-6 py-2.5 z-40" data-purpose="mobile-tab-bar">
+<div class="flex items-center justify-between max-w-sm mx-auto">
+<!-- Tab: Catálogo (Active) -->
+<button aria-label="Ir a Biblioteca" class="flex flex-col items-center text-charcoal focus:outline-none">
+<div class="p-1 rounded-full text-champagne-dark">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+<path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+</svg>
+</div>
+<span class="text-[10px] font-semibold text-charcoal">Colección</span>
+</button>
+<!-- Tab: Explorar / Búsqueda -->
+<button aria-label="Buscar modelos" class="flex flex-col items-center text-charcoal-muted hover:text-charcoal focus:outline-none" onclick="document.getElementById('search-input').focus();">
+<div class="p-1">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<span class="text-[10px] font-medium text-charcoal-muted">Explorar</span>
+</button>
+<!-- Tab: Favoritos / Deseos -->
+<button aria-label="Deseos guardados" class="flex flex-col items-center text-charcoal-muted hover:text-charcoal relative focus:outline-none" id="nav-fav-count">
+<div class="p-1 relative">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span class="hidden absolute top-0 right-0 w-2 h-2 rounded-full bg-champagne" id="fav-badge"></span>
+</div>
+<span class="text-[10px] font-medium text-charcoal-muted">Deseos</span>
+</button>
+<!-- Tab: Perfil de Coleccionista -->
+<button aria-label="Perfil horológico" class="flex flex-col items-center text-charcoal-muted hover:text-charcoal focus:outline-none">
+<div class="p-1">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<span class="text-[10px] font-medium text-charcoal-muted">Bóveda</span>
+</button>
+</div>
+</nav>
+<!-- END: BottomNavigation -->
+<!-- BEGIN: InteractiveCatalogLogic -->
+<script data-purpose="catalog-interactions">
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.watch-card');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const searchInput = document.getElementById('search-input');
+      const sortSelect = document.getElementById('sort-select');
+      const counterText = document.getElementById('results-counter');
 
-  function handleManualAdd(e) {
-    e.preventDefault();
-    const inputRef = document.getElementById('inputRefCode');
-    const selectImg = document.getElementById('inputImageSelect');
-    if (!inputRef || !inputRef.value.trim()) return;
+      // Modal elements
+      const modal = document.getElementById('detail-modal');
+      const modalCard = document.getElementById('modal-card');
+      const modalClose = document.getElementById('modal-close');
+      const modalTitle = document.getElementById('modal-title');
+      const modalCategory = document.getElementById('modal-category');
+      const modalMaterial = document.getElementById('modal-material');
+      const modalPower = document.getElementById('modal-power');
+      const modalComplication = document.getElementById('modal-complication');
+      const modalPrice = document.getElementById('modal-price');
+      const modalDesc = document.getElementById('modal-desc');
+      const modalDynamicArt = document.getElementById('modal-dynamic-art');
+      const modalFavBtn = document.getElementById('modal-favorite-btn');
+      const favBadge = document.getElementById('fav-badge');
+      const favLabelText = document.getElementById('fav-label-text');
 
-    appendPieceToGrid(inputRef.value.trim(), selectImg.value, true);
-    inputRef.value = '';
-    toggleAddForm();
-  }
-</script></body></html>
+      let currentActiveFilter = 'all';
+      let favoriteCount = 0;
+
+      // Filtering logic
+      function applyFilterAndSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          const code = card.getAttribute('data-code').toLowerCase();
+          const complication = card.getAttribute('data-complication').toLowerCase();
+
+          const matchesCategory = (currentActiveFilter === 'all') || (category === currentActiveFilter);
+          const matchesQuery = !query || code.includes(query) || complication.includes(query);
+
+          if (matchesCategory && matchesQuery) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        counterText.textContent = `Mostrando ${visibleCount} pieza${visibleCount === 1 ? '' : 's'}`;
+      }
+
+      window.filterWatches = applyFilterAndSearch;
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-charcoal', 'text-white');
+            b.classList.add('bg-white', 'text-charcoal');
+          });
+          btn.classList.remove('bg-white', 'text-charcoal');
+          btn.classList.add('bg-charcoal', 'text-white');
+
+          currentActiveFilter = btn.getAttribute('data-filter');
+          applyFilterAndSearch();
+        });
+      });
+
+      searchInput.addEventListener('input', applyFilterAndSearch);
+
+      // Sorting logic
+      sortSelect.addEventListener('change', () => {
+        const grid = document.getElementById('watch-grid');
+        const cardsArray = Array.from(cards);
+
+        const val = sortSelect.value;
+        cardsArray.sort((a, b) => {
+          const codeA = a.getAttribute('data-code');
+          const codeB = b.getAttribute('data-code');
+
+          if (val === 'code-asc') return codeA.localeCompare(codeB);
+          if (val === 'code-desc') return codeB.localeCompare(codeA);
+          return 0;
+        });
+
+        cardsArray.forEach(c => grid.appendChild(c));
+      });
+
+      // Open Modal on Card Click
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const code = card.getAttribute('data-code');
+          const cat = card.getAttribute('data-category');
+          const mat = card.getAttribute('data-material');
+          const power = card.getAttribute('data-power');
+          const comp = card.getAttribute('data-complication');
+          const price = card.getAttribute('data-price');
+          const desc = card.getAttribute('data-desc');
+          const watchGraphic = card.querySelector('div > div')?.cloneNode(true);
+
+          modalTitle.textContent = code;
+          modalCategory.textContent = 'Calibre ' + cat.toUpperCase();
+          modalMaterial.textContent = mat;
+          modalPower.textContent = power;
+          modalComplication.textContent = comp;
+          modalPrice.textContent = price;
+          modalDesc.textContent = desc;
+
+          modalDynamicArt.innerHTML = '';
+          if (watchGraphic) {
+            modalDynamicArt.appendChild(watchGraphic);
+          }
+
+          // Show Modal
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+          modalCard.classList.remove('translate-y-full', 'sm:translate-y-8');
+        });
+      });
+
+      // Close Modal Function
+      function closeModal() {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modalCard.classList.add('translate-y-full', 'sm:translate-y-8');
+      }
+
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Favorite Button Microinteraction
+      modalFavBtn.addEventListener('click', () => {
+        favoriteCount++;
+        favBadge.classList.remove('hidden');
+        favLabelText.textContent = '¡En Lista de Deseos!';
+        modalFavBtn.classList.add('border-champagne', 'bg-cream-100');
+        setTimeout(() => {
+          favLabelText.textContent = 'Guardado';
+        }, 1200);
+      });
+
+      // Snapshot quick scroll trigger
+      document.getElementById('btn-snapshot-inspect').addEventListener('click', () => {
+        document.querySelector('[data-purpose="original-reference-display"]').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+<!-- END: InteractiveCatalogLogic -->
+</body></html>
