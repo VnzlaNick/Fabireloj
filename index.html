@@ -221,34 +221,37 @@
     </div>
   </nav>
 
-  <!-- Lightbox Modal (Mobile Viewport Optimized) -->
-  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true">
-    <button id="lightbox-close-btn" aria-label="Cerrar visor" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white active:scale-95">
-      <span class="material-symbols-outlined text-[22px]">close</span>
-    </button>
-    <div id="lightbox-card" class="relative max-w-sm w-full bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 p-4 flex flex-col gap-3 shadow-2xl transform scale-95 transition-all">
-      <div class="relative w-full h-64 flex items-center justify-center bg-black/40 rounded-xl overflow-hidden p-2">
-        <img id="lightbox-image" alt="Detalle del reloj" class="max-h-full max-w-full object-contain drop-shadow-xl" src=""/>
+<!-- Lightbox Modal (Mobile Viewport Optimized) -->
+<div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true">
+  <button id="lightbox-close-btn" aria-label="Cerrar visor" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white active:scale-95">
+    <span class="material-symbols-outlined text-[22px]">close</span>
+  </button>
+
+  <div id="lightbox-card" class="relative max-w-sm w-full bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 p-4 flex flex-col gap-3 shadow-2xl transform scale-95 transition-all">
+    <div class="relative w-full h-64 flex items-center justify-center bg-black/40 rounded-xl overflow-hidden p-2">
+      <img id="lightbox-image" alt="Detalle del reloj" class="w-full h-full object-cover scale-110 drop-shadow-xl" src=""/>
+    </div>
+
+    <div class="flex flex-col gap-1 text-white">
+      <div class="flex items-center justify-between">
+        <span id="lightbox-ref" class="text-[10px] text-secondary font-bold uppercase tracking-wider">Ref.</span>
+        <span id="lightbox-price" class="font-headline text-[18px] font-bold text-white">$0 USD</span>
       </div>
-      <div class="flex flex-col gap-1 text-white">
-        <div class="flex items-center justify-between">
-          <span id="lightbox-ref" class="text-[10px] text-secondary font-bold uppercase tracking-wider">Ref.</span>
-          <span id="lightbox-price" class="font-headline text-[18px] font-bold text-white">$0 USD</span>
-        </div>
-        <h3 id="lightbox-title" class="font-headline text-[17px] font-bold">Modelo</h3>
-        <p id="lightbox-subtitle" class="text-[11px] text-white/70">Colección de Alta Relojería</p>
-      </div>
-      <div class="flex items-center gap-2 pt-1">
-        <button id="lightbox-dismiss-btn" class="flex-1 py-2 rounded-full bg-white/15 text-white text-[12px] font-semibold active:scale-95 transition-all">
-          Cerrar
-        </button>
-        <a id="lightbox-wa-btn" href="#" class="flex-1 py-2 rounded-full bg-emerald-600 text-white text-[12px] font-bold flex items-center justify-center gap-1 active:scale-95 shadow-sm">
-          <span class="material-symbols-outlined text-[16px]">chat</span>
-          <span>Consultar</span>
-        </a>
-      </div>
+      <h3 id="lightbox-title" class="font-headline text-[17px] font-bold">Modelo</h3>
+      <p id="lightbox-subtitle" class="text-[11px] text-white/70">Colección de Alta Relojería</p>
+    </div>
+
+    <div class="flex items-center gap-2 pt-1">
+      <button id="lightbox-dismiss-btn" class="flex-1 py-2 rounded-full bg-white/15 text-white text-[12px] font-semibold active:scale-95 transition-all">
+        Cerrar
+      </button>
+      <a id="lightbox-wa-btn" href="#" class="flex-1 py-2 rounded-full bg-emerald-600 text-white text-[12px] font-bold flex items-center justify-center gap-1 active:scale-95 shadow-sm">
+        <span class="material-symbols-outlined text-[16px]">chat</span>
+        <span>Consultar</span>
+      </a>
     </div>
   </div>
+</div>
 
   <!-- Admin / Catalog Management Modal (Local, No External Backend) -->
   <div id="admin-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 hidden" role="dialog" aria-modal="true">
