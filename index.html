@@ -198,28 +198,38 @@
 
   </main>
 
-  <!-- Mobile Bottom Tab Bar -->
-  <nav class="fixed bottom-0 inset-x-0 z-40 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/70 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.04)]">
-    <div class="flex justify-around items-center h-14 max-w-md mx-auto px-2">
-      <a class="flex flex-col items-center justify-center w-16 text-primary font-semibold transition-colors nav-tab-item active" data-path="catalogo" href="catálago.html">
-        <span class="material-symbols-outlined text-[20px]">grid_view</span>
-        <span class="text-[10px] uppercase font-bold tracking-wider mt-0.5">Catálogo</span>
-      </a>
-      <a class="flex flex-col items-center justify-center w-16 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item" data-path="lujo" href="#">
-        <span class="material-symbols-outlined text-[20px]">watch</span>
-        <span class="text-[10px] uppercase font-medium tracking-wider mt-0.5">Favoritos</span>
-      </a>
-      <a class="relative flex flex-col items-center justify-center w-16 text-secondary font-semibold transition-colors nav-tab-item" data-path="ofertas" href="#">
-        <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
-        <span class="text-[10px] uppercase font-bold tracking-wider mt-0.5">Ofertas</span>
-        <span class="absolute top-0 right-3 w-3.5 h-3.5 rounded-full bg-secondary text-white text-[8px] font-bold flex items-center justify-center">1</span>
-      </a>
-      <a class="flex flex-col items-center justify-center w-16 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item" data-path="contacto" href="https://wa.me/584241650425">
-        <span class="material-symbols-outlined text-[20px]">forum</span>
-        <span class="text-[10px] uppercase font-medium tracking-wider mt-0.5">Contacto</span>
-      </a>
-    </div>
-  </nav>
+<!-- Mobile Bottom Tab Bar -->
+<nav class="fixed bottom-0 inset-x-0 z-40 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-outline-variant/70 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.04)]">
+  <div class="flex justify-around items-center h-14 max-w-md mx-auto px-2">
+    <a class="flex flex-col items-center justify-center w-16 text-primary font-semibold transition-colors nav-tab-item active"
+       data-path="catalogo" href="catalogo.html">
+      <span class="material-symbols-outlined text-[20px]">grid_view</span>
+      <span class="text-[10px] uppercase font-bold tracking-wider mt-0.5">Catálogo</span>
+    </a>
+
+    <a class="flex flex-col items-center justify-center w-16 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item"
+       data-path="lujo" href="#">
+      <span class="material-symbols-outlined text-[20px]">watch</span>
+      <span class="text-[10px] uppercase font-medium tracking-wider mt-0.5">Favoritos</span>
+    </a>
+
+    <a id="offers-tab"
+       class="relative flex flex-col items-center justify-center w-16 text-secondary font-semibold transition-colors nav-tab-item"
+       data-path="ofertas" href="ofertas.html" aria-label="Ofertas">
+      <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+      <span class="text-[10px] uppercase font-bold tracking-wider mt-0.5">Ofertas</span>
+      <span id="offers-badge"
+            class="hidden absolute top-0 right-3 min-w-3.5 h-3.5 px-1 rounded-full bg-secondary text-white text-[8px] font-bold items-center justify-center"
+            aria-live="polite" aria-atomic="true"></span>
+    </a>
+
+    <a class="flex flex-col items-center justify-center w-16 text-on-surface-variant hover:text-on-surface transition-colors nav-tab-item"
+       data-path="contacto" href="https://wa.me/584241650425">
+      <span class="material-symbols-outlined text-[20px]">forum</span>
+      <span class="text-[10px] uppercase font-medium tracking-wider mt-0.5">Contacto</span>
+    </a>
+  </div>
+</nav>
 
 <!-- Lightbox Modal (Mobile Viewport Optimized) -->
 <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true">
