@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Biblioteca de relojes</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #10110f;
+      --panel: #191a17;
+      --panel-soft: #20211e;
+      --text: #f2efe7;
+      --muted: #a7a398;
+      --gold: #c7a76c;
+      --line: #34342e;
+      --danger: #ff9c8c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+
+    header, main {
+      width: min(1180px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    header {
+      padding: 38px 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 11px;
+    }
+
+    h1 {
+      margin: 8px 0;
+      font: 400 clamp(30px, 5vw, 48px)/1.1 Georgia, serif;
+    }
+
+    .subtitle, .muted { color: var(--muted); }
+
+    main { padding: 24px 0 60px; }
+
+    .toolbar, .admin-box, .login-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr minmax(160px, 220px);
+      gap: 12px;
+    }
+
+    input, select, textarea, button {
+      font: inherit;
+      color: var(--text);
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 11px 12px;
+    }
+
+    input, select, textarea { width: 100%; }
+    textarea { min-height: 90px; resize: vertical; }
+
+    button {
+      cursor: pointer;
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #17150f;
+      font-weight: 650;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 28px 0 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font: 400 25px Georgia, serif;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      display: block;
+      object-fit: cover;
+      background: var(--panel-soft);
+    }
+
+    .image-placeholder {
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      background: var(--panel-soft);
+      font: 16px Georgia, serif;
+    }
+
+    .card-body { padding: 15px; }
+    .category { color: var(--gold); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
+    .card h3 { margin: 5px 0 2px; font: 400 21px Georgia, serif; }
+    .reference { color: var(--muted); font-size: 13px; }
+    .price { margin: 13px 0; font-size: 18px; }
+    .details { color: var(--muted); font-size: 13px; }
+    .details p { margin: 5px 0; }
+    .description { margin-top: 12px !important; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field label {
+      display: block;
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+    .form-actions { margin-top: 14px; display: flex; gap: 10px; align-items: center; }
+    .notice { min-height: 22px; color: var(--muted); }
+    .error { color: var(--danger); }
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+      .toolbar, .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Colección privada</div>
+    <h1>Biblioteca de relojes</h1>
+    <div class="subtitle">Una colección que crece con cada nueva pieza.</div>
+  </header>
+
+  <main>
+    <section id="loginBox" class="login-box">
+      <h2>Acceso de administrador</h2>
+      <p class="muted">Inicia sesión para añadir relojes a la biblioteca.</p>
+      <form id="loginForm" class="form-grid">
+        <div class="field">
+          <label for="email">Correo</label>
+          <input id="email" type="email" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <input id="password" type="password" autocomplete="current-password" required />
+        </div>
+        <div class="field full">
+          <button id="loginButton" type="submit">Iniciar sesión</button>
+        </div>
+      </form>
+      <div id="loginMessage" class="notice" role="status"></div>
+    </section>
+
+    <section id="adminBox" class="admin-box hidden">
+      <div class="section-heading">
+        <h2>Añadir reloj</h2>
+        <button id="logoutButton" class="secondary" type="button">Cerrar sesión</button>
+      </div>
+
+      <form id="watchForm" class="form-grid">
+        <div class="field">
+          <label for="reference">Referencia única *</label>
+          <input id="reference" required maxlength="120" />
+        </div>
+        <div class="field">
+          <label for="category">Categoría *</label>
+          <input id="category" required placeholder="diver, skeleton, chronograph..." />
+        </div>
+        <div class="field">
+          <label for="material">Material</label>
+          <input id="material" />
+        </div>
+        <div class="field">
+          <label for="powerReserve">Reserva de marcha</label>
+          <input id="powerReserve" />
+        </div>
+        <div class="field">
+          <label for="complication">Complicación</label>
+          <input id="complication" />
+        </div>
+        <div class="field">
+          <label for="price">Precio estimado (USD)</label>
+          <input id="price" type="number" min="0" step="0.01" />
+        </div>
+        <div class="field full">
+          <label for="imageUrl">URL de imagen</label>
+          <input id="imageUrl" type="url" placeholder="https://..." />
+        </div>
+        <div class="field full">
+          <label for="description">Descripción</label>
+          <textarea id="description"></textarea>
+        </div>
+        <div class="field full form-actions">
+          <button id="saveButton" type="submit">Guardar en la biblioteca</button>
+          <span id="formMessage" class="notice" role="status"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="toolbar" aria-label="Filtros">
+      <input id="search" type="search" placeholder="Buscar por reloj, referencia o material..." />
+      <select id="categoryFilter">
+        <option value="">Todas las categorías</option>
+      </select>
+    </section>
+
+    <div class="section-heading">
+      <h2>La colección</h2>
+      <span id="count" class="muted"></span>
+    </div>
+
+    <div id="status" class="notice" role="status">Cargando biblioteca…</div>
+    <section id="watchGrid" class="grid" aria-live="polite"></section>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const SUPABASE_URL = 'https://tpidmniocervffdiibyp.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_U_4sNRRN26XoUxp71yGvIQ_TVwo6Vle';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    const $ = (id) => document.getElementById(id);
+    const grid = $('watchGrid');
+    const status = $('status');
+    let watches = [];
+    let currentUser = null;
+
+    function escapeHtml(value = '') {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      })[char]);
+    }
+
+    function safeImageUrl(value) {
+      try {
+        const url = new URL(value);
+        return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+      } catch {
+        return '';
+      }
+    }
+
+    function money(value) {
+      if (value === null || value === undefined || value === '') return 'Precio no indicado';
+      return new Intl.NumberFormat('es-ES', {
+        style: 'currency', currency: 'USD', maximumFractionDigits: 0
+      }).format(Number(value));
+    }
+
+    function render() {
+      const query = $('search').value.trim().toLowerCase();
+      const category = $('categoryFilter').value;
+
+      const filtered = watches.filter((watch) => {
+        const text = [
+          watch.reference, watch.category, watch.material,
+          watch.power_reserve, watch.complication, watch.description
+        ].filter(Boolean).join(' ').toLowerCase();
+
+        return (!query || text.includes(query))
+          && (!category || watch.category === category);
+      });
+
+      $('count').textContent = `${filtered.length} ${filtered.length === 1 ? 'reloj' : 'relojes'}`;
+
+      if (!filtered.length) {
+        grid.innerHTML = '<p class="muted">No hay relojes que coincidan con la búsqueda.</p>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((watch) => {
+        const image = safeImageUrl(watch.image_url);
+        const imageMarkup = image
+          ? `<img class="card-image" src="${escapeHtml(image)}" alt="${escapeHtml(watch.reference)}" loading="lazy">`
+          : '<div class="image-placeholder">Sin imagen</div>';
+
+        return `
+          <article class="card">
+            ${imageMarkup}
+            <div class="card-body">
+              <div class="category">${escapeHtml(watch.category || 'Sin categoría')}</div>
+              <h3>${escapeHtml(watch.reference || 'Reloj')}</h3>
+              <div class="reference">${escapeHtml(watch.material || '')}</div>
+              <div class="price">${money(watch.price)}</div>
+              <div class="details">
+                ${watch.power_reserve ? `<p>Reserva: ${escapeHtml(watch.power_reserve)}</p>` : ''}
+                ${watch.complication ? `<p>Complicación: ${escapeHtml(watch.complication)}</p>` : ''}
+                ${watch.description ? `<p class="description">${escapeHtml(watch.description)}</p>` : ''}
+              </div>
+            </div>
+          </article>`;
+      }).join('');
+    }
+
+    async function loadWatches() {
+      status.textContent = 'Cargando biblioteca…';
+      status.classList.remove('error');
+
+      const { data, error } = await supabase
+        .from('watch_library')
+        .select('id, reference, category, material, power_reserve, complication, price, description, image_url, created_at')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        status.textContent = `No se pudo cargar la biblioteca: ${error.message}`;
+        status.classList.add('error');
+        return;
+      }
+
+      watches = data ?? [];
+      const categories = [...new Set(watches.map((w) => w.category).filter(Boolean))].sort();
+      $('categoryFilter').innerHTML =
+        '<option value="">Todas las categorías</option>' +
+        categories.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+
+      status.textContent = '';
+      render();
+    }
+
+    function updateAuthUI() {
+      const isAdmin = currentUser?.app_metadata?.role === 'admin';
+      $('loginBox').classList.toggle('hidden', isAdmin);
+      $('adminBox').classList.toggle('hidden', !isAdmin);
+
+      if (currentUser && !isAdmin) {
+        $('loginMessage').textContent = 'La cuenta inició sesión, pero no tiene rol de administrador.';
+      }
+    }
+
+    $('search').addEventListener('input', render);
+    $('categoryFilter').addEventListener('change', render);
+
+    $('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      $('loginButton').disabled = true;
+      $('loginMessage').textContent = 'Iniciando sesión…';
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: $('email').value,
+        password: $('password').value
+      });
+
+      $('loginButton').disabled = false;
+
+      if (error) {
+        $('loginMessage').textContent = `No se pudo iniciar sesión: ${error.message}`;
+        $('loginMessage').classList.add('error');
+        return;
+      }
+
+      currentUser = data.user;
+      $('loginMessage').textContent = '';
+      updateAuthUI();
+    });
+
+    $('logoutButton').addEventListener('click', async () => {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        $('formMessage').textContent = error.message;
+        $('formMessage').classList.add('error');
+        return;
+      }
+      currentUser = null;
+      updateAuthUI();
+    });
+
+    $('watchForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      $('saveButton').disabled = true;
+      $('formMessage').textContent = 'Guardando…';
+      $('formMessage').classList.remove('error');
+
+      const rawPrice = $('price').value;
+      const record = {
+        reference: $('reference').value.trim(),
+        category: $('category').value.trim(),
+        material: $('material').value.trim() || null,
+        power_reserve: $('powerReserve').value.trim() || null,
+        complication: $('complication').value.trim() || null,
+        price: rawPrice === '' ? null : Number(rawPrice),
+        description: $('description').value.trim() || null,
+        image_url: $('imageUrl').value.trim() || null
+      };
+
+      const { error } = await supabase.from('watch_library').insert(record);
+      $('saveButton').disabled = false;
+
+      if (error) {
+        $('formMessage').textContent = `No se guardó: ${error.message}`;
+        $('formMessage').classList.add('error');
+        return;
+      }
+
+      $('watchForm').reset();
+      $('formMessage').textContent = 'Reloj archivado en la biblioteca.';
+      await loadWatches();
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      currentUser = session?.user ?? null;
+      updateAuthUI();
+    });
+
+    const { data: sessionData } = await supabase.auth.getSession();
+    currentUser = sessionData.session?.user ?? null;
+    updateAuthUI();
+    await loadWatches();
+  </script>
+</body>
+</html>
