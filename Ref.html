@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Catálogo de Relojes - Watch Vault</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              bg: '#F5F3EE',
+              card: '#FFFFFF',
+              surface: '#EFECE6',
+              text: '#1C1B1A',
+              muted: '#7A7670',
+              accent: '#B89047',
+              border: '#E5E1D8'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+            mono: ['SF Mono', 'ui-monospace', 'Menlo', 'Monaco', 'monospace']
+          },
+          boxShadow: {
+            'card-subtle': '0 2px 10px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02)',
+            'floating': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03)'
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="base-enhancements">
+    body {
+      background-color: #F5F3EE;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    /* Hide scrollbar for clean app-like display */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    * {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-luxury-bg text-luxury-text min-h-screen flex flex-col font-sans antialiased selection:bg-luxury-accent/20">
+<!-- BEGIN: MobileStatusBar (iOS aesthetic) -->
+<div class="w-full pt-2 px-6 flex justify-between items-center text-xs font-medium text-luxury-muted select-none" data-purpose="ios-safe-area">
+<span>9:41</span>
+<div class="flex items-center gap-1.5">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 18.23c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l.73-.73C8.16 19.94 9.98 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path></svg>
+<div class="w-5 h-2.5 border border-luxury-muted rounded-sm p-0.5 flex items-center">
+<div class="w-full h-full bg-luxury-text rounded-2xs"></div>
+</div>
+</div>
+</div>
+<!-- END: MobileStatusBar -->
+<!-- BEGIN: MainHeader -->
+<header class="px-5 pt-4 pb-3" data-purpose="header-section">
+<div class="flex items-center justify-between pb-1">
+<div>
+<p class="text-[10px] tracking-[0.22em] uppercase text-luxury-muted font-semibold">Watch Vault • DB v2.4</p>
+<h1 class="text-xl font-bold tracking-tight text-luxury-text mt-0.5">CATÁLOGO DE RELOJES</h1>
+</div>
+<!-- Search & Filter Quick Actions -->
+<div class="flex items-center gap-2">
+<button aria-label="Buscar" class="w-9 h-9 rounded-full bg-white border border-luxury-border flex items-center justify-center shadow-card-subtle active:scale-95 transition-transform" type="button">
+<svg class="w-4 h-4 text-luxury-text" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<button aria-label="Filtro" class="w-9 h-9 rounded-full bg-white border border-luxury-border flex items-center justify-center shadow-card-subtle active:scale-95 transition-transform" type="button">
+<svg class="w-4 h-4 text-luxury-text" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Live DB Feed Indicator -->
+<div class="flex items-center justify-between mt-2.5 pt-2 border-t border-luxury-border/60">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-[11px] font-medium tracking-wide text-neutral-600">Sincronizado con Base de Datos</span>
+</div>
+<span class="text-[11px] font-mono font-medium text-luxury-muted">10 ITEMS</span>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: WatchCatalogGrid -->
+<main class="flex-1 px-4 py-2 pb-24 overflow-y-auto" data-purpose="catalog-grid-container">
+<!-- Grid structured into 4 columns -->
+<div class="grid grid-cols-4 gap-2">
+<!-- Item 1: AC-300-TI -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj AC-300-TI cronógrafo titanio" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVfZCwFRInzElJvmju7I2QzamQ1VpIutyxWoa3idV3KabLCoXk_FUiuCOD006v55mL0eNV1LoBW9WxdOtzvvWsJigMvirRR8sxIl7LdqRqLvqd5UJTML9UVGVvg_-K11y6SWojuyJavtO5goJ0KGQgpL7N2zYhqmeaxcKToAJJj_Eo3kaKh1i9iof_sN3re_YWsaxLZAtv7ikBVemXCeuVnu4Q3blMrDf1ayD45fs"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">AC-300-TI</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1041</span>
+</article>
+<!-- Item 2: NAUTIC-44 -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj NAUTIC-44 dial azul bisel deportivo" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxd9SHxYfSWt9njIt-6Y3GCbp8hs6F9o9Ngl2WbwZYeNgSyiwlvyvr0a3a65Y9zojYhkdUHiIxHeq3XMtGj_WN-DJY2dJmB7W68Ab31be7ZgnW6Nyl7L2Td9Gd-Q-bdUujlkN1XWYGbd1zcAwOsNXZgfAoOL4N5ZQ5ZZP4iFlDu0TDNeIpfSblf8fryMEJ81V7Ywo2nvaaJ0-0pGbAAXiFc83TMHYHBlUP6BkkhcQ"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">NAUTIC-44</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1042</span>
+</article>
+<!-- Item 3: SM-T01 -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj SM-T01 deportivo azul turquesa" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqVXgY-sLmwJ4e45BJtrhi3fOIC14eTOlNGR2xOiPHCYEsuM1dQSyz_Dk05PW4Sw0xobyMFwN_0aNfFq7VPXzUaCBZPo2ItY8FkQmFSPCzFqVe1NHCIKX7Ls-snaF-kMMTRkaEcMzewqWEXW9_35prvhUgtecqzpxWwGZ_oP-BaX4_n98YEEvPWBeYH6wQ_BvRyjb2sBuuN0RVkeoJqLeqkJmrE0F_ZBftFrgP6Pw"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">SM-T01</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1043</span>
+</article>
+<!-- Item 4: CALIBRE-X -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj CALIBRE-X esqueletizado oro pulido" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH2PAURjlMR6wIF_VF3f-1WUyv2ZKKW0UtzKX_gT1IA5dzD4xbJmTerHjRq10cY-ObrElxo8ATzrMLTvYQIY2oF6y-75PCRNRlo-FZT63ztizchZkWnLeokh8dddItPKZG1sKJhXh35w-AReU_oOk4lvkoGFaEMud_eXkLikNZ_PmBhZEuY3bQFsI40wBoIWXV2kT5EIdCO_P_vcfEiMjF7gXP5ccUJXae9dxZExE"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">CALIBRE-X</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1044</span>
+</article>
+<!-- Item 5: TOURB-99 -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj TOURB-99 tourbillon caja negra vanguardista" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACuRcXJQZNgyD9XcxepyhWZDAbNhL0whM7TXOYdpt0TDPNiG0cybbRcYjgoUxe91zBWG4n9MnnPNcKvEV8ebLqG77WdsDWPidxp1mjDuWdxucUT3njJ_JxZHFFVTrDbz5gSdeIM0G0HJK_TwQ2E5DIDmiHiefEy3tQNMgfnLdm0cvJsx1LtGFDFIcgeRJBQ8dFvbgRwZR8q1YNDtkYxwRrhyE9PBJjGO0LmbCZJ-0"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">TOURB-99</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1045</span>
+</article>
+<!-- Item 6: CHRONO-01 -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj CHRONO-01 clásico correa cuero marrón" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA99oaHQfVglpLZEaxsNiL9o9y286e0j2e47xFI9NtLZ6VHaYv67LaL_w5_hOWWvEQJ64OSPTY3pODM1WymIRI0kEOlk8TcWLIRJtc3sVbPbn579igPzFaccRMl91UACx742LtQ1S5wgqOregxajlbb35t-fZea3yd8ufzBMLtFhwNOW3f6p-PYkrfXAfQ2JjKSWqBkiv3DcLBCz1rKyQL99nm1jzOa6V-j69SRnMU"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">CHRONO-01</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1046</span>
+</article>
+<!-- Item 7: AC-300-TI -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj AC-300-TI edición titanio satinado" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOEf5S4LjrD3FhCWlfrLUpAh1zPZprhC6_nTwQ2oICSsOURvEOJGAISIDsRzpWnj4Z2CIinBSsfoUtdaXDtviJdWwTrZuN6Kk3KwP_p2G14RzcsKL8ulJLqfsyOziMugMNZARYSjDERu-kg3zQ07kxJmEc67Yu3lHBT98p3hVBHEI1vC8OXSl5ANsnKEg4Fdt5ujd2Z3VnQPzH-Ss2dqXIVDGJkgU6cGalIobJhMA"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">AC-300-TI</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1047</span>
+</article>
+<!-- Item 8: CALIBRE-X -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj CALIBRE-X oro rosa mecanismo a la vista" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6jpwI0PILCDEYy6w7CuQR1gRrAtRnCy2CKZ10Bcp94Y8ByqkVVNQxvXc8GtH5Pm3lhUPdnrDB5bL8cKiKBJ8PguN-X8ONhNf2-cxuvHx8kKmYZKJxaYf0KF2-u1iUji3hYGONJnWMJt2YgLrgH6CkOWk7ckpqLGEWQ4C4aILgXmdhFmTPwRrtbpPF1LHH43TQE_RsfZxR2IlSZhM0vq7K8kfvNwwAOjEF8Kj55pQ"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">CALIBRE-X</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1048</span>
+</article>
+<!-- Item 9: TOURB-99 -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj TOURB-99 especificación atelier" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxEoVC_XVGgkS9xwQfgoXPta4obGxWNKLsCDQseVkygr-iIXEUfKia2-yq3ytANBgdhTgz8BaOpjcxf1M3EhXoODMOC4hS9uLPUcODO1IEubKyKDorThWSaTyQtm-cDT_zBJuID3T0YQwPxyGK78vG2ivvFHO10RIeHibDTesBtS3UC5cpmgOtOYUovJoUHzTszFXBCzchxgER1V-1t8PUWMiUvFfl9AgD016yNDg"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">TOURB-99</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1049</span>
+</article>
+<!-- Item 10: NAUTIC-44 -->
+<article class="bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer" data-purpose="watch-card">
+<div class="w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group">
+<img alt="Reloj NAUTIC-44 armis de acero esfera índigo" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5B-xkLhx7qgSh9rLlcYy04SrOQBGnqywtV2tC3Q_wlRBFKeGSvY9U9O3okr-9G-iFOtn8LXDAF2k-k0SGvdcOtra8Xbgmej_kG0TLEf-1HnUXYXTcQkRHJRqtiMKdL18RGMoqAEvgCTrAKkom9v1olAT_mGv1Dw-fCDxTVY_CULhoJTQU6HGUHwb4bPpG78XXGYdrcq9Goce5zb0cloYBI2Ky1ansP8U9tJQR2V8"/>
+</div>
+<h2 class="text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full">NAUTIC-44</h2>
+<span class="text-[9px] font-mono text-luxury-muted mt-0.5">DB #1050</span>
+</article>
+</div>
+</main>
+<!-- END: WatchCatalogGrid -->
+<!-- BEGIN: WatchPreviewModal -->
+<div aria-hidden="true" class="fixed inset-0 z-50 flex items-center justify-center p-5 opacity-0 pointer-events-none transition-all duration-300" id="watch-detail-modal">
+<!-- Backdrop Overlay -->
+<div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300" id="modal-backdrop"></div>
+<!-- Modal Window -->
+<div class="relative w-full max-w-sm bg-white rounded-2xl shadow-floating border border-luxury-border flex flex-col overflow-hidden transform scale-95 transition-all duration-300 z-10" id="modal-card">
+<!-- Modal Header -->
+<div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-luxury-border/60">
+<div class="flex flex-col">
+<h3 class="text-base font-bold text-luxury-text tracking-tight uppercase" id="modal-title">RELOJ</h3>
+<span class="text-xs font-mono font-medium text-luxury-muted" id="modal-ref">DB #0000</span>
+</div>
+<button aria-label="Cerrar" class="w-8 h-8 rounded-full bg-luxury-surface hover:bg-neutral-200 active:scale-95 flex items-center justify-center text-luxury-text transition-all" id="close-modal-btn" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<!-- Modal Image Preview -->
+<div class="p-6 flex items-center justify-center bg-[#FAF8F5]">
+<div class="w-full aspect-square rounded-xl bg-white border border-luxury-border/80 flex items-center justify-center p-4 shadow-sm">
+<img alt="Vista previa del reloj" class="w-full h-full object-contain mix-blend-multiply" id="modal-image" src=""/>
+</div>
+</div>
+</div>
+</div>
+<!-- END: WatchPreviewModal -->
+<!-- BEGIN: BottomPersistentBar -->
+<footer class="fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-md border-t border-luxury-border/80 px-5 py-3.5 flex items-center justify-between z-30" data-purpose="floating-status-bar">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-luxury-accent"></div>
+<p class="text-xs font-medium text-luxury-text">10 referencias cargadas</p>
+</div>
+<!-- Refresh Action Button -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-luxury-surface hover:bg-neutral-200/80 active:scale-95 text-xs font-semibold text-luxury-text transition-all" id="refresh-db-btn" type="button">
+<svg class="w-3.5 h-3.5 text-luxury-text transition-transform duration-500" fill="none" id="sync-icon" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Refrescar</span>
+</button>
+</footer>
+<!-- END: BottomPersistentBar -->
+<!-- BEGIN: Scripts -->
+<script data-purpose="watch-modal-interactions">
+  // Modal controller functions globally attached to window for instant reliability
+  window.openPreview = function(title, ref, imgUrl) {
+    const modal = document.getElementById('watch-detail-modal');
+    const modalCard = document.getElementById('modal-card');
+    const modalTitle = document.getElementById('modal-title');
+    const modalRef = document.getElementById('modal-ref');
+    const modalImage = document.getElementById('modal-image');
+
+    if (!modal || !modalCard) return;
+
+    if (modalTitle) modalTitle.textContent = title || 'RELOJ';
+    if (modalRef) modalRef.textContent = ref || '';
+    if (modalImage) {
+      modalImage.src = imgUrl || '';
+      modalImage.alt = title || 'Vista previa';
+    }
+
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100', 'pointer-events-auto');
+    modal.setAttribute('aria-hidden', 'false');
+
+    modalCard.classList.remove('scale-95');
+    modalCard.classList.add('scale-100');
+
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closePreview = function() {
+    const modal = document.getElementById('watch-detail-modal');
+    const modalCard = document.getElementById('modal-card');
+    if (!modal || !modalCard) return;
+
+    modalCard.classList.remove('scale-100');
+    modalCard.classList.add('scale-95');
+
+    modal.classList.remove('opacity-100', 'pointer-events-auto');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.setAttribute('aria-hidden', 'true');
+
+    document.body.style.overflow = '';
+  };
+
+  function setupWatchModal() {
+    // Attach click listener to each watch card
+    const cards = document.querySelectorAll('article[data-purpose="watch-card"]');
+    cards.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        const titleEl = card.querySelector('h2');
+        const refEl = card.querySelector('.font-mono');
+        const imgEl = card.querySelector('img');
+
+        const title = titleEl ? titleEl.textContent.trim() : 'RELOJ';
+        const ref = refEl ? refEl.textContent.trim() : '';
+        const imgUrl = imgEl ? imgEl.src : '';
+
+        window.openPreview(title, ref, imgUrl);
+      });
+    });
+
+    // Close on backdrop tap/click
+    const backdrop = document.getElementById('modal-backdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', window.closePreview);
+    }
+
+    // Close on X button tap/click
+    const closeBtn = document.getElementById('close-modal-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', window.closePreview);
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.closePreview();
+      }
+    });
+  }
+
+  // Initialize immediately or on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupWatchModal);
+  } else {
+    setupWatchModal();
+  }
+</script>
+<script data-purpose="sync-animation">
+  const refreshBtn = document.getElementById('refresh-db-btn');
+  const syncIcon = document.getElementById('sync-icon');
+
+  if (refreshBtn && syncIcon) {
+    refreshBtn.addEventListener('click', () => {
+      syncIcon.classList.add('rotate-180');
+      refreshBtn.disabled = true;
+      setTimeout(() => {
+        syncIcon.classList.remove('rotate-180');
+        refreshBtn.disabled = false;
+      }, 500);
+    });
+  }
+</script>
+<!-- END: Scripts -->
+</body></html>
