@@ -6,15 +6,15 @@
   <title>Biblioteca de relojes</title>
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #10110f;
-      --panel: #191a17;
-      --panel-soft: #20211e;
-      --text: #f2efe7;
-      --muted: #a7a398;
-      --gold: #c7a76c;
-      --line: #34342e;
-      --danger: #ff9c8c;
+      color-scheme: light;
+      --bg: #f7f5ef;
+      --panel: #fffefa;
+      --panel-soft: #f0eee7;
+      --text: #292820;
+      --muted: #777468;
+      --gold: #9a7840;
+      --line: #dedbd0;
+      --danger: #b34432;
     }
 
     * { box-sizing: border-box; }
@@ -82,7 +82,7 @@
       cursor: pointer;
       background: var(--gold);
       border-color: var(--gold);
-      color: #17150f;
+      color: #fff;
       font-weight: 650;
     }
 
@@ -168,6 +168,7 @@
     @media (max-width: 600px) {
       .toolbar, .form-grid { grid-template-columns: 1fr; }
       .field.full { grid-column: auto; }
+      .form-actions { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
@@ -179,7 +180,7 @@
   </header>
 
   <main>
-    <section id="loginBox" class="login-box">
+    <section id="loginBox" class="login-box hidden">
       <h2>Acceso de administrador</h2>
       <p class="muted">Inicia sesión para añadir relojes a la biblioteca.</p>
       <form id="loginForm" class="form-grid">
@@ -230,8 +231,14 @@
           <input id="price" type="number" min="0" step="0.01" />
         </div>
         <div class="field full">
-          <label for="imageUrl">URL de imagen</label>
-          <input id="imageUrl" type="url" placeholder="https://..." />
+          <label for="imageFile">Foto del reloj</label>
+          <input
+            id="imageFile"
+            type="file"
+            accept="image/*"
+            capture="environment"
+          />
+          <small class="muted">Elige una imagen de tu móvil o usa la cámara.</small>
         </div>
         <div class="field full">
           <label for="description">Descripción</label>
@@ -265,17 +272,25 @@
 
     const SUPABASE_URL = 'https://tpidmniocervffdiibyp.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_U_4sNRRN26XoUxp71yGvIQ_TVwo6Vle';
+    const STORAGE_BUCKET = 'watch-images';
+
     const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const showAdminLogin = new URLSearchParams(window.location.search).get('admin') === '1';
 
     const $ = (id) => document.getElementById(id);
     const grid = $('watchGrid');
     const status = $('status');
+
     let watches = [];
     let currentUser = null;
 
     function escapeHtml(value = '') {
       return String(value).replace(/[&<>"']/g, (char) => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
       })[char]);
     }
 
@@ -289,9 +304,14 @@
     }
 
     function money(value) {
-      if (value === null || value === undefined || value === '') return 'Precio no indicado';
+      if (value === null || value === undefined || value === '') {
+        return 'Precio no indicado';
+      }
+
       return new Intl.NumberFormat('es-ES', {
-        style: 'currency', currency: 'USD', maximumFractionDigits: 0
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
       }).format(Number(value));
     }
 
@@ -301,15 +321,20 @@
 
       const filtered = watches.filter((watch) => {
         const text = [
-          watch.reference, watch.category, watch.material,
-          watch.power_reserve, watch.complication, watch.description
+          watch.reference,
+          watch.category,
+          watch.material,
+          watch.power_reserve,
+          watch.complication,
+          watch.description
         ].filter(Boolean).join(' ').toLowerCase();
 
         return (!query || text.includes(query))
           && (!category || watch.category === category);
       });
 
-      $('count').textContent = `${filtered.length} ${filtered.length === 1 ? 'reloj' : 'relojes'}`;
+      $('count').textContent =
+        `${filtered.length} ${filtered.length === 1 ? 'reloj' : 'relojes'}`;
 
       if (!filtered.length) {
         grid.innerHTML = '<p class="muted">No hay relojes que coincidan con la búsqueda.</p>';
@@ -356,10 +381,15 @@
       }
 
       watches = data ?? [];
-      const categories = [...new Set(watches.map((w) => w.category).filter(Boolean))].sort();
+
+      const categories = [...new Set(watches.map((watch) => watch.category).filter(Boolean))]
+        .sort();
+
       $('categoryFilter').innerHTML =
         '<option value="">Todas las categorías</option>' +
-        categories.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+        categories.map((item) =>
+          `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`
+        ).join('');
 
       status.textContent = '';
       render();
@@ -367,12 +397,51 @@
 
     function updateAuthUI() {
       const isAdmin = currentUser?.app_metadata?.role === 'admin';
-      $('loginBox').classList.toggle('hidden', isAdmin);
+
+      $('loginBox').classList.toggle('hidden', isAdmin || !showAdminLogin);
       $('adminBox').classList.toggle('hidden', !isAdmin);
 
-      if (currentUser && !isAdmin) {
-        $('loginMessage').textContent = 'La cuenta inició sesión, pero no tiene rol de administrador.';
+      if (currentUser && !isAdmin && showAdminLogin) {
+        $('loginMessage').textContent =
+          'La cuenta inició sesión, pero no tiene rol de administrador.';
       }
+    }
+
+    async function uploadWatchImage(file) {
+      if (!file) return null;
+
+      if (file.size > 5 * 1024 * 1024) {
+        throw new Error('La imagen no puede superar los 5 MB.');
+      }
+
+      const allowedTypes = {
+        'image/jpeg': 'jpg',
+        'image/png': 'png',
+        'image/webp': 'webp',
+        'image/gif': 'gif'
+      };
+
+      const extension = allowedTypes[file.type];
+      if (!extension) {
+        throw new Error('Usa una imagen JPG, PNG, WEBP o GIF.');
+      }
+
+      const path = `watches/${crypto.randomUUID()}.${extension}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .upload(path, file, {
+          contentType: file.type,
+          upsert: false
+        });
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage
+        .from(STORAGE_BUCKET)
+        .getPublicUrl(path);
+
+      return data.publicUrl;
     }
 
     $('search').addEventListener('input', render);
@@ -381,6 +450,7 @@
     $('loginForm').addEventListener('submit', async (event) => {
       event.preventDefault();
       $('loginButton').disabled = true;
+      $('loginMessage').classList.remove('error');
       $('loginMessage').textContent = 'Iniciando sesión…';
 
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -403,45 +473,61 @@
 
     $('logoutButton').addEventListener('click', async () => {
       const { error } = await supabase.auth.signOut();
+
       if (error) {
         $('formMessage').textContent = error.message;
         $('formMessage').classList.add('error');
         return;
       }
+
       currentUser = null;
       updateAuthUI();
     });
 
     $('watchForm').addEventListener('submit', async (event) => {
       event.preventDefault();
-      $('saveButton').disabled = true;
-      $('formMessage').textContent = 'Guardando…';
-      $('formMessage').classList.remove('error');
 
-      const rawPrice = $('price').value;
-      const record = {
-        reference: $('reference').value.trim(),
-        category: $('category').value.trim(),
-        material: $('material').value.trim() || null,
-        power_reserve: $('powerReserve').value.trim() || null,
-        complication: $('complication').value.trim() || null,
-        price: rawPrice === '' ? null : Number(rawPrice),
-        description: $('description').value.trim() || null,
-        image_url: $('imageUrl').value.trim() || null
-      };
-
-      const { error } = await supabase.from('watch_library').insert(record);
-      $('saveButton').disabled = false;
-
-      if (error) {
-        $('formMessage').textContent = `No se guardó: ${error.message}`;
+      if (currentUser?.app_metadata?.role !== 'admin') {
+        $('formMessage').textContent = 'Solo un administrador puede añadir relojes.';
         $('formMessage').classList.add('error');
         return;
       }
 
-      $('watchForm').reset();
-      $('formMessage').textContent = 'Reloj archivado en la biblioteca.';
-      await loadWatches();
+      $('saveButton').disabled = true;
+      $('formMessage').classList.remove('error');
+      $('formMessage').textContent = 'Guardando…';
+
+      try {
+        const imageFile = $('imageFile').files?.[0] ?? null;
+        const imageUrl = await uploadWatchImage(imageFile);
+        const rawPrice = $('price').value;
+
+        const record = {
+          reference: $('reference').value.trim(),
+          category: $('category').value.trim(),
+          material: $('material').value.trim() || null,
+          power_reserve: $('powerReserve').value.trim() || null,
+          complication: $('complication').value.trim() || null,
+          price: rawPrice === '' ? null : Number(rawPrice),
+          description: $('description').value.trim() || null,
+          image_url: imageUrl
+        };
+
+        const { error } = await supabase
+          .from('watch_library')
+          .insert(record);
+
+        if (error) throw error;
+
+        $('watchForm').reset();
+        $('formMessage').textContent = 'Reloj archivado en la biblioteca.';
+        await loadWatches();
+      } catch (error) {
+        $('formMessage').textContent = `No se guardó: ${error.message}`;
+        $('formMessage').classList.add('error');
+      } finally {
+        $('saveButton').disabled = false;
+      }
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
@@ -452,6 +538,7 @@
     const { data: sessionData } = await supabase.auth.getSession();
     currentUser = sessionData.session?.user ?? null;
     updateAuthUI();
+
     await loadWatches();
   </script>
 </body>
