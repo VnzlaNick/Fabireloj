@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html class="h-full" lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    name="viewport"
+  />
+  <title>Catálogo de Relojes - Watch Vault</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              bg: '#F5F3EE',
+              card: '#FFFFFF',
+              surface: '#EFECE6',
+              text: '#1C1B1A',
+              muted: '#7A7670',
+              accent: '#B89047',
+              border: '#E5E1D8'
+            }
+          },
+          fontFamily: {
+            sans: [
+              '-apple-system',
+              'BlinkMacSystemFont',
+              'Segoe UI',
+              'Roboto',
+              'Helvetica',
+              'Arial',
+              'sans-serif'
+            ],
+            mono: ['SF Mono', 'ui-monospace', 'Menlo', 'Monaco', 'monospace']
+          },
+          boxShadow: {
+            'card-subtle':
+              '0 2px 10px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02)',
+            floating:
+              '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #F5F3EE;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    * {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="bg-luxury-bg text-luxury-text min-h-screen flex flex-col font-sans antialiased selection:bg-luxury-accent/20">
+
+  <!-- Barra superior -->
+  <div
+    class="w-full pt-2 px-6 flex justify-between items-center text-xs font-medium text-luxury-muted select-none"
+    data-purpose="ios-safe-area"
+  >
+    <span>9:41</span>
+    <div class="flex items-center gap-1.5">
+      <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 18.23c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l.73-.73C8.16 19.94 9.98 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path>
+      </svg>
+      <div class="w-5 h-2.5 border border-luxury-muted rounded-sm p-0.5 flex items-center">
+        <div class="w-full h-full bg-luxury-text rounded-sm"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabecera -->
+  <header class="px-5 pt-4 pb-3" data-purpose="header-section">
+    <div class="flex items-center justify-between pb-1">
+      <div>
+        <p class="text-[10px] tracking-[0.22em] uppercase text-luxury-muted font-semibold">
+          Watch Vault • DB v2.4
+        </p>
+        <h1 class="text-xl font-bold tracking-tight text-luxury-text mt-0.5">
+          CATÁLOGO DE RELOJES
+        </h1>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          aria-label="Buscar"
+          class="w-9 h-9 rounded-full bg-white border border-luxury-border flex items-center justify-center shadow-card-subtle active:scale-95 transition-transform"
+          type="button"
+        >
+          <svg class="w-4 h-4 text-luxury-text" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+
+        <button
+          aria-label="Filtro"
+          class="w-9 h-9 rounded-full bg-white border border-luxury-border flex items-center justify-center shadow-card-subtle active:scale-95 transition-transform"
+          type="button"
+        >
+          <svg class="w-4 h-4 text-luxury-text" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between mt-2.5 pt-2 border-t border-luxury-border/60">
+      <div class="flex items-center gap-2">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span id="sync-status" class="text-[11px] font-medium tracking-wide text-neutral-600">
+          Conectando con la base de datos...
+        </span>
+      </div>
+      <span id="item-count" class="text-[11px] font-mono font-medium text-luxury-muted">
+        Cargando...
+      </span>
+    </div>
+  </header>
+
+  <!-- Catálogo: las tarjetas se cargan desde public.watches -->
+  <main class="flex-1 px-4 py-2 pb-24 overflow-y-auto" data-purpose="catalog-grid-container">
+    <div id="watch-grid" class="grid grid-cols-4 gap-2"></div>
+  </main>
+
+  <!-- Modal de detalle -->
+  <div
+    aria-hidden="true"
+    aria-labelledby="modal-title"
+    aria-modal="true"
+    class="fixed inset-0 z-50 flex items-center justify-center p-5 opacity-0 pointer-events-none transition-all duration-300"
+    id="watch-detail-modal"
+    role="dialog"
+  >
+    <div
+      class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+      id="modal-backdrop"
+    ></div>
+
+    <div
+      class="relative w-full max-w-sm bg-white rounded-2xl shadow-floating border border-luxury-border flex flex-col overflow-hidden transform scale-95 transition-all duration-300 z-10"
+      id="modal-card"
+    >
+      <div class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-luxury-border/60">
+        <div class="flex flex-col">
+          <h2 class="text-base font-bold text-luxury-text tracking-tight uppercase" id="modal-title">
+            RELOJ
+          </h2>
+          <span id="modal-ref" class="text-xs font-mono font-medium text-luxury-muted"></span>
+        </div>
+
+        <button
+          aria-label="Cerrar"
+          class="w-8 h-8 rounded-full bg-luxury-surface hover:bg-neutral-200 active:scale-95 flex items-center justify-center text-luxury-text transition-all"
+          id="close-modal-btn"
+          type="button"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 flex items-center justify-center bg-[#FAF8F5]">
+        <div class="w-full aspect-square rounded-xl bg-white border border-luxury-border/80 flex items-center justify-center p-4 shadow-sm">
+          <img
+            alt="Vista previa del reloj"
+            class="w-full h-full object-contain mix-blend-multiply"
+            id="modal-image"
+            src=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra inferior -->
+  <footer
+    class="fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-md border-t border-luxury-border/80 px-5 py-3.5 flex items-center justify-between z-30"
+    data-purpose="floating-status-bar"
+  >
+    <div class="flex items-center space-x-2">
+      <div class="w-2 h-2 rounded-full bg-luxury-accent"></div>
+      <p id="footer-count" class="text-xs font-medium text-luxury-text">
+        Cargando referencias...
+      </p>
+    </div>
+
+    <button
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-luxury-surface hover:bg-neutral-200/80 active:scale-95 text-xs font-semibold text-luxury-text transition-all"
+      id="refresh-db-btn"
+      type="button"
+    >
+      <svg
+        class="w-3.5 h-3.5 text-luxury-text transition-transform duration-500"
+        fill="none"
+        id="sync-icon"
+        stroke="currentColor"
+        stroke-width="2.2"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span>Refrescar</span>
+    </button>
+  </footer>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Carga e interacción del catálogo -->
+  <script>
+    const SUPABASE_URL = 'https://tpidmniocervffdiibyp.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = '<sb_publishable_U_4sNRRN26XoUxp71yGvIQ_TVwo6Vle>';
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const grid = document.getElementById('watch-grid');
+    const itemCount = document.getElementById('item-count');
+    const footerCount = document.getElementById('footer-count');
+    const syncStatus = document.getElementById('sync-status');
+    const refreshBtn = document.getElementById('refresh-db-btn');
+    const syncIcon = document.getElementById('sync-icon');
+
+    function createWatchCard(watch) {
+      const card = document.createElement('article');
+      card.dataset.reference = watch.reference;
+      card.className =
+        'bg-white rounded-xl p-2 flex flex-col items-center shadow-card-subtle border border-luxury-border/70 hover:border-luxury-accent/50 transition-all cursor-pointer';
+
+      const imageBox = document.createElement('div');
+      imageBox.className =
+        'w-full aspect-square rounded-lg bg-luxury-surface/40 overflow-hidden flex items-center justify-center p-1.5 mb-1.5 relative group';
+
+      const image = document.createElement('img');
+      image.alt = `Reloj ${watch.title || watch.reference}`;
+      image.className =
+        'w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300';
+      image.loading = 'lazy';
+
+      if (watch.image_url) {
+        image.src = watch.image_url;
+      }
+
+      const title = document.createElement('h2');
+      title.className =
+        'text-xs font-bold tracking-tight text-luxury-text text-center truncate w-full';
+      title.textContent = watch.title || 'Reloj';
+
+      const reference = document.createElement('span');
+      reference.className = 'text-[9px] font-mono text-luxury-muted mt-0.5';
+      reference.textContent = watch.reference;
+
+      imageBox.appendChild(image);
+      card.append(imageBox, title, reference);
+
+      return card;
+    }
+
+    async function loadWatches() {
+      refreshBtn.disabled = true;
+      syncIcon.classList.add('rotate-180');
+      syncStatus.textContent = 'Conectando con la base de datos...';
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('watches')
+          .select('id, title, reference, image_url')
+          .order('reference', { ascending: true });
+
+        if (error) {
+          throw error;
+        }
+
+        const watches = data || [];
+        grid.replaceChildren(...watches.map(createWatchCard));
+
+        const count = watches.length;
+        itemCount.textContent = `${count} ITEMS`;
+        footerCount.textContent = `${count} referencias cargadas`;
+        syncStatus.textContent = 'Sincronizado con Base de Datos';
+      } catch (error) {
+        console.error('Error al cargar el catálogo:', error);
+        syncStatus.textContent = 'Error al sincronizar';
+        itemCount.textContent = 'Error';
+        footerCount.textContent = 'No se pudo cargar el catálogo';
+        grid.textContent = 'No se pudo cargar el catálogo. Revisa la conexión y la publishable key.';
+      } finally {
+        refreshBtn.disabled = false;
+        syncIcon.classList.remove('rotate-180');
+      }
+    }
+
+    window.openPreview = function(title, reference, imageUrl) {
+      const modal = document.getElementById('watch-detail-modal');
+      const modalCard = document.getElementById('modal-card');
+      const modalTitle = document.getElementById('modal-title');
+      const modalRef = document.getElementById('modal-ref');
+      const modalImage = document.getElementById('modal-image');
+
+      modalTitle.textContent = title || 'RELOJ';
+      modalRef.textContent = reference || '';
+      modalImage.src = imageUrl || '';
+      modalImage.alt = title || 'Vista previa del reloj';
+
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      modal.setAttribute('aria-hidden', 'false');
+
+      modalCard.classList.remove('scale-95');
+      modalCard.classList.add('scale-100');
+
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closePreview = function() {
+      const modal = document.getElementById('watch-detail-modal');
+      const modalCard = document.getElementById('modal-card');
+
+      modalCard.classList.remove('scale-100');
+      modalCard.classList.add('scale-95');
+
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.setAttribute('aria-hidden', 'true');
+
+      document.body.style.overflow = '';
+    };
+
+    grid.addEventListener('click', (event) => {
+      const card = event.target.closest('article[data-reference]');
+
+      if (!card || !grid.contains(card)) {
+        return;
+      }
+
+      const title = card.querySelector('h2')?.textContent.trim() || 'RELOJ';
+      const imageUrl = card.querySelector('img')?.src || '';
+
+      window.openPreview(title, card.dataset.reference, imageUrl);
+    });
+
+    document.getElementById('modal-backdrop')
+      .addEventListener('click', window.closePreview);
+
+    document.getElementById('close-modal-btn')
+      .addEventListener('click', window.closePreview);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        window.closePreview();
+      }
+    });
+
+    refreshBtn.addEventListener('click', loadWatches);
+
+    loadWatches();
+  </script>
+</body>
+</html>
