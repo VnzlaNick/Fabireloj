@@ -118,11 +118,22 @@
       <button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/60 text-[12px] font-semibold active:scale-95 transition-transform" data-category="damas">
         Damas
       </button>
-      <button class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-secondary/40 text-[12px] font-semibold active:scale-95 transition-transform flex items-center gap-1" data-category="ofertas">
-        <span class="material-symbols-outlined text-[14px] text-secondary">auto_awesome</span>
-        <span>Ofertas</span>
-        <span class="px-1.5 py-0.2 rounded-full bg-secondary text-white text-[9px] font-bold ml-0.5">1</span>
-      </button>
+ <button
+  id="offers-filter-btn"
+  class="filter-chip whitespace-nowrap px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-secondary/40 text-[12px] font-semibold active:scale-95 transition-transform flex items-center gap-1"
+  data-category="ofertas"
+  type="button"
+  aria-pressed="false"
+>
+  <span class="material-symbols-outlined text-[14px] text-secondary">auto_awesome</span>
+  <span>Ofertas</span>
+  <span
+    id="offers-badge"
+    class="px-1.5 py-0.5 rounded-full bg-secondary text-white text-[9px] font-bold ml-0.5"
+    aria-live="polite"
+    hidden
+  >0</span>
+</button>
     </section>
 
     <!-- Watches Feed List (Mobile-Optimized Cards) -->
@@ -605,34 +616,122 @@
     return article;
   }
 
-  async function loadWatches() {
-    const { data, error } = await supabase
-      .from('watches')
-      .select(
-        'id,title,reference,price,stock,specs,offer_type,discount,image_url,brand,category,created_at'
-      )
-      .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('No se pudo cargar el catálogo:', error.message);
-      feed.textContent =
-        'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
-      return;
-    }
+const offersButton = document.getElementById('offers-filter-btn');
+const offersBadge = document.getElementById('offers-badge');
 
-    watchesById = new Map((data || []).map(watch => [String(watch.id), watch]));
-    feed.replaceChildren(...(data || []).map(makeCard));
-    applyFilter(activeFilter);
+const OFFERS_SEEN_KEY = 'watch-vault-seen-offers-v1';
+let currentWatches = [];
+let activeCategory = 'all';
+
+function getSeenOffers() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(OFFERS_SEEN_KEY) || '[]'));
+  } catch {
+    return new Set();
+  }
+}
+
+function getOfferSignature(watch) {
+  return [
+    watch.reference,
+    watch.discount ?? '',
+    watch.price ?? ''
+  ].join('|');
+}
+
+function updateOffersBadge() {
+  const seenOffers = getSeenOffers();
+  const unseenCount = currentWatches.filter((watch) =>
+    watch.offer_type === 'oferta' &&
+    !seenOffers.has(getOfferSignature(watch))
+  ).length;
+
+  offersBadge.textContent = String(unseenCount);
+  offersBadge.hidden = unseenCount === 0;
+  offersButton.setAttribute(
+    'aria-label',
+    unseenCount > 0 ? `Ofertas, ${unseenCount} sin ver` : 'Ofertas'
+  );
+}
+
+function renderWatches() {
+  const watchesToShow = activeCategory === 'ofertas'
+    ? currentWatches.filter((watch) => watch.offer_type === 'oferta')
+    : currentWatches;
+
+  if (watchesToShow.length === 0) {
+    const message = document.createElement('p');
+    message.className = 'col-span-4 text-center text-sm text-luxury-muted py-8';
+    message.textContent = 'No hay ofertas disponibles.';
+    grid.replaceChildren(message);
+    return;
   }
 
-  async function isAdmin() {
-    try {
-      const { data, error } = await supabase.auth.getUser();
-      return !error && data.user?.app_metadata?.role === 'admin';
-    } catch {
-      return false;
-    }
+  grid.replaceChildren(...watchesToShow.map(createWatchCard));
+}
+
+function markCurrentOffersAsSeen() {
+  const seenOffers = getSeenOffers();
+
+  currentWatches
+    .filter((watch) => watch.offer_type === 'oferta')
+    .forEach((watch) => seenOffers.add(getOfferSignature(watch)));
+
+  localStorage.setItem(OFFERS_SEEN_KEY, JSON.stringify([...seenOffers]));
+  updateOffersBadge();
+}
+
+offersButton.addEventListener('click', () => {
+  if (activeCategory === 'ofertas') {
+    activeCategory = 'all';
+    offersButton.setAttribute('aria-pressed', 'false');
+  } else {
+    activeCategory = 'ofertas';
+    offersButton.setAttribute('aria-pressed', 'true');
+    renderWatches();
+    markCurrentOffersAsSeen();
+    return;
   }
+
+  renderWatches();
+});
+
+
+
+async function loadWatches() {
+  const { data, error } = await supabase
+    .from('watches')
+    .select('id, title, reference, image_url, offer_type, discount, price')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('No se pudo cargar el catálogo:', error.message);
+    feed.textContent =
+      'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
+    return;
+  }
+
+currentWatches = data || [];
+  updateOffersBadge();
+
+  itemCount.textContent = `${currentWatches.length} ITEMS`;
+  footerCount.textContent = `${currentWatches.length} referencias cargadas`;
+  syncStatus.textContent = 'Sincronizado con Base de Datos';
+
+  watchesById = new Map(currentWatches.map(watch => [String(watch.id), watch]));
+  feed.replaceChildren(...currentWatches.map(makeCard));
+  applyFilter(activeFilter);
+
+
+
+  currentWatches = data || [];
+  updateOffersBadge();
+
+  watchesById = new Map(currentWatches.map(watch => [String(watch.id), watch]));
+  feed.replaceChildren(...currentWatches.map(makeCard));
+  applyFilter(activeFilter);
+}
 
   const loginForm = document.createElement('form');
   loginForm.id = 'catalog-admin-login';
