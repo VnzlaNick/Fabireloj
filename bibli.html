@@ -486,16 +486,13 @@
         const imageUrl = await uploadWatchImage(imageFile);
         const rawPrice = $('price').value;
 
-        const record = {
-          reference: $('reference').value.trim(),
-          category: $('category').value.trim(),
-          material: $('material').value.trim() || null,
-          power_reserve: $('powerReserve').value.trim() || null,
-          complication: $('complication').value.trim() || null,
-          price: rawPrice === '' ? null : Number(rawPrice),
-          description: $('description').value.trim() || null,
-          image_url: imageUrl
-        };
+   const record = {
+  reference: $('reference').value.trim(),
+  category: 'Sin categoría',
+  price: rawPrice === '' ? null : Number(rawPrice),
+  description: $('description').value.trim() || null,
+  image_url: imageUrl
+};
 
         const { error } = await supabase
           .from('watch_library')
