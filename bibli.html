@@ -49,6 +49,7 @@
     }
 
     .subtitle, .muted { color: var(--muted); }
+
     main { padding: 24px 0 60px; }
 
     .toolbar, .admin-box, .login-box {
@@ -92,9 +93,9 @@
     }
 
     button.danger {
-      background: var(--danger);
+      background: transparent;
       border-color: var(--danger);
-      color: #fff;
+      color: var(--danger);
     }
 
     button:disabled { opacity: .6; cursor: wait; }
@@ -143,13 +144,7 @@
     }
 
     .card-body { padding: 15px; }
-    .category {
-      color: var(--gold);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-    }
-
+    .category { color: var(--gold); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
     .card h3 { margin: 5px 0 2px; font: 400 21px Georgia, serif; }
     .reference { color: var(--muted); font-size: 13px; }
     .price { margin: 13px 0; font-size: 18px; }
@@ -157,30 +152,14 @@
     .details p { margin: 5px 0; }
     .description { margin-top: 12px !important; }
 
-    .stock-badge {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: #e9efe5;
-      color: #3e6537;
-      font-size: 12px;
-      font-weight: 650;
-    }
-
-    .stock-badge.sold-out {
-      background: #f6e5e1;
-      color: var(--danger);
-    }
-
     .card-actions {
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
       margin-top: 14px;
     }
 
     .card-actions button {
+      flex: 1;
       padding: 8px 10px;
       font-size: 13px;
     }
@@ -221,7 +200,7 @@
   <main>
     <section id="loginBox" class="login-box hidden">
       <h2>Acceso de administrador</h2>
-      <p class="muted">Inicia sesión para gestionar los relojes de la biblioteca.</p>
+      <p class="muted">Inicia sesión para administrar la biblioteca.</p>
       <form id="loginForm" class="form-grid">
         <div class="field">
           <label for="email">Correo</label>
@@ -240,7 +219,7 @@
 
     <section id="adminBox" class="admin-box hidden">
       <div class="section-heading">
-        <h2 id="formTitle">Añadir reloj</h2>
+        <h2 id="formHeading">Añadir reloj</h2>
         <button id="logoutButton" class="secondary" type="button">Cerrar sesión</button>
       </div>
 
@@ -249,26 +228,22 @@
           <label for="reference">Referencia única *</label>
           <input id="reference" required maxlength="120" />
         </div>
-
         <div class="field">
           <label for="price">Precio estimado (USD)</label>
           <input id="price" type="number" min="0" step="0.01" />
         </div>
-
         <div class="field full">
           <label for="imageFile">Foto del reloj</label>
-          <input id="imageFile" type="file" accept="image/*" />
-          <small class="muted">Selecciona una imagen de Fotos o Archivos del móvil. Al modificar, déjalo vacío para conservar la foto actual.</small>
+          <input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif" />
+          <small class="muted">Selecciona una imagen de Fotos o Archivos del móvil. En modo edición, déjalo vacío para conservar la imagen actual.</small>
         </div>
-
         <div class="field full">
           <label for="description">Descripción</label>
           <textarea id="description"></textarea>
         </div>
-
         <div class="field full form-actions">
           <button id="saveButton" type="submit">Guardar en la biblioteca</button>
-          <button id="cancelEditButton" class="secondary hidden" type="button">Cancelar modificación</button>
+          <button id="cancelEditButton" class="secondary hidden" type="button">Cancelar edición</button>
           <span id="formMessage" class="notice" role="status"></span>
         </div>
       </form>
@@ -298,7 +273,8 @@
     const STORAGE_BUCKET = 'watch-images';
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-    const showAdminLogin = new URLSearchParams(window.location.search).get('admin') === '1';
+    const showAdminLogin =
+      new URLSearchParams(window.location.search).get('admin') === '1';
 
     const $ = (id) => document.getElementById(id);
     const grid = $('watchGrid');
@@ -306,7 +282,11 @@
 
     let watches = [];
     let currentUser = null;
-    let editingWatchId = null;
+    let editingWatch = null;
+
+    function isAdmin() {
+      return currentUser?.app_metadata?.role === 'admin';
+    }
 
     function escapeHtml(value = '') {
       return String(value).replace(/[&<>"']/g, (char) => ({
@@ -342,7 +322,6 @@
     function render() {
       const query = $('search').value.trim().toLowerCase();
       const category = $('categoryFilter').value;
-      const isAdmin = currentUser?.app_metadata?.role === 'admin';
 
       const filtered = watches.filter((watch) => {
         const text = [
@@ -362,7 +341,8 @@
         `${filtered.length} ${filtered.length === 1 ? 'reloj' : 'relojes'}`;
 
       if (!filtered.length) {
-        grid.innerHTML = '<p class="muted">No hay relojes que coincidan con la búsqueda.</p>';
+        grid.innerHTML =
+          '<p class="muted">No hay relojes que coincidan con la búsqueda.</p>';
         return;
       }
 
@@ -372,16 +352,9 @@
           ? `<img class="card-image" src="${escapeHtml(image)}" alt="${escapeHtml(watch.reference)}" loading="lazy">`
           : '<div class="image-placeholder">Sin imagen</div>';
 
-        const isSoldOut = watch.stock === 'Agotado';
-        const stockMarkup = `
-          <span class="stock-badge${isSoldOut ? ' sold-out' : ''}">
-            ${isSoldOut ? 'Agotado' : 'Disponible'}
-          </span>`;
-
-        const actionsMarkup = isAdmin
+        const adminActions = isAdmin()
           ? `<div class="card-actions">
-               <button class="secondary" type="button" data-action="edit" data-id="${escapeHtml(watch.id)}">Modificar</button>
-               <button class="secondary" type="button" data-action="stock" data-id="${escapeHtml(watch.id)}">${isSoldOut ? 'Marcar disponible' : 'Marcar agotado'}</button>
+               <button class="secondary" type="button" data-action="edit" data-id="${escapeHtml(watch.id)}">Editar</button>
                <button class="danger" type="button" data-action="delete" data-id="${escapeHtml(watch.id)}">Eliminar</button>
              </div>`
           : '';
@@ -399,8 +372,7 @@
                 ${watch.complication ? `<p>Complicación: ${escapeHtml(watch.complication)}</p>` : ''}
                 ${watch.description ? `<p class="description">${escapeHtml(watch.description)}</p>` : ''}
               </div>
-              ${stockMarkup}
-              ${actionsMarkup}
+              ${adminActions}
             </div>
           </article>`;
       }).join('');
@@ -412,7 +384,7 @@
 
       const { data, error } = await supabase
         .from('watch_library')
-        .select('id, reference, category, material, power_reserve, complication, price, description, image_url, stock, created_at')
+        .select('id, reference, category, material, power_reserve, complication, price, description, image_url, created_at')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -423,8 +395,9 @@
 
       watches = data ?? [];
 
-      const categories = [...new Set(watches.map((watch) => watch.category).filter(Boolean))]
-        .sort();
+      const categories = [...new Set(
+        watches.map((watch) => watch.category).filter(Boolean)
+      )].sort();
 
       $('categoryFilter').innerHTML =
         '<option value="">Todas las categorías</option>' +
@@ -437,17 +410,45 @@
     }
 
     function updateAuthUI() {
-      const isAdmin = currentUser?.app_metadata?.role === 'admin';
+      const admin = isAdmin();
 
-      $('loginBox').classList.toggle('hidden', isAdmin || !showAdminLogin);
-      $('adminBox').classList.toggle('hidden', !isAdmin);
+      $('loginBox').classList.toggle('hidden', admin || !showAdminLogin);
+      $('adminBox').classList.toggle('hidden', !admin);
 
-      if (currentUser && !isAdmin && showAdminLogin) {
+      if (currentUser && !admin && showAdminLogin) {
         $('loginMessage').textContent =
           'La cuenta inició sesión, pero no tiene rol de administrador.';
       }
 
       render();
+    }
+
+    function resetWatchForm() {
+      editingWatch = null;
+      $('watchForm').reset();
+      $('formHeading').textContent = 'Añadir reloj';
+      $('saveButton').textContent = 'Guardar en la biblioteca';
+      $('cancelEditButton').classList.add('hidden');
+      $('formMessage').textContent = '';
+      $('formMessage').classList.remove('error');
+    }
+
+    function startEditing(watch) {
+      if (!isAdmin()) return;
+
+      editingWatch = watch;
+      $('reference').value = watch.reference ?? '';
+      $('price').value = watch.price ?? '';
+      $('description').value = watch.description ?? '';
+      $('imageFile').value = '';
+
+      $('formHeading').textContent = 'Editar reloj';
+      $('saveButton').textContent = 'Guardar cambios';
+      $('cancelEditButton').classList.remove('hidden');
+      $('formMessage').textContent = '';
+
+      $('adminBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      $('reference').focus();
     }
 
     async function uploadWatchImage(file) {
@@ -487,93 +488,51 @@
       return data.publicUrl;
     }
 
-    function cancelEdit() {
-      editingWatchId = null;
-      $('watchForm').reset();
-      $('formTitle').textContent = 'Añadir reloj';
-      $('saveButton').textContent = 'Guardar en la biblioteca';
-      $('cancelEditButton').classList.add('hidden');
-      $('formMessage').textContent = '';
-      $('formMessage').classList.remove('error');
-    }
-
     $('search').addEventListener('input', render);
     $('categoryFilter').addEventListener('change', render);
-    $('cancelEditButton').addEventListener('click', cancelEdit);
 
-    grid.addEventListener('click', async (event) => {
+    $('watchGrid').addEventListener('click', async (event) => {
       const button = event.target.closest('button[data-action]');
-      if (!button) return;
-
-      if (currentUser?.app_metadata?.role !== 'admin') {
-        status.textContent = 'Solo un administrador puede gestionar los relojes.';
-        status.classList.add('error');
-        return;
-      }
+      if (!button || !isAdmin()) return;
 
       const watch = watches.find((item) => item.id === button.dataset.id);
       if (!watch) return;
 
-      const action = button.dataset.action;
-      button.disabled = true;
-      status.classList.remove('error');
+      if (button.dataset.action === 'edit') {
+        startEditing(watch);
+        return;
+      }
 
-      try {
-        if (action === 'edit') {
-          editingWatchId = watch.id;
-          $('reference').value = watch.reference ?? '';
-          $('price').value = watch.price ?? '';
-          $('description').value = watch.description ?? '';
-          $('imageFile').value = '';
-          $('formTitle').textContent = 'Modificar reloj';
-          $('saveButton').textContent = 'Guardar cambios';
-          $('cancelEditButton').classList.remove('hidden');
-          $('formMessage').textContent = '';
-          $('formMessage').classList.remove('error');
-          $('watchForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
-          $('reference').focus();
+      if (button.dataset.action === 'delete') {
+        const confirmed = window.confirm(
+          `¿Eliminar el reloj "${watch.reference}" de la biblioteca?`
+        );
+
+        if (!confirmed) return;
+
+        button.disabled = true;
+
+        const { error } = await supabase
+          .from('watch_library')
+          .delete()
+          .eq('id', watch.id);
+
+        if (error) {
+          button.disabled = false;
+          status.textContent = `No se pudo eliminar el reloj: ${error.message}`;
+          status.classList.add('error');
           return;
         }
 
-        if (action === 'stock') {
-          const newStock = watch.stock === 'Agotado' ? 'Disponible' : 'Agotado';
-          const { error } = await supabase
-            .from('watch_library')
-            .update({ stock: newStock })
-            .eq('id', watch.id);
-
-          if (error) throw error;
-
-          status.textContent = `El reloj ahora figura como ${newStock.toLowerCase()}.`;
-          await loadWatches();
-          return;
+        if (editingWatch?.id === watch.id) {
+          resetWatchForm();
         }
 
-        if (action === 'delete') {
-          const confirmed = window.confirm(
-            `¿Seguro que quieres eliminar el reloj "${watch.reference}"? Esta acción no se puede deshacer.`
-          );
-
-          if (!confirmed) return;
-
-          const { error } = await supabase
-            .from('watch_library')
-            .delete()
-            .eq('id', watch.id);
-
-          if (error) throw error;
-
-          if (editingWatchId === watch.id) cancelEdit();
-          status.textContent = 'Reloj eliminado de la biblioteca.';
-          await loadWatches();
-        }
-      } catch (error) {
-        status.textContent = `No se pudo completar la acción: ${error.message}`;
-        status.classList.add('error');
-      } finally {
-        button.disabled = false;
+        await loadWatches();
       }
     });
+
+    $('cancelEditButton').addEventListener('click', resetWatchForm);
 
     $('loginForm').addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -589,7 +548,8 @@
       $('loginButton').disabled = false;
 
       if (error) {
-        $('loginMessage').textContent = `No se pudo iniciar sesión: ${error.message}`;
+        $('loginMessage').textContent =
+          `No se pudo iniciar sesión: ${error.message}`;
         $('loginMessage').classList.add('error');
         return;
       }
@@ -609,47 +569,49 @@
       }
 
       currentUser = null;
-      cancelEdit();
+      resetWatchForm();
       updateAuthUI();
     });
 
     $('watchForm').addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      if (currentUser?.app_metadata?.role !== 'admin') {
-        $('formMessage').textContent = 'Solo un administrador puede añadir o modificar relojes.';
+      if (!isAdmin()) {
+        $('formMessage').textContent =
+          'Solo un administrador puede administrar relojes.';
         $('formMessage').classList.add('error');
         return;
       }
 
       $('saveButton').disabled = true;
       $('formMessage').classList.remove('error');
-      $('formMessage').textContent = editingWatchId ? 'Guardando cambios…' : 'Guardando…';
+      $('formMessage').textContent = 'Guardando…';
 
       try {
         const imageFile = $('imageFile').files?.[0] ?? null;
-        const imageUrl = await uploadWatchImage(imageFile);
-        const rawPrice = $('price').value;
+        const uploadedImageUrl = imageFile
+          ? await uploadWatchImage(imageFile)
+          : null;
 
         const record = {
           reference: $('reference').value.trim(),
-          price: rawPrice === '' ? null : Number(rawPrice),
-          description: $('description').value.trim() || null
+          category: editingWatch?.category ?? 'Sin categoría',
+          material: editingWatch?.material ?? null,
+          power_reserve: editingWatch?.power_reserve ?? null,
+          complication: editingWatch?.complication ?? null,
+          price: $('price').value === '' ? null : Number($('price').value),
+          description: $('description').value.trim() || null,
+          image_url: uploadedImageUrl ?? editingWatch?.image_url ?? null
         };
-
-        if (imageUrl) record.image_url = imageUrl;
 
         let error;
 
-        if (editingWatchId) {
+        if (editingWatch) {
           ({ error } = await supabase
             .from('watch_library')
             .update(record)
-            .eq('id', editingWatchId));
+            .eq('id', editingWatch.id));
         } else {
-          record.category = 'Sin categoría';
-          record.stock = 'Disponible';
-
           ({ error } = await supabase
             .from('watch_library')
             .insert(record));
@@ -657,9 +619,8 @@
 
         if (error) throw error;
 
-        const wasEditing = Boolean(editingWatchId);
-        cancelEdit();
-        $('formMessage').textContent = wasEditing
+        resetWatchForm();
+        $('formMessage').textContent = editingWatch
           ? 'Cambios guardados.'
           : 'Reloj archivado en la biblioteca.';
 
