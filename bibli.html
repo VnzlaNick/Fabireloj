@@ -270,7 +270,7 @@
 
     const SUPABASE_URL = 'https://tpidmniocervffdiibyp.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_U_4sNRRN26XoUxp71yGvIQ_TVwo6Vle';
-    const STORAGE_BUCKET = 'watch-images';
+    const STORAGE_BUCKET = 'relojes-catalogo';
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
     const showAdminLogin =
@@ -470,7 +470,7 @@
         throw new Error('Usa una imagen JPG, PNG, WEBP o GIF.');
       }
 
-      const path = `watches/${crypto.randomUUID()}.${extension}`;
+      const path = `items/${crypto.randomUUID()}.${extension}`;
 
       const { error: uploadError } = await supabase.storage
         .from(STORAGE_BUCKET)
@@ -484,6 +484,10 @@
       const { data } = supabase.storage
         .from(STORAGE_BUCKET)
         .getPublicUrl(path);
+
+
+
+
 
       return data.publicUrl;
     }
@@ -617,14 +621,17 @@
             .insert(record));
         }
 
-        if (error) throw error;
+      if (error) throw error;
 
-        resetWatchForm();
-        $('formMessage').textContent = editingWatch
-          ? 'Cambios guardados.'
-          : 'Reloj archivado en la biblioteca.';
+const wasEditing = Boolean(editingWatch);
+resetWatchForm();
 
-        await loadWatches();
+$('formMessage').textContent = wasEditing
+  ? 'Cambios guardados.'
+  : 'Reloj archivado en la biblioteca.';
+
+await loadWatches();
+
       } catch (error) {
         $('formMessage').textContent = `No se guardó: ${error.message}`;
         $('formMessage').classList.add('error');
