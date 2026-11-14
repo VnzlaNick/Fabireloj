@@ -616,122 +616,34 @@
     return article;
   }
 
+  async function loadWatches() {
+    const { data, error } = await supabase
+      .from('watches')
+      .select(
+        'id,title,reference,price,stock,specs,offer_type,discount,image_url,brand,category,created_at'
+      )
+      .order('created_at', { ascending: false });
 
-const offersButton = document.getElementById('offers-filter-btn');
-const offersBadge = document.getElementById('offers-badge');
+    if (error) {
+      console.error('No se pudo cargar el catálogo:', error.message);
+      feed.textContent =
+        'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
+      return;
+    }
 
-const OFFERS_SEEN_KEY = 'watch-vault-seen-offers-v1';
-let currentWatches = [];
-let activeCategory = 'all';
-
-function getSeenOffers() {
-  try {
-    return new Set(JSON.parse(localStorage.getItem(OFFERS_SEEN_KEY) || '[]'));
-  } catch {
-    return new Set();
-  }
-}
-
-function getOfferSignature(watch) {
-  return [
-    watch.reference,
-    watch.discount ?? '',
-    watch.price ?? ''
-  ].join('|');
-}
-
-function updateOffersBadge() {
-  const seenOffers = getSeenOffers();
-  const unseenCount = currentWatches.filter((watch) =>
-    watch.offer_type === 'oferta' &&
-    !seenOffers.has(getOfferSignature(watch))
-  ).length;
-
-  offersBadge.textContent = String(unseenCount);
-  offersBadge.hidden = unseenCount === 0;
-  offersButton.setAttribute(
-    'aria-label',
-    unseenCount > 0 ? `Ofertas, ${unseenCount} sin ver` : 'Ofertas'
-  );
-}
-
-function renderWatches() {
-  const watchesToShow = activeCategory === 'ofertas'
-    ? currentWatches.filter((watch) => watch.offer_type === 'oferta')
-    : currentWatches;
-
-  if (watchesToShow.length === 0) {
-    const message = document.createElement('p');
-    message.className = 'col-span-4 text-center text-sm text-luxury-muted py-8';
-    message.textContent = 'No hay ofertas disponibles.';
-    grid.replaceChildren(message);
-    return;
+    watchesById = new Map((data || []).map(watch => [String(watch.id), watch]));
+    feed.replaceChildren(...(data || []).map(makeCard));
+    applyFilter(activeFilter);
   }
 
-  grid.replaceChildren(...watchesToShow.map(createWatchCard));
-}
-
-function markCurrentOffersAsSeen() {
-  const seenOffers = getSeenOffers();
-
-  currentWatches
-    .filter((watch) => watch.offer_type === 'oferta')
-    .forEach((watch) => seenOffers.add(getOfferSignature(watch)));
-
-  localStorage.setItem(OFFERS_SEEN_KEY, JSON.stringify([...seenOffers]));
-  updateOffersBadge();
-}
-
-offersButton.addEventListener('click', () => {
-  if (activeCategory === 'ofertas') {
-    activeCategory = 'all';
-    offersButton.setAttribute('aria-pressed', 'false');
-  } else {
-    activeCategory = 'ofertas';
-    offersButton.setAttribute('aria-pressed', 'true');
-    renderWatches();
-    markCurrentOffersAsSeen();
-    return;
+  async function isAdmin() {
+    try {
+      const { data, error } = await supabase.auth.getUser();
+      return !error && data.user?.app_metadata?.role === 'admin';
+    } catch {
+      return false;
+    }
   }
-
-  renderWatches();
-});
-
-
-
-async function loadWatches() {
-  const { data, error } = await supabase
-    .from('watches')
-    .select('id, title, reference, image_url, offer_type, discount, price')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('No se pudo cargar el catálogo:', error.message);
-    feed.textContent =
-      'No se pudo cargar el catálogo. Revisa la conexión y las políticas de acceso.';
-    return;
-  }
-
-currentWatches = data || [];
-  updateOffersBadge();
-
-  itemCount.textContent = `${currentWatches.length} ITEMS`;
-  footerCount.textContent = `${currentWatches.length} referencias cargadas`;
-  syncStatus.textContent = 'Sincronizado con Base de Datos';
-
-  watchesById = new Map(currentWatches.map(watch => [String(watch.id), watch]));
-  feed.replaceChildren(...currentWatches.map(makeCard));
-  applyFilter(activeFilter);
-
-
-
-  currentWatches = data || [];
-  updateOffersBadge();
-
-  watchesById = new Map(currentWatches.map(watch => [String(watch.id), watch]));
-  feed.replaceChildren(...currentWatches.map(makeCard));
-  applyFilter(activeFilter);
-}
 
   const loginForm = document.createElement('form');
   loginForm.id = 'catalog-admin-login';
